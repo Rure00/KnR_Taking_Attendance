@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance
+package com.rure.knr_takingattendance.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -38,7 +38,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     KnR_TakingAttendanceTheme {
