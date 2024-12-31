@@ -79,4 +79,6 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     implementation("androidx.compose.foundation:foundation:1.7.6")
+
+    implementation(kotlin("reflect"))
 }
