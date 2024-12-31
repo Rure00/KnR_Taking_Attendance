@@ -15,17 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.presentation.screen.HomeScreen
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import com.rure.knr_takingattendance.presentation.state.home.DayMemberAttendance
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
 import com.rure.knr_takingattendance.ui.theme.White
-import java.time.LocalDate
 
 @Composable
 fun MemberAttendanceBar(memberAttendance: DayMemberAttendance) {
@@ -46,10 +43,11 @@ fun MemberAttendanceBar(memberAttendance: DayMemberAttendance) {
 
 
         IconButton(onClick = { }) {
+            //ImageVector.vectorResource(iconId)
             Image(
                 painter = painterResource(iconId),
                 contentDescription = null,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(28.dp)
             )
         }
 

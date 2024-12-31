@@ -48,7 +48,7 @@ val testMemberAttendance = listOf(
     DayMemberAttendance("김민수", LocalDate.now(), AttendanceState.Attend),
     DayMemberAttendance("김진수", LocalDate.now(), AttendanceState.Attend),
     DayMemberAttendance("노홍철", LocalDate.now(), AttendanceState.NonAttend),
-    DayMemberAttendance("두정민", LocalDate.now(), AttendanceState.Attend),
+    DayMemberAttendance("두정민", LocalDate.now(), AttendanceState.Tardy),
     DayMemberAttendance("배진우", LocalDate.now(), AttendanceState.Attend),
     DayMemberAttendance("성승모", LocalDate.now(), AttendanceState.Attend),
     DayMemberAttendance("이폐급", LocalDate.now(), AttendanceState.Absence),
