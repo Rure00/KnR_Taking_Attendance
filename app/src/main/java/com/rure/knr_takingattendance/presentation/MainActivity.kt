@@ -21,9 +21,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.rure.knr_takingattendance.presentation.navigation.Destination
-import com.rure.knr_takingattendance.presentation.navigation.TopAppBarComponent
+import com.rure.knr_takingattendance.presentation.component.TopAppBarComponent
 import com.rure.knr_takingattendance.presentation.navigation.mainNavGraph
 import com.rure.knr_takingattendance.ui.theme.KnR_TakingAttendanceTheme
+import com.rure.knr_takingattendance.ui.theme.LightGray
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +57,7 @@ private fun MainPage() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        containerColor = LightGray,
         topBar = { TopAppBarComponent(navController, screen.value) }
     ) { innerPadding ->
         val pagerState = rememberPagerState(0, 0f) {

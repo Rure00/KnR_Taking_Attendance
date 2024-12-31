@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.navigation
+package com.rure.knr_takingattendance.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.presentation.navigation.Destination
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
 import com.rure.knr_takingattendance.ui.theme.White
