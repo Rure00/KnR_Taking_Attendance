@@ -81,4 +81,6 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.7.6")
 
     implementation(kotlin("reflect"))
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0")
 }

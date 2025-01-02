@@ -26,7 +26,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
 //                }
 //            )
 
-            HomeScreen {  }
+            HomeScreen(
+                { navController.navigate(Destination.PersonalAttend.route) }
+            )
             onScreenChanged(Destination.Home)
         }
 

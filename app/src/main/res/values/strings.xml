@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KnR_TakingAttendance</string>
+
+    <string name="attendance_bottom_sheet_title">%s 님의 출석</string>
 </resources>
