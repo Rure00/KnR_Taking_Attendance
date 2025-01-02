@@ -153,9 +153,9 @@ fun HomeScreen(
     }
 
     Log.d("HomeScreen", "showBottomSheet: ${bottomSheetStateHolder.value.showBottomSheet}")
-    if(bottomSheetStateHolder.value.showBottomSheet) with(bottomSheetStateHolder.value) {
-        val item = memberAttendance!!
-        val changedState = selectedState!!
+    if(bottomSheetStateHolder.value.showBottomSheet) {
+        val item = bottomSheetStateHolder.value.memberAttendance!!
+        val changedState = bottomSheetStateHolder.value.selectedState!!
         AttendanceBottomSheet(item) {
             bottomSheetStateHolder.value = AttendanceSheetStateHolder(false)
             dayAttendanceViewModel.changeMemberAttendance(item, changedState)

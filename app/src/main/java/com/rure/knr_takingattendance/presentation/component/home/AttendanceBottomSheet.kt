@@ -37,6 +37,7 @@ import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
 import com.rure.knr_takingattendance.ui.theme.White
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -56,9 +57,11 @@ fun AttendanceBottomSheet(
         onDismissRequest = { onChange(member.attendanceStatus) }
     ) {
         View(member) {
-            onChange(it)
             coroutineScope.launch {
+                delay(300L)
                 sheetState.hide()
+
+                onChange(it)
             }
         }
     }
@@ -85,8 +88,6 @@ private fun View(member: DayMemberAttendance, onChange: (AttendanceState) -> Uni
                 AttendanceButton(state, state == currentState.value) {
                     currentState.value = state
                     onChange(state)
-
-
                 }
             }
         }
