@@ -1,16 +1,25 @@
 package com.rure.knr_takingattendance.presentation.component.home
 
+import android.util.Log
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,8 +28,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.rure.knr_takingattendance.R
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
@@ -28,10 +39,14 @@ import com.rure.knr_takingattendance.presentation.state.home.DayMemberAttendance
 import com.rure.knr_takingattendance.ui.theme.Black
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.LightGray
+import com.rure.knr_takingattendance.ui.theme.SkyBlue
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
 import com.rure.knr_takingattendance.ui.theme.White
-import java.time.LocalDate
+
+
+private const val MaxDragOffset = -150f
+private const val DragCompensation = 20f
 
 @Composable
 fun MemberAttendanceBar(
@@ -39,17 +54,69 @@ fun MemberAttendanceBar(
     onStatusChange: (AttendanceState) -> Unit,
     onSlideLeft: () -> Unit
 ) {
-    val isClicked = remember {
-        mutableStateOf(false)
+    // 슬라이드 상태
+    val dragOffset = remember { mutableStateOf(0f) }
+
+    val dragOffsetAnimation = animateFloatAsState(
+        targetValue = dragOffset.value,
+        animationSpec = tween(durationMillis = 400),
+        label = "dragOffsetAnimation"
+    )
+
+    Box(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Max)
+        .background(Black)
+        .pointerInput(Unit) {
+            detectHorizontalDragGestures(
+                onHorizontalDrag = { _, dragAmount ->
+                    dragOffset.value = (dragOffset.value + dragAmount).coerceIn(MaxDragOffset, 0f)
+                    Log.d("MemberAttendanceBar", "slideOffset: ${dragOffset.value}")
+                },
+                onDragEnd = {
+                    if(dragOffset.value < MaxDragOffset + DragCompensation) {
+                        //TODO: 전화걸기
+                        Log.d("MemberAttendanceBar", "full drag!")
+                    } else {
+                        Log.d("MemberAttendanceBar", "not full drag...")
+                    }
+
+                    dragOffset.value = 0f
+                }
+            )
+        })
+    {
+
+        Row(modifier = Modifier
+            .fillMaxHeight().fillMaxWidth()
+            //.offset { IntOffset(-(dragOffsetAnimation.value + MaxDragOffset).toInt(), 0) }
+            .background(SkyBlue),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(R.drawable.phone_image),
+                contentDescription = null,
+                modifier = Modifier.size(28.dp)
+            )
+            Text(
+                modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+                text = stringResource(R.string.call),
+                style = Typography.bodyMedium,
+                color = White
+            )
+        }
+
+        MemberStatusBar(dragOffsetAnimation.value, memberAttendance, onStatusChange)
     }
 
-    MemberStatusBar(memberAttendance, onStatusChange)
+
 }
 
 @Composable
-private fun MemberStatusBar(memberAttendance: DayMemberAttendance, onClick: (AttendanceState) -> Unit) {
+private fun MemberStatusBar(animationOffset: Float, memberAttendance: DayMemberAttendance, onClick: (AttendanceState) -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth().wrapContentHeight()
+        modifier = Modifier
+            .offset(x = animationOffset.dp)
+            .fillMaxWidth().fillMaxHeight()
             .background(White)
             .padding(horizontal = 16.dp, vertical = 11.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -131,11 +198,11 @@ private fun ChangeStatusBar(onStatusChange: (AttendanceState) -> Unit) {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun Preview() {
-    val ma = DayMemberAttendance(
-        name = "홍길동", localDate = LocalDate.now(), attendanceStatus = AttendanceState.Absence
-    )
-    MemberAttendanceBar(ma, {}, {})
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun Preview() {
+//    val ma = DayMemberAttendance(
+//        name = "홍길동", localDate = LocalDate.now(), attendanceStatus = AttendanceState.Absence
+//    )
+//    MemberAttendanceBar(ma, {}, {})
+//}
