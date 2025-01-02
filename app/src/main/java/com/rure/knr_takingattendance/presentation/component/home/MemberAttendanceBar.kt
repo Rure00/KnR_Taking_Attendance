@@ -72,7 +72,7 @@ fun MemberAttendanceBar(
             detectHorizontalDragGestures(
                 onHorizontalDrag = { _, dragAmount ->
                     dragOffset.value = (dragOffset.value + dragAmount).coerceIn(MaxDragOffset, 0f)
-                    Log.d("MemberAttendanceBar", "slideOffset: ${dragOffset.value}")
+                    //Log.d("MemberAttendanceBar", "slideOffset: ${dragOffset.value}")
                 },
                 onDragEnd = {
                     if(dragOffset.value < MaxDragOffset + DragCompensation) {
