@@ -1,7 +1,9 @@
 package com.rure.knr_takingattendance.presentation.component.home
 
 import android.util.Log
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -59,7 +61,8 @@ fun MemberAttendanceBar(
 
     val dragOffsetAnimation = animateFloatAsState(
         targetValue = dragOffset.value,
-        animationSpec = tween(durationMillis = 400),
+        //tween(durationMillis = 200)
+        animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow),
         label = "dragOffsetAnimation"
     )
 
