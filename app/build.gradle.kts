@@ -83,4 +83,11 @@ dependencies {
     implementation(kotlin("reflect"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0")
+
+    // Room
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    testImplementation("androidx.room:room-testing:$room_version")
+    //implementation("androidx.room:room-paging:$room_version")
 }
