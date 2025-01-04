@@ -66,22 +66,16 @@ val testMap = mapOf(
     AttendanceState.Tardy to 2
 )
 val testMemberAttendance = listOf(
-    DayMemberAttendance("김민수", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("김진수", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("노홍철", LocalDate.now(), AttendanceState.NonAttend),
-    DayMemberAttendance("두정민", LocalDate.now(), AttendanceState.Tardy),
-    DayMemberAttendance("배진우", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("성승모", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("이폐급", LocalDate.now(), AttendanceState.Absence),
-    DayMemberAttendance("황유상", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("김민수", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("김진수", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("노홍철", LocalDate.now(), AttendanceState.NonAttend),
-    DayMemberAttendance("두정민", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("배진우", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("성승모", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("이폐급", LocalDate.now(), AttendanceState.Absence),
-    DayMemberAttendance("황유상", LocalDate.now(), AttendanceState.Attend),
+    DayMemberAttendance("길성준", LocalDate.now(), AttendanceState.NonAttend),
+    DayMemberAttendance("노홍철", LocalDate.now(), AttendanceState.Attend),
+    DayMemberAttendance("박명수", LocalDate.now(), AttendanceState.Attend),
+    DayMemberAttendance("이지각", LocalDate.now(), AttendanceState.Tardy),
+    DayMemberAttendance("유재석", LocalDate.now(), AttendanceState.Attend),
+    DayMemberAttendance("전진", LocalDate.now(), AttendanceState.NonAttend),
+    DayMemberAttendance("정형돈", LocalDate.now(), AttendanceState.Tardy),
+    DayMemberAttendance("정준하", LocalDate.now(), AttendanceState.Attend),
+    DayMemberAttendance("하동훈", LocalDate.now(), AttendanceState.Attend),
+    DayMemberAttendance("홍무단", LocalDate.now(), AttendanceState.Absence),
 )
 
 @Composable
