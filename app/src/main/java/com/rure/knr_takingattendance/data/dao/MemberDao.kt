@@ -1,5 +1,6 @@
 package com.rure.knr_takingattendance.data.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
@@ -8,6 +9,7 @@ import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import java.time.LocalDate
 
+@Dao
 interface MemberDao {
     @Insert
     fun insertMember(member: Member)
@@ -17,5 +19,8 @@ interface MemberDao {
     fun deleteMember(member: Member)
 
     @Query("SELECT * FROM members WHERE id == :id")
-    fun getMemberById(id: Int): List<MemberParticipation>
+    fun getMemberById(id: Int): List<Member>
+
+    @Query("SELECT * FROM members")
+    fun getAllMembers(): List<Member>
 }

@@ -2,6 +2,11 @@ package com.rure.knr_takingattendance.presentation.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.rure.knr_takingattendance.data.entities.Member
+import com.rure.knr_takingattendance.data.entities.MemberParticipation
+import com.rure.knr_takingattendance.data.entities.Position
+import com.rure.knr_takingattendance.domain.repository.MemberParticipationRepository
+import com.rure.knr_takingattendance.domain.repository.MemberRepository
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import com.rure.knr_takingattendance.presentation.state.home.DayAttendance
 import com.rure.knr_takingattendance.presentation.state.home.DayMemberAttendance
