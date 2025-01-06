@@ -13,10 +13,9 @@ enum class Position(val abbr: String) {
     tableName = "members"
 )
 data class Member(
-    @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "position") val position: Position,
     @ColumnInfo(name = "join_date") val joinDate: LocalDate,
     @ColumnInfo(name = "phone_number") val phoneNumber: String,
-
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )

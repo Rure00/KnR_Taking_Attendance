@@ -10,21 +10,34 @@ import javax.inject.Inject
 class MemberParticipationRepositoryImpl @Inject constructor(
     private val participationDao: MemberParticipationDao
 ): MemberParticipationRepository {
-    override fun insertMemberParticipation(memberParticipation: MemberParticipation) {
+    override suspend fun insertMemberParticipation(memberParticipation: MemberParticipation) {
+        kotlin.runCatching {
+            participationDao.insertMemberParticipation(memberParticipation)
+        }
     }
 
-    override fun updateMemberParticipation(memberParticipation: MemberParticipation) {
+    override suspend fun updateMemberParticipation(memberParticipation: MemberParticipation) {
+        kotlin.runCatching {
+            participationDao.updateMemberParticipation(memberParticipation)
+        }
     }
 
-    override fun deleteMemberParticipation(memberParticipation: MemberParticipation) {
+    override suspend fun deleteMemberParticipation(memberParticipation: MemberParticipation) {
+        kotlin.runCatching {
+            participationDao.deleteMemberParticipation(memberParticipation)
+        }
     }
 
-    override fun getMemberParticipationWhen(date: LocalDate): List<MemberParticipation> {
-        return listOf()
+    override suspend fun getMemberParticipationWhen(date: LocalDate): List<MemberParticipation> {
+        return kotlin.runCatching {
+            participationDao.getMemberParticipationWhen(date)
+        }.getOrDefault(listOf())
     }
 
-    override fun getMemberParticipationByMember(memberId: Int): List<MemberParticipation> {
-        return listOf()
+    override suspend fun getMemberParticipationByMember(memberId: Int): List<MemberParticipation> {
+        return kotlin.runCatching {
+            participationDao.getMemberParticipationByMember(memberId)
+        }.getOrDefault(listOf())
     }
 
 }

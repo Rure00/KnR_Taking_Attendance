@@ -19,7 +19,7 @@ interface MemberDao {
     fun deleteMember(member: Member)
 
     @Query("SELECT * FROM members WHERE id == :id")
-    fun getMemberById(id: Int): List<Member>
+    fun getMemberById(id: Int): Member?
 
     @Query("SELECT * FROM members")
     fun getAllMembers(): List<Member>

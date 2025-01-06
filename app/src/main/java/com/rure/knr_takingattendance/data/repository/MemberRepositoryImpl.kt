@@ -9,24 +9,34 @@ import javax.inject.Inject
 class MemberRepositoryImpl @Inject constructor(
     private val memberDao: MemberDao
 ): MemberRepository {
-    override fun insertMember(member: Member) {
-
+    override suspend fun insertMember(member: Member) {
+        kotlin.runCatching {
+            memberDao.insertMember(member)
+        }
     }
 
-    override fun deleteMember(member: Member) {
-
+    override suspend fun deleteMember(member: Member) {
+        kotlin.runCatching {
+            memberDao.deleteMember(member)
+        }
     }
 
-    override fun updateMember(member: Member) {
-
+    override suspend fun updateMember(member: Member) {
+        kotlin.runCatching {
+            memberDao.updateMember(member)
+        }
     }
 
-    override fun getAllMembers(): List<Member> {
-        return listOf()
+    override suspend fun getAllMembers(): List<Member> {
+        return kotlin.runCatching {
+            memberDao.getAllMembers()
+        }.getOrDefault(listOf())
     }
 
-    override fun getMemberById(id: Int): Member? {
-        return null
+    override suspend fun getMemberById(id: Int): Member? {
+        return kotlin.runCatching {
+            memberDao.getMemberById(id)
+        }.getOrNull()
     }
 
 }
