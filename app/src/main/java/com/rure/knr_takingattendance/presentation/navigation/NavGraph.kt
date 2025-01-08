@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.rure.knr_takingattendance.presentation.screen.HomeScreen
 
 fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: (Destination) -> Unit) {
     navigation(
@@ -25,6 +26,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
 //                }
 //            )
 
+            HomeScreen(
+                { navController.navigate(Destination.PersonalAttend.route) }
+            )
             onScreenChanged(Destination.Home)
         }
 
