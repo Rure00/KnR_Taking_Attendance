@@ -31,8 +31,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
-import com.rure.knr_takingattendance.presentation.state.home.DayMemberAttendance
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
@@ -44,7 +44,7 @@ import java.time.LocalDate
 @OptIn(ExperimentalMaterial3Api::class)     // ModalBottomSheet에서 뜸.
 @Composable
 fun AttendanceBottomSheet(
-    member: DayMemberAttendance,
+    participation: MemberParticipation,
     onChange: (AttendanceState) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -54,9 +54,9 @@ fun AttendanceBottomSheet(
         modifier = Modifier.fillMaxWidth().wrapContentHeight(),
         containerColor = White,
         sheetState = sheetState,
-        onDismissRequest = { onChange(member.attendanceStatus) }
+        onDismissRequest = { onChange(participation.attendanceStatus) }
     ) {
-        View(member) {
+        View(participation) {
             coroutineScope.launch {
                 delay(300L)
                 sheetState.hide()
@@ -69,16 +69,16 @@ fun AttendanceBottomSheet(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun View(member: DayMemberAttendance, onChange: (AttendanceState) -> Unit) {
+private fun View(participation: MemberParticipation, onChange: (AttendanceState) -> Unit) {
     val currentState = remember {
-        mutableStateOf<AttendanceState>(member.attendanceStatus)
+        mutableStateOf<AttendanceState>(participation.attendanceStatus)
     }
 
     Column(
         modifier = Modifier.fillMaxWidth().wrapContentHeight()
     ) {
         Text(
-            text = stringResource(R.string.attendance_bottom_sheet_title, member.name),
+            text = stringResource(R.string.attendance_bottom_sheet_title, participation.member.name),
             style = Typography.titleMedium,
             modifier = Modifier.fillMaxWidth().padding(start = 9.dp, end = 9.dp, top = 9.dp, bottom = 13.dp)
         )
@@ -138,12 +138,12 @@ private fun AttendanceButton(state: AttendanceState, isSelected: Boolean, onStat
     }
 }
 
-@Preview(backgroundColor = Color.WHITE.toLong())
-@Composable
-fun AttendanceBottomSheetPreview() {
-    View(
-        member = DayMemberAttendance("장동철", LocalDate.now(), AttendanceState.Attend)
-    ) {
-
-    }
-}
+//@Preview(backgroundColor = Color.WHITE.toLong())
+//@Composable
+//fun AttendanceBottomSheetPreview() {
+//    View(
+//        member = MemberParticipation("장동철", LocalDate.now(), AttendanceState.Attend)
+//    ) {
+//
+//    }
+//}

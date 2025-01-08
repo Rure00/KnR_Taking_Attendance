@@ -11,9 +11,9 @@ import javax.inject.Inject
 
 class GetMemberByIdUseCase @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(id: Int): Member? = withContext(defaultDispatcher) {
+    suspend operator fun invoke(id: Int): Member? = withContext(ioDispatcher) {
         return@withContext memberRepository.getMemberById(id)
     }
 }

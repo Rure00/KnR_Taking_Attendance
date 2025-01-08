@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 class DeleteMemberUseCase @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val ioDispatcher: CoroutineDispatcher,
 ) {
     suspend operator fun invoke(
         member: Member
-    ) = withContext(defaultDispatcher) {
+    ) = withContext(ioDispatcher) {
         memberRepository.deleteMember(member)
     }
 }

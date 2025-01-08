@@ -36,8 +36,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
-import com.rure.knr_takingattendance.presentation.state.home.DayMemberAttendance
 import com.rure.knr_takingattendance.ui.theme.Black
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.LightGray
@@ -52,7 +52,7 @@ private const val DragCompensation = 20f
 
 @Composable
 fun MemberAttendanceBar(
-    memberAttendance: DayMemberAttendance,
+    participation: MemberParticipation,
     onStatusChange: (AttendanceState) -> Unit,
     onSlideLeft: () -> Unit
 ) {
@@ -108,14 +108,14 @@ fun MemberAttendanceBar(
             )
         }
 
-        MemberStatusBar(dragOffsetAnimation.value, memberAttendance, onStatusChange)
+        MemberStatusBar(dragOffsetAnimation.value, participation, onStatusChange)
     }
 
 
 }
 
 @Composable
-private fun MemberStatusBar(animationOffset: Float, memberAttendance: DayMemberAttendance, onClick: (AttendanceState) -> Unit) {
+private fun MemberStatusBar(animationOffset: Float, participation: MemberParticipation, onClick: (AttendanceState) -> Unit) {
     Row(
         modifier = Modifier
             .offset(x = animationOffset.dp)
@@ -125,7 +125,7 @@ private fun MemberStatusBar(animationOffset: Float, memberAttendance: DayMemberA
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        val (iconId, textColor) = when(memberAttendance.attendanceStatus) {
+        val (iconId, textColor) = when(participation.attendanceStatus) {
             AttendanceState.Attend -> R.drawable.attendant_icon to TossBlue
             AttendanceState.NonAttend -> R.drawable.non_attendant_icon to Gray
             AttendanceState.Tardy -> R.drawable.tardy_icon to Gray
@@ -143,12 +143,12 @@ private fun MemberStatusBar(animationOffset: Float, memberAttendance: DayMemberA
 
         Text(
             modifier = Modifier.padding(start = 16.dp).weight(1f),
-            text = memberAttendance.name,
+            text = participation.member.name,
             style = Typography.bodyMedium
         )
 
         Text(
-            text = memberAttendance.attendanceStatus.kr,
+            text = participation.attendanceStatus.kr,
             style = Typography.bodyLarge,
             color =textColor
         )

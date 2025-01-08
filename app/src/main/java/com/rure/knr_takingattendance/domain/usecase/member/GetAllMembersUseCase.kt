@@ -11,9 +11,9 @@ import javax.inject.Inject
 
 class GetAllMembersUseCase @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(): List<Member> = withContext(defaultDispatcher) {
+    suspend operator fun invoke(): List<Member> = withContext(ioDispatcher) {
         return@withContext memberRepository.getAllMembers()
     }
 }

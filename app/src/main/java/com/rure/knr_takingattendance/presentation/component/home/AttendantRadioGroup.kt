@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import com.rure.knr_takingattendance.presentation.state.home.DayAttendanceSummary
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.LightGray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
@@ -24,7 +25,14 @@ import com.rure.knr_takingattendance.ui.theme.Typography
 import com.rure.knr_takingattendance.ui.theme.White
 
 @Composable
-fun AttendantRadioGroup(selected: AttendanceState, attendanceToNum: Map<AttendanceState, Int>, onSelect: (AttendanceState) -> Unit) {
+fun AttendantRadioGroup(selected: AttendanceState, attendanceSummary: DayAttendanceSummary, onSelect: (AttendanceState) -> Unit) {
+    val attendanceToNum = mapOf(
+        AttendanceState.All to attendanceSummary.allNum,
+        AttendanceState.Attend to attendanceSummary.attendNum,
+        AttendanceState.NonAttend to attendanceSummary.nonAttendNum,
+        AttendanceState.Tardy to attendanceSummary.tardyNum,
+        AttendanceState.Absence to attendanceSummary.absenceNum,
+    )
 
     Row(
         modifier = Modifier.wrapContentHeight().fillMaxWidth(),

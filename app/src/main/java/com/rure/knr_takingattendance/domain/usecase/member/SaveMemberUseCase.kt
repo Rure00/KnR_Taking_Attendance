@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 class SaveMemberUseCase @Inject constructor(
     private val memberRepository: MemberRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val ioDispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke(
         name: String,
         position: Position,
         joinDate: LocalDate,
         phoneNumber: String,
-    ) = withContext(defaultDispatcher) {
+    ) = withContext(ioDispatcher) {
         memberRepository.insertMember(
             Member(name, position, joinDate, phoneNumber)
         )

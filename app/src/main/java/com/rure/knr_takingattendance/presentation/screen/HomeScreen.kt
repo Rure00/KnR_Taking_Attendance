@@ -34,75 +34,39 @@ import com.rure.knr_takingattendance.presentation.component.home.AttendanceBotto
 import com.rure.knr_takingattendance.presentation.component.home.AttendantRadioGroup
 import com.rure.knr_takingattendance.presentation.component.home.HomeDatePickerModal
 import com.rure.knr_takingattendance.presentation.component.home.MemberAttendanceBar
+import com.rure.knr_takingattendance.presentation.intent.ParticipationIntent
 import com.rure.knr_takingattendance.presentation.state.home.ArrangeEnum
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceSheetStateHolder
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
-import com.rure.knr_takingattendance.presentation.state.home.DayAttendance
-import com.rure.knr_takingattendance.presentation.state.home.DayMemberAttendance
+import com.rure.knr_takingattendance.presentation.state.home.DayAttendanceSummary
 import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewModel
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.time.DayOfWeek
-import java.time.LocalDate
 
-val testMap = mapOf(
-    AttendanceState.All to 30,
-    AttendanceState.Attend to 20,
-    AttendanceState.NonAttend to 7,
-    AttendanceState.Absence to 1,
-    AttendanceState.Tardy to 2
-)
-val testMemberAttendance = listOf(
-    DayMemberAttendance("길성준", LocalDate.now(), AttendanceState.NonAttend),
-    DayMemberAttendance("노홍철", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("박명수", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("이지각", LocalDate.now(), AttendanceState.Tardy),
-    DayMemberAttendance("유재석", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("전진", LocalDate.now(), AttendanceState.NonAttend),
-    DayMemberAttendance("정형돈", LocalDate.now(), AttendanceState.Tardy),
-    DayMemberAttendance("정준하", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("하동훈", LocalDate.now(), AttendanceState.Attend),
-    DayMemberAttendance("홍무단", LocalDate.now(), AttendanceState.Absence),
-)
 
 @Composable
 fun HomeScreen(
     toPersonal: () -> Unit,
     dayAttendanceViewModel: DayAttendanceViewModel = hiltViewModel<DayAttendanceViewModel>()
 ) {
-    val selectedAttendanceStatus = remember {
-        mutableStateOf(AttendanceState.All)
-    }
-
     val showDatePicker = remember { mutableStateOf(false) }
     val selectedDay = remember {
         dayAttendanceViewModel.selectedDay
     }
 
-    val dayAttendance = remember {
-        //TODO: TestCode 고치기
-        derivedStateOf {
-            DayAttendance(selectedDay.value, testMap)
-        }
+    val selectedAttendanceStatus = remember {
+        mutableStateOf(AttendanceState.All)
     }
-//    val dayAttendance = remember {
-//        derivedStateOf {
-//            when(selectedAttendanceStatus.value) {
-//                AttendanceState.All -> dayAttendanceViewModel.dayMemberAttendances.value
-//                else -> {
-//                    dayAttendanceViewModel.dayMemberAttendances.value.filter {
-//                        it.attendanceStatus == selectedAttendanceStatus.value
-//                    }
-//                }
-//            }
-//        }
-//    }
-    val dayMemberAttendances = remember {
-        //dayAttendanceViewModel.dayMemberAttendances
+    val dayAttendance = remember {
+        dayAttendanceViewModel.daySummarize
+    }
 
-        //TODO: TestCode 고치기
-        mutableStateOf(testMemberAttendance)
+    val dayMemberAttendances = remember {
+        dayAttendanceViewModel.memberParticipation
     }
 
     val listState = rememberLazyListState()
@@ -138,7 +102,7 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                AttendantRadioGroup(selectedAttendanceStatus.value, dayAttendance.value.attendance) {
+                AttendantRadioGroup(selectedAttendanceStatus.value, dayAttendance.value) {
                     selectedAttendanceStatus.value = it
                 }
             }
@@ -223,11 +187,13 @@ fun HomeScreen(
 
     Log.d("HomeScreen", "showBottomSheet: ${bottomSheetStateHolder.value.showBottomSheet}")
     if(bottomSheetStateHolder.value.showBottomSheet) {
-        val item = bottomSheetStateHolder.value.memberAttendance!!
+        val item = bottomSheetStateHolder.value.participation!!
         val changedState = bottomSheetStateHolder.value.selectedState!!
         AttendanceBottomSheet(item) {
             bottomSheetStateHolder.value = AttendanceSheetStateHolder(false)
-            dayAttendanceViewModel.changeMemberAttendance(item, changedState)
+            dayAttendanceViewModel.emit(
+                ParticipationIntent.UpdateParticipation(item.copy(attendanceStatus = changedState))
+            )
         }
     }
 }

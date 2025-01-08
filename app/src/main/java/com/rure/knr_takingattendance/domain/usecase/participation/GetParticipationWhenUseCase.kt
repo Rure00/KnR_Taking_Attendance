@@ -10,9 +10,9 @@ import javax.inject.Inject
 
 class GetParticipationWhenUseCase @Inject constructor(
     private val participationRepository: MemberParticipationRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(date: LocalDate): List<MemberParticipation> = withContext(defaultDispatcher) {
+    suspend operator fun invoke(date: LocalDate): List<MemberParticipation> = withContext(ioDispatcher) {
         return@withContext participationRepository.getMemberParticipationWhen(date)
     }
 }

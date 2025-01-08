@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 class UpdateMemberParticipationUseCase @Inject constructor(
     private val participationRepository: MemberParticipationRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val ioDispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke(
         participation: MemberParticipation
-    ) = withContext(defaultDispatcher) {
+    ) = withContext(ioDispatcher) {
         participationRepository.updateMemberParticipation(participation)
     }
 }
