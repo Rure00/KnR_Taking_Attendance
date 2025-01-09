@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.rure.knr_takingattendance.presentation.screen.HomeScreen
+import com.rure.knr_takingattendance.presentation.screen.OptionScreen
 
 fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: (Destination) -> Unit) {
     navigation(
@@ -41,6 +42,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
         }
 
         composable(route = Destination.Option.route) {
+            OptionScreen(
+                { navController.navigate(Destination.AddMember.route) }
+            )
             onScreenChanged(Destination.Option)
         }
     }
