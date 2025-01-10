@@ -1,5 +1,6 @@
 package com.rure.knr_takingattendance.presentation.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +29,9 @@ import com.rure.knr_takingattendance.presentation.component.option.BirthPicker
 import com.rure.knr_takingattendance.presentation.validation.MemberRegisterValidation
 import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
 import com.rure.knr_takingattendance.ui.theme.Black
+import com.rure.knr_takingattendance.ui.theme.LightGray
 import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.knr_takingattendance.ui.theme.White
 import java.time.LocalDate
 
 @Composable
@@ -43,7 +46,7 @@ fun AddMemberScreen(
     val activateNextButton = remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(White),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -67,7 +70,7 @@ private fun WriteNamePage(nameState: MutableState<String>, onChange: (String) ->
     Column(modifier = Modifier.padding(horizontal = 10.dp)) {
         Text(
             text = stringResource(R.string.enter_name),
-            style = Typography.bodyLarge,
+            style = Typography.titleSmall,
             color = Black
         )
 
@@ -87,11 +90,23 @@ private fun WriteBirthPage(birthState: MutableState<LocalDate>, onChange: (Strin
             mutableStateOf(LocalDate.now())
         }
 
-        BirthPicker(selectedDate.value) {
+        Text(
+            text = stringResource(R.string.enter_birth),
+            style = Typography.titleSmall,
+            color = Black
+        )
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        BirthPicker(
+            date = selectedDate.value,
+            modifier = Modifier,
+            itemModifier = Modifier,
+            visibleItemNum = 5,
+            dividerColor = LightGray
+        ) {
             selectedDate.value = it
         }
-
-        Text(text = selectedDate.value.toString())
     }
 }
 

@@ -29,9 +29,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.wear.compose.material3.Text
 import com.rure.knr_takingattendance.ui.theme.Black
+import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.Typography
+import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
@@ -39,22 +42,25 @@ import kotlinx.coroutines.flow.map
 fun Picker(
     items: List<Int>,
     defaultState: Int,
-    //startIndex: Int,
     modifier: Modifier = Modifier,
-    doLog: Boolean = false,
     visibleItemsCount: Int = 3,
     textModifier: Modifier = Modifier,
-    textStyle: TextStyle = Typography.labelMedium,
+    textStyle: TextStyle = Typography.bodyMedium,
+    selectedColor: Color = Black,
+    unselectedColor: Color = Gray,
     dividerColor: Color = Black,
     onItemChanged: (Int) -> Unit,
 ) {
-    val selectedItem = remember { mutableStateOf(defaultState) }
     val startIndex = items.indexOf(defaultState)
 
     val visibleItemsMiddle = visibleItemsCount / 2
     val listScrollCount = Integer.MAX_VALUE
     val listScrollMiddle = listScrollCount / 2
     val listStartIndex = listScrollMiddle - listScrollMiddle % items.size - visibleItemsMiddle + startIndex
+
+    val selectedItem = remember { mutableStateOf(defaultState) }
+    val selectedItemIndex = remember { mutableStateOf(listStartIndex) }
+
 
     fun getItem(index: Int) = items[index % items.size]
 
@@ -78,8 +84,11 @@ fun Picker(
             .map { index -> getItem(index + visibleItemsMiddle) }
             .distinctUntilChanged()
             .collect { item ->
+                selectedItemIndex.value = listState.firstVisibleItemIndex + visibleItemsCount/2
                 selectedItem.value = item
                 onItemChanged(selectedItem.value)
+
+                Log.d("Picker", "selectedItemIndex: ${selectedItemIndex.value}")
             }
     }
 
@@ -102,7 +111,9 @@ fun Picker(
                     style = textStyle,
                     modifier = Modifier
                         .onSizeChanged { size -> itemHeightPixels.value = size.height }
-                        .then(textModifier)
+                        .then(textModifier),
+                    color = if(index == selectedItemIndex.value) selectedColor
+                        else unselectedColor
                 )
             }
         }

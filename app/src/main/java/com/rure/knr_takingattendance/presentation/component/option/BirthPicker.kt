@@ -9,6 +9,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.rure.knr_takingattendance.presentation.component.Picker
 import java.time.LocalDate
 import java.time.YearMonth
@@ -17,6 +18,9 @@ import java.time.YearMonth
 fun BirthPicker(
     date: LocalDate,
     modifier: Modifier = Modifier,
+    itemModifier: Modifier = Modifier,
+    visibleItemNum: Int = 3,
+    dividerColor: Color = Color.Black,
     onItemChanged: (LocalDate) -> Unit
 ) {
 
@@ -50,16 +54,36 @@ fun BirthPicker(
     }
 
     Row(horizontalArrangement = Arrangement.SpaceEvenly)  {
-        Picker(yearList, selectedYear.value,  modifier = Modifier.weight(1f)) {
+        Picker(
+            items = yearList,
+            defaultState = selectedYear.value,
+            modifier = itemModifier.weight(1f),
+            visibleItemsCount = visibleItemNum,
+            dividerColor = dividerColor
+        ) {
             selectedYear.value = it
             onItemChanged(getSelectedDate())
         }
-        Picker(monthList, selectedMonth.value,  modifier = Modifier.weight(1f)) {
+
+
+        Picker(
+            items = monthList,
+            defaultState = selectedMonth.value,
+            modifier = itemModifier.weight(1f),
+            visibleItemsCount = visibleItemNum,
+            dividerColor = dividerColor
+        ) {
             selectedMonth.value = it
             onItemChanged(getSelectedDate())
         }
 
-        Picker(dayList.value, selectedDay.value,  modifier = Modifier.weight(1f), true) {
+        Picker(
+            items = dayList.value,
+            defaultState = selectedDay.value,
+            modifier = itemModifier.weight(1f),
+            visibleItemsCount = visibleItemNum,
+            dividerColor = dividerColor
+        ) {
             selectedDay.value = it
             onItemChanged(getSelectedDate())
         }
