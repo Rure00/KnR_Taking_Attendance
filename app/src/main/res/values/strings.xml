@@ -7,4 +7,6 @@
     <string name="not_today">활동하는 날이 아닙니다.</string>
     <string name="add_member">팀원 추가</string>
     <string name="save_attendance">출석부 저장</string>
+    <string name="enter_name">이름을 입력해주세요.</string>
+    <string name="enter_birth">생년월일을 입력해주세요.</string>
 </resources>

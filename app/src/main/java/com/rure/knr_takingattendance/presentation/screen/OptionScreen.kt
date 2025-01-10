@@ -39,6 +39,7 @@ import com.rure.knr_takingattendance.ui.theme.White
 @Composable
 fun OptionScreen(
     toAddMember: () -> Unit,
+    toSaveAttendance: () -> Unit,
     memberViewModel: MemberViewModel = hiltViewModel<MemberViewModel>()
 ) {
     Column(
@@ -46,7 +47,7 @@ fun OptionScreen(
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         OptionButton(stringResource(R.string.add_member)) { toAddMember() }
-        OptionButton(stringResource(R.string.save_attendance)) { }
+        OptionButton(stringResource(R.string.save_attendance)) { toSaveAttendance() }
     }
 }
 

@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.rure.knr_takingattendance.presentation.screen.AddMemberScreen
 import com.rure.knr_takingattendance.presentation.screen.HomeScreen
 import com.rure.knr_takingattendance.presentation.screen.OptionScreen
 
@@ -19,16 +20,8 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
         startDestination = Destination.Home.route
     ) {
         composable(route = Destination.Home.route) {
-//            ChatListFragment (
-//                openChatRoom = { roomId ->
-//                    navController.navigate(route = Destination.ChatList.ChatRoom.route+roomId) {
-//                        popUpTo(navController.graph.id) {inclusive=false}
-//                    }
-//                }
-//            )
-
             HomeScreen(
-                { navController.navigate(Destination.PersonalAttend.route) }
+                toPersonal = { navController.navigate(Destination.PersonalAttend.route) }
             )
             onScreenChanged(Destination.Home)
         }
@@ -38,12 +31,14 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
         }
 
         composable(route = Destination.AddMember.route) {
+            AddMemberScreen()
             onScreenChanged(Destination.AddMember)
         }
 
         composable(route = Destination.Option.route) {
             OptionScreen(
-                { navController.navigate(Destination.AddMember.route) }
+                toAddMember = { navController.navigate(Destination.AddMember.route) },
+                toSaveAttendance = {  }
             )
             onScreenChanged(Destination.Option)
         }
