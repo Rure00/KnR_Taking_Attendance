@@ -4,15 +4,12 @@ import java.time.LocalDate
 
 object MemberRegisterValidation {
     fun checkName(name: String): Boolean {
-        return true
+        return name.length >= 2
     }
     fun checkPhoneNumber(number: String): Boolean {
         return true
     }
     fun checkJoiningDate(date: LocalDate): Boolean {
-        return true
-    }
-    fun checkBirth(date: LocalDate): Boolean {
         return true
     }
 }

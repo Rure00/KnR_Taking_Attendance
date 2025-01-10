@@ -9,4 +9,7 @@
     <string name="save_attendance">출석부 저장</string>
     <string name="enter_name">이름을 입력해주세요.</string>
     <string name="enter_birth">생년월일을 입력해주세요.</string>
+    <string name="enter_position">포지션을 골라주세요.</string>
+    <string name="enter_joining_date">입단을 날짜를 적어주세요.</string>
+    <string name="enter_phone_number">전화번호를 적어주세요.</string>
 </resources>

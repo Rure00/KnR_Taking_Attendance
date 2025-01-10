@@ -23,4 +23,9 @@ val LightGray = Color(0xFFE2E2E2)
 val CautionOrange = Color(0xFFFFAC49)
 val WarningRed = Color(0xFFFF5353)
 
+val FwColor = Color(0xFFE74343)
+val MfColor = Color(0xFF92B271)
+val DfColor = Color(0xFF2075FA)
+val GkColor = Color(0xFFFFAC49)
+
 

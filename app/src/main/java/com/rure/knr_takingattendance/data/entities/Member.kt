@@ -9,6 +9,13 @@ enum class Position(val abbr: String) {
     Forward("FW"), Midfielder("MF"), Defender("DF"), GoalKeeper("GK")
 }
 
+fun getPositionFalseMap() = mapOf(
+    Position.Forward to false,
+    Position.Midfielder to false,
+    Position.Defender to false,
+    Position.GoalKeeper to false,
+)
+
 @Entity(
     tableName = "members"
 )
