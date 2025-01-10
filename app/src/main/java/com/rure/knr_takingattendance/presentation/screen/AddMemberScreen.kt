@@ -1,5 +1,8 @@
 package com.rure.knr_takingattendance.presentation.screen
 
+import android.content.Context
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,18 +28,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.Position
 import com.rure.knr_takingattendance.data.entities.getPositionFalseMap
 import com.rure.knr_takingattendance.presentation.component.KoreanTextField
 import com.rure.knr_takingattendance.presentation.component.Picker
 import com.rure.knr_takingattendance.presentation.component.PositionButton
 import com.rure.knr_takingattendance.presentation.component.option.BirthPicker
+import com.rure.knr_takingattendance.presentation.intent.MemberIntent
 import com.rure.knr_takingattendance.presentation.validation.MemberRegisterValidation
 import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
 import com.rure.knr_takingattendance.ui.theme.Black
@@ -48,6 +54,7 @@ import java.time.LocalDate
 
 @Composable
 fun AddMemberScreen(
+    toBack: () -> Unit,
     memberViewModel: MemberViewModel = hiltViewModel<MemberViewModel>()
 ) {
 
@@ -88,6 +95,34 @@ fun AddMemberScreen(
 
     )
 
+    fun toNextPage(context: Context) {
+        if(pageIndex.value <= pages.lastIndex) {
+            pageIndex.value++
+        } else {
+            memberViewModel.emit(
+                MemberIntent.SaveMember(
+                    name = nameState.value,
+                    birth = birthState.value,
+                    position = positionState.value,
+                    joinDate =joiningDayState.value,
+                    phoneNumber = phoneNumberState.value,
+                )
+            )
+
+            Toast.makeText(context, context.getString(R.string.success_save_member), Toast.LENGTH_SHORT).show()
+            toBack()
+        }
+
+        activateNextButton.value = false
+    }
+
+    BackHandler {
+        if(pageIndex.value >= 0) pageIndex.value--
+        else toBack()
+    }
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -95,20 +130,18 @@ fun AddMemberScreen(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
+        val context = LocalContext.current
 
+
+        Spacer(modifier = Modifier.height(30.dp))
         Box(modifier = Modifier.weight(1f).fillMaxSize()) {
             pages[pageIndex.value]()
         }
-
         Box(
             modifier = Modifier.height(55.dp).fillMaxWidth().background(
                 if(activateNextButton.value) TossBlue
                 else LightGray
-            ).clickable {
-                pageIndex.value++
-                activateNextButton.value = false
-            },
+            ).clickable { toNextPage(context) },
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -120,6 +153,8 @@ fun AddMemberScreen(
             )
         }
     }
+
+
 }
 
 @Composable

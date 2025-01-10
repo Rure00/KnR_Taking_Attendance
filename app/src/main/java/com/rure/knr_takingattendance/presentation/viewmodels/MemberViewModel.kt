@@ -26,7 +26,11 @@ class MemberViewModel @Inject constructor(
             is MemberIntent.SaveMember -> {
                 viewModelScope.launch {
                     saveMemberUseCase.invoke(
-                        intent.name, intent.position, intent.joinDate, intent.phoneNumber
+                        intent.name,
+                        intent.birth,
+                        intent.position,
+                        intent.joinDate,
+                        intent.phoneNumber
                     )
                 }
             }

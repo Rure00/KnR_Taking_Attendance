@@ -31,7 +31,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
         }
 
         composable(route = Destination.AddMember.route) {
-            AddMemberScreen()
+            AddMemberScreen(
+                { navController.popBackStack() }
+            )
             onScreenChanged(Destination.AddMember)
         }
 

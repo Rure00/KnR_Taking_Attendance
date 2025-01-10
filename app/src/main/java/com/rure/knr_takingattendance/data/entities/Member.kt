@@ -21,7 +21,8 @@ fun getPositionFalseMap() = mapOf(
 )
 data class Member(
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "position") val position: Position,
+    @ColumnInfo(name = "birth") val birth: LocalDate,
+    @ColumnInfo(name = "position") val position: Map<Position, Boolean>,
     @ColumnInfo(name = "join_date") val joinDate: LocalDate,
     @ColumnInfo(name = "phone_number") val phoneNumber: String,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,

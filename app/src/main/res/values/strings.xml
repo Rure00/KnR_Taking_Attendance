@@ -12,4 +12,5 @@
     <string name="enter_position">포지션을 골라주세요.</string>
     <string name="enter_joining_date">입단을 날짜를 적어주세요.</string>
     <string name="enter_phone_number">전화번호를 적어주세요.</string>
+    <string name="success_save_member">멤버 저장이 완료되었습니다.</string>
 </resources>

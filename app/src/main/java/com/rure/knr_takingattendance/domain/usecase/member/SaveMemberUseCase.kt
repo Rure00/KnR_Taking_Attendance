@@ -15,12 +15,13 @@ class SaveMemberUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         name: String,
-        position: Position,
+        birth: LocalDate,
+        position: Map<Position, Boolean>,
         joinDate: LocalDate,
         phoneNumber: String,
     ) = withContext(ioDispatcher) {
         memberRepository.insertMember(
-            Member(name, position, joinDate, phoneNumber)
+            Member(name, birth, position, joinDate, phoneNumber)
         )
     }
 }
