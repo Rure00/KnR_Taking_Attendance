@@ -5,12 +5,12 @@ import java.time.LocalDate
 
 class LocalDateConverter {
     @TypeConverter
-    fun fromTimestamp(value: String?): LocalDate? {
-        return value?.let { LocalDate.parse(it) }
+    fun fromTimestamp(value: String): LocalDate {
+        return LocalDate.parse(value)
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: LocalDate?): String? {
-        return date?.toString()
+    fun dateToTimestamp(date: LocalDate): String {
+        return date.toString()
     }
 }

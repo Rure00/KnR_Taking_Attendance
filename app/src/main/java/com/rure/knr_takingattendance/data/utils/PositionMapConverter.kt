@@ -8,13 +8,17 @@ import java.time.LocalDate
 
 class PositionMapConverter {
     @TypeConverter
-    fun fromString(value: String?): Map<Position, Boolean> {
+    fun fromString(value: String?): Map<Position, Boolean>? {
+        if(value.isNullOrEmpty()) return null
+
         val mapType = object : TypeToken<Map<Position, Boolean>>() {}.type
         return Gson().fromJson(value, mapType)
     }
 
     @TypeConverter
-    fun mapToString(map: Map<Position, Boolean>): String? {
+    fun mapToString(map: Map<Position, Boolean>?): String? {
+        if(map.isNullOrEmpty()) return null
+
         val gson = Gson()
         return gson.toJson(map)
     }

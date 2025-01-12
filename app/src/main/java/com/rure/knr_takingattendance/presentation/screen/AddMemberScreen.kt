@@ -96,7 +96,7 @@ fun AddMemberScreen(
     )
 
     fun toNextPage(context: Context) {
-        if(pageIndex.value <= pages.lastIndex) {
+        if(pageIndex.value < pages.lastIndex) {
             pageIndex.value++
         } else {
             memberViewModel.emit(
@@ -117,7 +117,7 @@ fun AddMemberScreen(
     }
 
     BackHandler {
-        if(pageIndex.value >= 0) pageIndex.value--
+        if(pageIndex.value > 0) pageIndex.value--
         else toBack()
     }
 

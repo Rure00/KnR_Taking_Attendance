@@ -1,7 +1,9 @@
 package com.rure.knr_takingattendance.presentation.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.domain.usecase.member.DeleteMemberUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.GetAllMembersUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.GetMemberByIdUseCase
@@ -9,6 +11,7 @@ import com.rure.knr_takingattendance.domain.usecase.member.SaveMemberUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.UpdateMemberUseCase
 import com.rure.knr_takingattendance.presentation.intent.MemberIntent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +23,6 @@ class MemberViewModel @Inject constructor(
     private val getAllMembersUseCase: GetAllMembersUseCase,
     private val getMemberByIdUseCase: GetMemberByIdUseCase,
 ): ViewModel() {
-
     fun emit(intent: MemberIntent) {
         when(intent) {
             is MemberIntent.SaveMember -> {
