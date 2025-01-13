@@ -6,19 +6,19 @@ import com.rure.knr_takingattendance.domain.repository.MemberParticipationReposi
 import java.time.LocalDate
 import javax.inject.Inject
 
-// TODO("Not yet implemented")
+
 class MemberParticipationRepositoryImpl @Inject constructor(
     private val participationDao: MemberParticipationDao
 ): MemberParticipationRepository {
     override suspend fun insertMemberParticipation(memberParticipation: MemberParticipation) {
         kotlin.runCatching {
-            participationDao.insertMemberParticipation(memberParticipation)
-        }
-    }
+            val list = participationDao.getMemberParticipationWhen(memberParticipation.date)
 
-    override suspend fun updateMemberParticipation(memberParticipation: MemberParticipation) {
-        kotlin.runCatching {
-            participationDao.updateMemberParticipation(memberParticipation)
+            if(list.any { it.memberId == memberParticipation.memberId }) {
+                participationDao.updateMemberParticipation(memberParticipation)
+            } else {
+                participationDao.insertMemberParticipation(memberParticipation)
+            }
         }
     }
 

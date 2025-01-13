@@ -5,7 +5,6 @@ import java.time.LocalDate
 
 interface MemberParticipationRepository {
     suspend fun insertMemberParticipation(memberParticipation: MemberParticipation)
-    suspend fun updateMemberParticipation(memberParticipation: MemberParticipation)
     suspend fun deleteMemberParticipation(memberParticipation: MemberParticipation)
 
     suspend fun getMemberParticipationWhen(date: LocalDate): List<MemberParticipation>
