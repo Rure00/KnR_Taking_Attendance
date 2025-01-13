@@ -3,6 +3,10 @@ package com.rure.knr_takingattendance.data.repository
 import com.rure.knr_takingattendance.data.dao.MemberDao
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.domain.repository.MemberRepository
+import com.rure.knr_takingattendance.domain.result.MemberFlowResult
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 // TODO("Not yet implemented")
@@ -37,6 +41,15 @@ class MemberRepositoryImpl @Inject constructor(
         return kotlin.runCatching {
             memberDao.getMemberById(id)
         }.getOrNull()
+    }
+
+    override fun subscribeMemberFlow() = flow {
+        emit(MemberFlowResult.Loading)
+        memberDao.subscribeMemberFlow().collect {
+            emit(MemberFlowResult.Success(it))
+        }
+    }.catch { e ->
+        emit(MemberFlowResult.Fail(e))
     }
 
 }

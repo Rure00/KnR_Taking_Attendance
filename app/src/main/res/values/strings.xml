@@ -5,4 +5,12 @@
     <string name="arrange_text">정렬: %s</string>
     <string name="call">통화</string>
     <string name="not_today">활동하는 날이 아닙니다.</string>
+    <string name="add_member">팀원 추가</string>
+    <string name="save_attendance">출석부 저장</string>
+    <string name="enter_name">이름을 입력해주세요.</string>
+    <string name="enter_birth">생년월일을 입력해주세요.</string>
+    <string name="enter_position">포지션을 골라주세요.</string>
+    <string name="enter_joining_date">입단을 날짜를 적어주세요.</string>
+    <string name="enter_phone_number">전화번호를 적어주세요.</string>
+    <string name="success_save_member">멤버 저장이 완료되었습니다.</string>
 </resources>
