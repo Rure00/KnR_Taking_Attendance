@@ -6,6 +6,8 @@ import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import java.time.LocalDate
 
 sealed class ParticipationIntent {
+    data object InitParticipation: ParticipationIntent()
+
     data class SaveParticipation(val date: LocalDate, val attendanceState: AttendanceState, val member: Member): ParticipationIntent()
     data class DeleteParticipation(val dayMemberAttendance: MemberParticipation): ParticipationIntent()
     data class UpdateParticipation(val dayMemberAttendance: MemberParticipation): ParticipationIntent()

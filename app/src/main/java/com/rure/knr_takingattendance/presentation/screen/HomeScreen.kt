@@ -18,6 +18,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,13 +63,9 @@ fun HomeScreen(
     val selectedAttendanceStatus = remember {
         mutableStateOf(AttendanceState.All)
     }
-    val dayAttendance = remember {
-        dayAttendanceViewModel.daySummarize
-    }
+    val dayAttendance = dayAttendanceViewModel.daySummarize.collectAsState()
 
-    val dayMemberAttendances = remember {
-        dayAttendanceViewModel.memberParticipation
-    }
+    val dayMemberAttendances = dayAttendanceViewModel.memberParticipation.collectAsState()
 
     val listState = rememberLazyListState()
 
@@ -78,6 +76,9 @@ fun HomeScreen(
 
     val bottomSheetStateHolder = remember { mutableStateOf(AttendanceSheetStateHolder(false)) }
 
+    LaunchedEffect(true) {
+        dayAttendanceViewModel.emit(ParticipationIntent.InitParticipation)
+    }
 
 
     LazyColumn(
@@ -161,7 +162,6 @@ fun HomeScreen(
                         color = TossBlue
                     )
                 }
-
             }
 
             return@LazyColumn
@@ -180,7 +180,7 @@ fun HomeScreen(
 
     if(showDatePicker.value) {
         HomeDatePickerModal(
-            { selectedDay.value = it },
+            { dayAttendanceViewModel.changeSelectedDay(it) },
             { showDatePicker.value = false }
         )
     }
