@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.presentation.component.home.AttendanceBottomSheet
 import com.rure.knr_takingattendance.presentation.component.home.AttendantRadioGroup
 import com.rure.knr_takingattendance.presentation.component.home.HomeDatePickerModal
@@ -60,12 +61,26 @@ fun HomeScreen(
         dayAttendanceViewModel.selectedDay
     }
 
+    val daySummarize = dayAttendanceViewModel.daySummarize.collectAsState()
     val selectedAttendanceStatus = remember {
         mutableStateOf(AttendanceState.All)
     }
-    val dayAttendance = dayAttendanceViewModel.daySummarize.collectAsState()
 
     val dayMemberAttendances = dayAttendanceViewModel.memberParticipation.collectAsState()
+
+
+//    remember {
+//        derivedStateOf {
+//            if(selectedAttendanceStatus.value == AttendanceState.All) {
+//                dayAttendanceViewModel.memberParticipation.value
+//            } else {
+//                dayAttendanceViewModel.memberParticipation.value.filter {
+//                    it.attendanceStatus == selectedAttendanceStatus.value
+//                }
+//            }
+//        }
+//    }
+    //dayAttendanceViewModel.memberParticipation.collectAsState()
 
     val listState = rememberLazyListState()
 
@@ -103,7 +118,7 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                AttendantRadioGroup(selectedAttendanceStatus.value, dayAttendance.value) {
+                AttendantRadioGroup(selectedAttendanceStatus.value, daySummarize.value) {
                     selectedAttendanceStatus.value = it
                 }
             }
@@ -167,12 +182,18 @@ fun HomeScreen(
             return@LazyColumn
         }
 
-        itemsIndexed(dayMemberAttendances.value) { index, item ->
-            MemberAttendanceBar(item, { changedState ->
-                bottomSheetStateHolder.value = AttendanceSheetStateHolder(
-                    true, item, changedState
-                )
-            }, {})
+        itemsIndexed(getAttendanceByStatus(dayMemberAttendances.value, selectedAttendanceStatus.value)) { index, item ->
+            MemberAttendanceBar(
+                item,
+                { changedState ->
+                    bottomSheetStateHolder.value = AttendanceSheetStateHolder(
+                        true, item, changedState
+                    )
+                },
+                {
+                    //TODO: 전화 걸기
+                }
+            )
             Spacer(modifier = Modifier.height(3.dp))
         }
     }
@@ -188,7 +209,7 @@ fun HomeScreen(
     Log.d("HomeScreen", "showBottomSheet: ${bottomSheetStateHolder.value.showBottomSheet}")
     if(bottomSheetStateHolder.value.showBottomSheet) {
         val item = bottomSheetStateHolder.value.participation!!
-        val changedState = bottomSheetStateHolder.value.selectedState!!
+        //val changedState = bottomSheetStateHolder.value.selectedState!!
         AttendanceBottomSheet(item) {
             Log.d("AttendanceBottomSheet", "item: ${item.attendanceStatus.kr} changed to ${it.kr}")
             bottomSheetStateHolder.value = AttendanceSheetStateHolder(false)
@@ -198,6 +219,16 @@ fun HomeScreen(
         }
     }
 }
+
+private fun getAttendanceByStatus(list: List<MemberParticipation>, status: AttendanceState) =
+    if(status == AttendanceState.All) {
+        list
+    } else {
+        list.filter {
+            it.attendanceStatus == status
+        }
+    }
+
 
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable

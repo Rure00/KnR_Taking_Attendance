@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -57,10 +58,10 @@ fun MemberAttendanceBar(
     onSlideLeft: () -> Unit
 ) {
     // 슬라이드 상태
-    val dragOffset = remember { mutableStateOf(0f) }
+    val dragOffset = remember { mutableFloatStateOf(0f) }
 
     val dragOffsetAnimation = animateFloatAsState(
-        targetValue = dragOffset.value,
+        targetValue = dragOffset.floatValue,
         //tween(durationMillis = 200)
         animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow),
         label = "dragOffsetAnimation"
@@ -71,7 +72,7 @@ fun MemberAttendanceBar(
         .pointerInput(Unit) {
             detectHorizontalDragGestures(
                 onHorizontalDrag = { _, dragAmount ->
-                    dragOffset.value = (dragOffset.value + dragAmount).coerceIn(MaxDragOffset, 0f)
+                    dragOffset.floatValue = (dragOffset.floatValue + dragAmount).coerceIn(MaxDragOffset, 0f)
                     //Log.d("MemberAttendanceBar", "slideOffset: ${dragOffset.value}")
                 },
                 onDragEnd = {

@@ -84,6 +84,7 @@ class DayAttendanceViewModel @Inject constructor(
                         else it
                     }
 
+                    updateDaySummarize()
                     saveMemberParticipationUseCase.invoke(intent.dayMemberAttendance)
                 }
             }
@@ -99,6 +100,7 @@ class DayAttendanceViewModel @Inject constructor(
             is ParticipationIntent.GetParticipationWhen -> {
                 viewModelScope.launch {
                     val membersAttendance = getParticipationWhenUseCase.invoke(intent.date).toMutableList()
+                    Log.d("DayAttendanceViewModel", "membersAttendance size: ${membersAttendance.size}")
                     memberList.value.forEach { member ->
                         if(!membersAttendance.any { it.memberId == member.id }) {
                             membersAttendance.add(
@@ -113,17 +115,7 @@ class DayAttendanceViewModel @Inject constructor(
                     }
                     _memberParticipation.value = membersAttendance
 
-                    val attendanceToList = _memberParticipation.value.groupBy {
-                        it.attendanceStatus
-                    }
-                    _daySummarize.value = DayAttendanceSummary(
-                        date = selectedDay.value,
-                        allNum = _memberParticipation.value.size,
-                        attendNum = attendanceToList[AttendanceState.Attend]?.size ?: 0,
-                        nonAttendNum = attendanceToList[AttendanceState.NonAttend]?.size ?: 0,
-                        tardyNum = attendanceToList[AttendanceState.Tardy]?.size ?: 0,
-                        absenceNum = attendanceToList[AttendanceState.Absence]?.size ?: 0
-                    )
+                    updateDaySummarize()
                 }
             }
             is ParticipationIntent.GetParticipationByMember -> {
@@ -137,5 +129,19 @@ class DayAttendanceViewModel @Inject constructor(
     fun changeSelectedDay(date: LocalDate) {
         _selectedDay.value = date
         emit(ParticipationIntent.GetParticipationWhen(date))
+    }
+
+    private fun updateDaySummarize() {
+        val attendanceToList = _memberParticipation.value.groupBy {
+            it.attendanceStatus
+        }
+        _daySummarize.value = DayAttendanceSummary(
+            date = selectedDay.value,
+            allNum = _memberParticipation.value.size,
+            attendNum = attendanceToList[AttendanceState.Attend]?.size ?: 0,
+            nonAttendNum = attendanceToList[AttendanceState.NonAttend]?.size ?: 0,
+            tardyNum = attendanceToList[AttendanceState.Tardy]?.size ?: 0,
+            absenceNum = attendanceToList[AttendanceState.Absence]?.size ?: 0
+        )
     }
 }
