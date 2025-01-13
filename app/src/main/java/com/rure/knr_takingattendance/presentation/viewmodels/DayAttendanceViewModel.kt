@@ -1,20 +1,17 @@
 package com.rure.knr_takingattendance.presentation.viewmodels
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.domain.result.MemberFlowResult
-import com.rure.knr_takingattendance.domain.usecase.member.GetAllMembersUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.SubscribeMemberFlowUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.DeleteMemberParticipationUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.GetParticipationByMemberUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.GetParticipationWhenUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.SaveMemberParticipationUseCase
-import com.rure.knr_takingattendance.domain.usecase.participation.UpdateMemberParticipationUseCase
 import com.rure.knr_takingattendance.presentation.intent.ParticipationIntent
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import com.rure.knr_takingattendance.presentation.state.home.DayAttendanceSummary
@@ -23,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -31,11 +27,9 @@ import javax.inject.Inject
 class DayAttendanceViewModel @Inject constructor(
     private val saveMemberParticipationUseCase: SaveMemberParticipationUseCase,
     private val deleteMemberParticipationUseCase: DeleteMemberParticipationUseCase,
-    private val updateMemberParticipationUseCase: UpdateMemberParticipationUseCase,
     private val getParticipationWhenUseCase: GetParticipationWhenUseCase,
     private val getParticipationByMemberUseCase: GetParticipationByMemberUseCase,
 
-    private val getAllMembersUseCase: GetAllMembersUseCase,
     private val subscribeMemberFlowUseCase: SubscribeMemberFlowUseCase
 ): ViewModel() {
 
@@ -53,6 +47,8 @@ class DayAttendanceViewModel @Inject constructor(
     private val _memberParticipation = MutableStateFlow(listOf<MemberParticipation>())
     val memberParticipation get() = _memberParticipation.asStateFlow()
 
+    private val _participationByMember = MutableStateFlow(listOf<MemberParticipation>())
+    val participationByMember get() = _participationByMember.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -83,21 +79,21 @@ class DayAttendanceViewModel @Inject constructor(
 
             is ParticipationIntent.SaveParticipation -> {
                 viewModelScope.launch {
-                    saveMemberParticipationUseCase.invoke(
-                        MemberParticipation(
-                            intent.date, intent.member.id, intent.attendanceState, intent.member
-                        )
-                    )
+                    _memberParticipation.value = _memberParticipation.value.map {
+                        if(it.memberId == intent.dayMemberAttendance.memberId) intent.dayMemberAttendance
+                        else it
+                    }
+
+                    saveMemberParticipationUseCase.invoke(intent.dayMemberAttendance)
                 }
             }
             is ParticipationIntent.DeleteParticipation -> {
                 viewModelScope.launch {
+                    _memberParticipation.value = _memberParticipation.value.filter {
+                        it.memberId != intent.dayMemberAttendance.memberId
+                    }
 
-                }
-            }
-            is ParticipationIntent.UpdateParticipation -> {
-                viewModelScope.launch {
-
+                    deleteMemberParticipationUseCase.invoke(intent.dayMemberAttendance)
                 }
             }
             is ParticipationIntent.GetParticipationWhen -> {
@@ -132,7 +128,7 @@ class DayAttendanceViewModel @Inject constructor(
             }
             is ParticipationIntent.GetParticipationByMember -> {
                 viewModelScope.launch {
-
+                    _participationByMember.value = getParticipationByMemberUseCase.invoke(intent.member)
                 }
             }
         }
@@ -141,26 +137,5 @@ class DayAttendanceViewModel @Inject constructor(
     fun changeSelectedDay(date: LocalDate) {
         _selectedDay.value = date
         emit(ParticipationIntent.GetParticipationWhen(date))
-    }
-
-
-
-
-    private fun getSummaryFromDayParticipation(date: LocalDate, list: List<MemberParticipation>): DayAttendanceSummary {
-        val allNum = list.size
-        val numArr = Array(5) {0}
-
-        list.forEach {
-            numArr[it.attendanceStatus.ordinal] = numArr[it.attendanceStatus.ordinal] + 1
-        }
-
-        return DayAttendanceSummary(
-            date = date,
-            allNum = allNum,
-            attendNum = numArr[1],
-            nonAttendNum = numArr[2],
-            tardyNum = numArr[3],
-            absenceNum = numArr[4]
-        )
     }
 }

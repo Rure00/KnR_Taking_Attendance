@@ -190,9 +190,10 @@ fun HomeScreen(
         val item = bottomSheetStateHolder.value.participation!!
         val changedState = bottomSheetStateHolder.value.selectedState!!
         AttendanceBottomSheet(item) {
+            Log.d("AttendanceBottomSheet", "item: ${item.attendanceStatus.kr} changed to ${it.kr}")
             bottomSheetStateHolder.value = AttendanceSheetStateHolder(false)
             dayAttendanceViewModel.emit(
-                ParticipationIntent.UpdateParticipation(item.copy(attendanceStatus = changedState))
+                ParticipationIntent.SaveParticipation(item.copy(attendanceStatus = it))
             )
         }
     }
