@@ -32,9 +32,9 @@ class DayAttendanceViewModel @Inject constructor(
 
     private val subscribeMemberFlowUseCase: SubscribeMemberFlowUseCase
 ): ViewModel() {
+    private val tag = "DayAttendanceViewModel"
 
     private val _memberList = MutableStateFlow(listOf<Member>())
-    val memberList get() = _memberList.asStateFlow()
 
     private val _selectedDay = mutableStateOf<LocalDate>(LocalDate.now())
     val selectedDay get() = _selectedDay
@@ -60,7 +60,7 @@ class DayAttendanceViewModel @Inject constructor(
                         emit(ParticipationIntent.InitParticipation)
                     }
                     is MemberFlowResult.Fail -> {
-                        Log.e("DayAttendanceViewModel", "Collect MemberFlow Failed: ${it.exception.message}")
+                        Log.e(tag, "Collect MemberFlow Failed: ${it.exception.message}")
                     }
                 }
 
@@ -100,8 +100,8 @@ class DayAttendanceViewModel @Inject constructor(
             is ParticipationIntent.GetParticipationWhen -> {
                 viewModelScope.launch {
                     val membersAttendance = getParticipationWhenUseCase.invoke(intent.date).toMutableList()
-                    Log.d("DayAttendanceViewModel", "membersAttendance size: ${membersAttendance.size}")
-                    memberList.value.forEach { member ->
+                    Log.d(tag, "membersAttendance size: ${membersAttendance.size}")
+                    _memberList.value.forEach { member ->
                         if(!membersAttendance.any { it.memberId == member.id }) {
                             membersAttendance.add(
                                 MemberParticipation(
