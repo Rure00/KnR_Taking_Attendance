@@ -62,7 +62,6 @@ fun MemberAttendanceBar(
 
     val dragOffsetAnimation = animateFloatAsState(
         targetValue = dragOffset.floatValue,
-        //tween(durationMillis = 200)
         animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow),
         label = "dragOffsetAnimation"
     )
@@ -73,17 +72,12 @@ fun MemberAttendanceBar(
             detectHorizontalDragGestures(
                 onHorizontalDrag = { _, dragAmount ->
                     dragOffset.floatValue = (dragOffset.floatValue + dragAmount).coerceIn(MaxDragOffset, 0f)
-                    //Log.d("MemberAttendanceBar", "slideOffset: ${dragOffset.value}")
                 },
                 onDragEnd = {
                     if(dragOffset.value < MaxDragOffset + DragCompensation) {
-                        //TODO: 전화걸기
-                        Log.d("MemberAttendanceBar", "full drag!")
-                    } else {
-                        Log.d("MemberAttendanceBar", "not full drag...")
+                        onSlideLeft()
                     }
-
-                    dragOffset.value = 0f
+                    dragOffset.floatValue = 0f
                 }
             )
         })
