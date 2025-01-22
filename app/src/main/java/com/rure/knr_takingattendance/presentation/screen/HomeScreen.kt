@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rure.knr_takingattendance.R
 import com.rure.knr_takingattendance.data.entities.MemberParticipation
+import com.rure.knr_takingattendance.presentation.MainActivity
 import com.rure.knr_takingattendance.presentation.component.home.AttendanceBottomSheet
 import com.rure.knr_takingattendance.presentation.component.home.AttendantRadioGroup
 import com.rure.knr_takingattendance.presentation.component.home.HomeDatePickerModal
@@ -42,6 +44,7 @@ import com.rure.knr_takingattendance.presentation.state.home.ArrangeEnum
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceSheetStateHolder
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import com.rure.knr_takingattendance.presentation.state.home.DayAttendanceSummary
+import com.rure.knr_takingattendance.presentation.utils.RequestPermission
 import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewModel
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
@@ -67,20 +70,6 @@ fun HomeScreen(
     }
 
     val dayMemberAttendances = dayAttendanceViewModel.memberParticipation.collectAsState()
-
-
-//    remember {
-//        derivedStateOf {
-//            if(selectedAttendanceStatus.value == AttendanceState.All) {
-//                dayAttendanceViewModel.memberParticipation.value
-//            } else {
-//                dayAttendanceViewModel.memberParticipation.value.filter {
-//                    it.attendanceStatus == selectedAttendanceStatus.value
-//                }
-//            }
-//        }
-//    }
-    //dayAttendanceViewModel.memberParticipation.collectAsState()
 
     val listState = rememberLazyListState()
 
@@ -183,6 +172,10 @@ fun HomeScreen(
         }
 
         itemsIndexed(getAttendanceByStatus(dayMemberAttendances.value, selectedAttendanceStatus.value)) { index, item ->
+            val context = LocalContext.current
+            val requestPermission = remember {
+                RequestPermission(context as MainActivity, context)
+            }
             MemberAttendanceBar(
                 item,
                 { changedState ->
@@ -191,7 +184,7 @@ fun HomeScreen(
                     )
                 },
                 {
-                    //TODO: 전화 걸기
+                    requestPermission.requestCall(item.member.phoneNumber)
                 }
             )
             Spacer(modifier = Modifier.height(3.dp))
