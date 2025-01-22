@@ -13,4 +13,9 @@
     <string name="enter_joining_date">입단을 날짜를 적어주세요.</string>
     <string name="enter_phone_number">전화번호를 적어주세요.</string>
     <string name="success_save_member">멤버 저장이 완료되었습니다.</string>
+
+    <string name="join_date_in">입단: %s</string>
+    <string name="attendance_persentage">출석률\n%d%%</string>
+    <string name="late_num">지각: %d</string>
+    <string name="forcible_num">무단: %d</string>
 </resources>

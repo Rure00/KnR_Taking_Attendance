@@ -1,17 +1,14 @@
 package com.rure.knr_takingattendance.presentation.navigation
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.rure.knr_takingattendance.presentation.screen.AddMemberScreen
 import com.rure.knr_takingattendance.presentation.screen.HomeScreen
+import com.rure.knr_takingattendance.presentation.screen.MemberDetailScreen
 import com.rure.knr_takingattendance.presentation.screen.OptionScreen
 
 fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: (Destination) -> Unit) {
@@ -21,13 +18,20 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
     ) {
         composable(route = Destination.Home.route) {
             HomeScreen(
-                toPersonal = { navController.navigate(Destination.PersonalAttend.route) }
+                toPersonal = { navController.navigate(Destination.MemberDetail.route) }
             )
             onScreenChanged(Destination.Home)
         }
 
-        composable(route = Destination.PersonalAttend.route) {
-            onScreenChanged(Destination.PersonalAttend)
+        composable(
+            route = Destination.MemberDetail.route + "/{id}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.IntType }
+            )
+        ) {
+            val id = it.arguments?.getInt("id") ?: throw  Exception("No Arguments For id.")
+            MemberDetailScreen(id)
+            onScreenChanged(Destination.MemberDetail)
         }
 
         composable(route = Destination.AddMember.route) {

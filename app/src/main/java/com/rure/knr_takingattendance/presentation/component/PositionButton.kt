@@ -32,9 +32,10 @@ fun PositionButton(
     position: Position,
     textStyle: TextStyle,
     modifier: Modifier = Modifier,
+    initialState: Boolean = false,
     onClick: (Boolean, Position) -> Unit
 ) {
-    val isSelected = remember { mutableStateOf(false) }
+    val isSelected = remember { mutableStateOf(initialState) }
     val buttonColor = when(position) {
         Position.Forward -> FwColor
         Position.Midfielder -> MfColor

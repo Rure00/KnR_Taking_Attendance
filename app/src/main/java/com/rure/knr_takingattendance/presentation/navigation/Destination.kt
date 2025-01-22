@@ -14,7 +14,7 @@ sealed class Destination(
         "설정", "option",false, true
     )
 
-    data object PersonalAttend: Destination(
+    data object MemberDetail: Destination(
         "개인 출석", "personal",false, true
     )
 
