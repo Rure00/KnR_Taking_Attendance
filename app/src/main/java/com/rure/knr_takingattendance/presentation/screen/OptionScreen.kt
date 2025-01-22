@@ -24,12 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.presentation.MainActivity
 import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewModel
 import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
 import com.rure.knr_takingattendance.ui.theme.LightGray
@@ -40,7 +43,7 @@ import com.rure.knr_takingattendance.ui.theme.White
 fun OptionScreen(
     toAddMember: () -> Unit,
     toSaveAttendance: () -> Unit,
-    memberViewModel: MemberViewModel = hiltViewModel<MemberViewModel>()
+    memberViewModel: MemberViewModel = viewModel(LocalContext.current as MainActivity)
 ) {
     Column(
         modifier = Modifier.fillMaxSize().background(LightGray).padding(top = 6.dp, start = 6.dp, end = 6.dp),

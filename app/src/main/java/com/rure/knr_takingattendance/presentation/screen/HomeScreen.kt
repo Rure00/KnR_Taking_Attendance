@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rure.knr_takingattendance.R
 import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.presentation.MainActivity
@@ -57,7 +58,7 @@ import java.time.DayOfWeek
 @Composable
 fun HomeScreen(
     toPersonal: () -> Unit,
-    dayAttendanceViewModel: DayAttendanceViewModel = hiltViewModel<DayAttendanceViewModel>()
+    dayAttendanceViewModel: DayAttendanceViewModel = viewModel(LocalContext.current as MainActivity)
 ) {
     val showDatePicker = remember { mutableStateOf(false) }
     val selectedDay = remember {

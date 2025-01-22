@@ -34,16 +34,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rure.knr_takingattendance.R
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.Position
 import com.rure.knr_takingattendance.data.entities.getPositionFalseMap
+import com.rure.knr_takingattendance.presentation.MainActivity
 import com.rure.knr_takingattendance.presentation.component.KoreanTextField
 import com.rure.knr_takingattendance.presentation.component.Picker
 import com.rure.knr_takingattendance.presentation.component.PositionButton
 import com.rure.knr_takingattendance.presentation.component.option.BirthPicker
 import com.rure.knr_takingattendance.presentation.intent.MemberIntent
 import com.rure.knr_takingattendance.presentation.validation.MemberRegisterValidation
+import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewModel
 import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
 import com.rure.knr_takingattendance.ui.theme.Black
 import com.rure.knr_takingattendance.ui.theme.LightGray
@@ -55,7 +58,7 @@ import java.time.LocalDate
 @Composable
 fun AddMemberScreen(
     toBack: () -> Unit,
-    memberViewModel: MemberViewModel = hiltViewModel<MemberViewModel>()
+    memberViewModel: MemberViewModel = viewModel(LocalContext.current as MainActivity)
 ) {
 
     val nameState = remember { mutableStateOf("") }
