@@ -1,0 +1,29 @@
+package com.rure.knr_takingattendance.presentation.state.detail
+
+import com.rure.knr_takingattendance.data.entities.Member
+import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import java.time.LocalDate
+
+data class AttendanceHistory(
+    val member: Member,
+
+    val attendanceRate: Int,
+    val total: Int,
+    val attendNum: Int,
+    val nonAttendNum: Int,
+    val lateNum: Int,
+    val forcibleNum: Int,
+
+    val yearlyAttendance: List<YearlyAttendance>
+)
+
+data class DailyAttendance(
+    val date: LocalDate,
+    val attendance: AttendanceState
+)
+
+
+data class YearlyAttendance(
+    val year: Int,
+    val monthlyAttendances: Map<Int, DailyAttendance>
+)
