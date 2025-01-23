@@ -1,17 +1,22 @@
 package com.rure.knr_takingattendance.presentation.screen
 
 import android.app.Activity
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,8 +24,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCompositionContext
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -30,48 +38,83 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.rure.knr_takingattendance.R
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.presentation.MainActivity
 import com.rure.knr_takingattendance.presentation.component.PositionButton
+import com.rure.knr_takingattendance.presentation.state.UiResult
+import com.rure.knr_takingattendance.presentation.state.detail.AttendanceHistory
 import com.rure.knr_takingattendance.presentation.utils.RequestPermission
 import com.rure.knr_takingattendance.presentation.utils.toPhoneFormat
-import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
+import com.rure.knr_takingattendance.presentation.viewmodels.AttendanceHistoryViewModel
 import com.rure.knr_takingattendance.ui.theme.Black
 import com.rure.knr_takingattendance.ui.theme.Gray
+import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.knr_takingattendance.ui.theme.White
+import kotlinx.coroutines.launch
 
 @Composable
-fun MemberDetailScreen(
+fun AttendanceHistoryScreen(
     memberId: Int,
-    memberViewModel: MemberViewModel = viewModel(LocalContext.current as MainActivity)
+    context: Context = LocalContext.current,
+    attendanceHistoryViewModel: AttendanceHistoryViewModel = hiltViewModel()
 ) {
     val tag = "MemberDetailScreen"
-    val member = remember { memberViewModel.getMemberById(memberId)?: throw Exception("$tag: Wrong Member Id") }
+    val attendanceHistory = remember {
+        mutableStateOf<AttendanceHistory?>(null)
+    }
+    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            attendanceHistoryViewModel.attendanceHistory
+                .collect {
+                    when(it) {
+                        is UiResult.Success -> {
+                            attendanceHistory.value = it.value
+                        }
+                        is UiResult.Fail-> {
+                            Toast.makeText(context, context.getString(R.string.fail_load_atd_history), Toast.LENGTH_SHORT).show()
+                            backPressedDispatcher?.onBackPressed()
+                            return@collect
+                        }
+                        else -> null
+                    }
+                }
+        }
+
+        attendanceHistoryViewModel.getHistory(memberId = memberId)
+    }
+
+    if(attendanceHistory.value == null) {
+        HolderView()
+        return
+    }
 
     val listState = rememberLazyListState()
-
     LazyColumn(
+        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
         state = listState,
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val history = attendanceHistory.value!!
         item {
-            MemberInformationBox(member)
+            MemberInformationBox(history.member, history.attendanceRate)
             Spacer(modifier = Modifier.height(14.dp))
 
             Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-                val lateNum = 5
-                val forcibleNum = 5
                 Text(
-                    text = stringResource(R.string.late_num, lateNum),
+                    text = stringResource(R.string.late_num, history.lateNum),
                     style = Typography.labelSmall,
                     color = Gray
                 )
                 Text(
-                    text = stringResource(R.string.forcible_num, forcibleNum),
+                    text = stringResource(R.string.forcible_num, history.forcibleNum),
                     style = Typography.labelSmall,
                     color = Gray
                 )
@@ -86,15 +129,18 @@ fun MemberDetailScreen(
 }
 
 @Composable
-private fun MemberInformationBox(member: Member) {
+private fun MemberInformationBox(member: Member, atdRate: Int) {
     val context = LocalContext.current
     Column(
-        modifier = Modifier.fillMaxWidth().wrapContentHeight()
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
             .padding(top = 6.dp, start = 7.dp, end = 7.dp)
             .background(color = Color.White, shape = RoundedCornerShape(8.dp))
             .padding(horizontal = 7.dp, vertical = 7.dp)
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -106,10 +152,11 @@ private fun MemberInformationBox(member: Member) {
 
             Text(
                 text = stringResource(R.string.join_date_in, member.joinDate.toString().replace("-", ".")),
-                style = Typography.bodyLarge,
+                style = Typography.labelSmall,
                 color = Gray
             )
         }
+        Spacer(modifier = Modifier.height(15.dp))
 
 
         Row(
@@ -120,12 +167,13 @@ private fun MemberInformationBox(member: Member) {
         ) {
             Image(
                 painter = painterResource(R.drawable.phone_with_blue_bg),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(1.25.dp))
             Text(
                 text = member.phoneNumber.toPhoneFormat(),
-                style = Typography.labelSmall,
+                style = Typography.bodySmall,
                 color = Black,
                 modifier = Modifier.drawBehind {
 
@@ -141,14 +189,34 @@ private fun MemberInformationBox(member: Member) {
                 }
             )
         }
+        Spacer(modifier = Modifier.height(15.dp))
 
-        Row(horizontalArrangement = Arrangement.SpaceBetween) {
-            val attendanceRate = 80
+
+        Row(
+            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             PositionBox(member)
-            Text(
-                text = stringResource(R.string.attendance_persentage, attendanceRate),
 
+            Column(
+                modifier = Modifier
+                    .background(color = TossBlue, shape = RoundedCornerShape(3.dp))
+                    .padding(vertical = 8.dp, horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.attendance_str),
+                    style = Typography.labelMedium,
+                    color = White,
                 )
+                Text(
+                    text = stringResource(R.string.rate, atdRate),
+                    style = Typography.labelMedium,
+                    color = White,
+                )
+            }
+
         }
     }
 }
@@ -160,24 +228,39 @@ private fun PositionBox(member: Member) {
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             PositionButton(
-                Position.Forward, Typography.labelSmall,
+                Position.Forward, Typography.labelMedium, Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
                 initialState = member.position[Position.Forward] ?: false
             ) { _, _ -> }
             PositionButton(
-                Position.Defender, Typography.labelSmall,
+                Position.Defender, Typography.labelMedium,Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
                 initialState = member.position[Position.Defender] ?: false
             ) { _, _ -> }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             PositionButton(
-                Position.Midfielder, Typography.labelSmall,
+                Position.Midfielder, Typography.labelMedium,Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
                 initialState = member.position[Position.Midfielder] ?: false
             ) { _, _ -> }
             PositionButton(
-                Position.GoalKeeper, Typography.labelSmall,
+                Position.GoalKeeper, Typography.labelMedium,Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
                 initialState = member.position[Position.GoalKeeper] ?: false
             ) { _, _ -> }
         }
+    }
+}
+
+@Composable
+private fun HolderView() {
+    Column {
+        Box(
+            modifier = Modifier.fillMaxWidth().height(200.dp).background(color = White).padding(10.dp)
+        )
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Box(
+            modifier = Modifier.fillMaxWidth().height(140.dp).background(color = White).padding(10.dp)
+        )
     }
 }

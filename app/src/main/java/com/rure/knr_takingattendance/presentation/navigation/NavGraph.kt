@@ -8,7 +8,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.rure.knr_takingattendance.presentation.screen.AddMemberScreen
 import com.rure.knr_takingattendance.presentation.screen.HomeScreen
-import com.rure.knr_takingattendance.presentation.screen.MemberDetailScreen
+import com.rure.knr_takingattendance.presentation.screen.AttendanceHistoryScreen
 import com.rure.knr_takingattendance.presentation.screen.OptionScreen
 
 fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: (Destination) -> Unit) {
@@ -18,7 +18,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
     ) {
         composable(route = Destination.Home.route) {
             HomeScreen(
-                toPersonal = { navController.navigate(Destination.MemberDetail.route) }
+                toAttendanceHistoryScreen = { navController.navigate(Destination.MemberDetail.route + "/${it}") }
             )
             onScreenChanged(Destination.Home)
         }
@@ -30,7 +30,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
             )
         ) {
             val id = it.arguments?.getInt("id") ?: throw  Exception("No Arguments For id.")
-            MemberDetailScreen(id)
+            AttendanceHistoryScreen(id)
             onScreenChanged(Destination.MemberDetail)
         }
 

@@ -57,7 +57,7 @@ import java.time.DayOfWeek
 
 @Composable
 fun HomeScreen(
-    toPersonal: () -> Unit,
+    toAttendanceHistoryScreen: (Int) -> Unit,
     dayAttendanceViewModel: DayAttendanceViewModel = viewModel(LocalContext.current as MainActivity)
 ) {
     val showDatePicker = remember { mutableStateOf(false) }
@@ -179,6 +179,7 @@ fun HomeScreen(
             }
             MemberAttendanceBar(
                 item,
+                { toAttendanceHistoryScreen(it) },
                 { changedState ->
                     bottomSheetStateHolder.value = AttendanceSheetStateHolder(
                         true, item, changedState

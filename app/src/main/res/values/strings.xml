@@ -15,7 +15,9 @@
     <string name="success_save_member">멤버 저장이 완료되었습니다.</string>
 
     <string name="join_date_in">입단: %s</string>
-    <string name="attendance_persentage">출석률\n%d%%</string>
+    <string name="attendance_str">출석률</string>
     <string name="late_num">지각: %d</string>
     <string name="forcible_num">무단: %d</string>
+    <string name="fail_load_atd_history">멤버 정보를 불러들이는데 실패하였습니다.</string>
+    <string name="rate">%d%%</string>
 </resources>

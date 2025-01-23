@@ -45,7 +45,7 @@ fun PositionButton(
     val unSelectedColor = LightGray
 
     Card(
-        modifier = modifier,
+        modifier = Modifier,
         shape = RoundedCornerShape(7.dp),
         colors = CardDefaults.cardColors(containerColor = if(isSelected.value) buttonColor else unSelectedColor)
     ) {

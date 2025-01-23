@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import com.rure.knr_takingattendance.ui.theme.Black
@@ -54,6 +55,7 @@ private const val DragCompensation = 20f
 @Composable
 fun MemberAttendanceBar(
     participation: MemberParticipation,
+    toAttendanceHistoryScreen: (Int) -> Unit,
     onStatusChange: (AttendanceState) -> Unit,
     onSlideLeft: () -> Unit
 ) {
@@ -103,19 +105,30 @@ fun MemberAttendanceBar(
             )
         }
 
-        MemberStatusBar(dragOffsetAnimation.value, participation, onStatusChange)
+        MemberStatusBar(
+            animationOffset = dragOffsetAnimation.value,
+            participation = participation,
+            toAttendanceHistoryScreen = toAttendanceHistoryScreen,
+            onClick = onStatusChange
+        )
     }
 
 
 }
 
 @Composable
-private fun MemberStatusBar(animationOffset: Float, participation: MemberParticipation, onClick: (AttendanceState) -> Unit) {
+private fun MemberStatusBar(
+    animationOffset: Float,
+    participation: MemberParticipation,
+    toAttendanceHistoryScreen: (Int) -> Unit,
+    onClick: (AttendanceState) -> Unit
+) {
     Row(
         modifier = Modifier
             .offset(x = animationOffset.dp)
             .fillMaxWidth().fillMaxHeight()
             .background(White)
+            .clickable { toAttendanceHistoryScreen(participation.memberId) }
             .padding(horizontal = 16.dp, vertical = 11.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
