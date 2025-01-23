@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -50,6 +52,7 @@ import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewMo
 import com.rure.knr_takingattendance.ui.theme.Gray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.knr_takingattendance.ui.theme.White
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.time.DayOfWeek
@@ -80,11 +83,6 @@ fun HomeScreen(
     }
 
     val bottomSheetStateHolder = remember { mutableStateOf(AttendanceSheetStateHolder(false)) }
-
-    LaunchedEffect(true) {
-        dayAttendanceViewModel.emit(ParticipationIntent.InitParticipation)
-    }
-
 
     LazyColumn(
         state = listState,
@@ -155,19 +153,38 @@ fun HomeScreen(
 
 
 
-        if(selectedDay.value.dayOfWeek != DayOfWeek.SUNDAY) {
-            item {
-                Box(
-                    modifier = Modifier.fillMaxSize().padding(top = 60.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(R.string.not_today),
-                        style = Typography.labelMedium,
-                        color = TossBlue
-                    )
-                }
-            }
+        if(dayMemberAttendances.value.isEmpty()) {
+//            item {
+//                Column(
+//                    modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(10.dp),
+//                    horizontalAlignment = Alignment.CenterHorizontally
+//                ) {
+//                    Box(
+//                        modifier = Modifier.padding(top = 60.dp),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        Text(
+//                            text = stringResource(R.string.not_today),
+//                            style = Typography.labelMedium,
+//                            color = TossBlue
+//                        )
+//                    }
+//
+//                    Text(
+//                        text = stringResource(R.string.start_attendance),
+//                        style = Typography.bodyLarge,
+//                        color = White,
+//                        modifier = Modifier
+//                            .fillMaxWidth().wrapContentHeight()
+//                            .background(color = TossBlue)
+//                            .clip(RoundedCornerShape(8.dp))
+//                            .clickable {
+//                                //TODO: Load Data in Selected Day.
+//                                dayAttendanceViewModel.emit(ParticipationIntent.InitParticipation)
+//                            }
+//                    )
+//                }
+//            }
 
             return@LazyColumn
         }
@@ -210,6 +227,40 @@ fun HomeScreen(
             bottomSheetStateHolder.value = AttendanceSheetStateHolder(false)
             dayAttendanceViewModel.emit(
                 ParticipationIntent.SaveParticipation(item.copy(attendanceStatus = it))
+            )
+        }
+    }
+
+    if(dayMemberAttendances.value.isEmpty()) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(vertical = 10.dp, horizontal = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier.padding(top = 60.dp).weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.not_today),
+                    style = Typography.labelMedium,
+                    color = TossBlue
+                )
+            }
+
+            Text(
+                text = stringResource(R.string.start_attendance),
+                style = Typography.bodyLarge,
+                color = White,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth().wrapContentHeight()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(color = TossBlue)
+                    .clickable {
+                        //TODO: Load Data in Selected Day.
+                        dayAttendanceViewModel.emit(ParticipationIntent.InitParticipation)
+                    }
+                    .padding(vertical = 10.dp)
             )
         }
     }

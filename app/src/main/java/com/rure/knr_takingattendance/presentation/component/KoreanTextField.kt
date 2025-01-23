@@ -31,7 +31,6 @@ fun KoreanTextField(
         value = value,
         onValueChange = { newValue ->
             if (newValue.isEmpty() || regex.matches(newValue)) {
-                Log.d("KoreanTextField", newValue)
                 onValueChange(newValue)
             }
         },
