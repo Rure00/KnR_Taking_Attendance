@@ -28,9 +28,6 @@ class GetAttendanceHistoryUseCase @Inject constructor(
         var lateNum = 0
         var forcibleNum = 0
 
-        val yearly = mutableListOf<Map<Int, AttendanceState>>()
-        val monthly = mutableMapOf<Int, AttendanceState>()
-
         val yearObject = mutableMapOf<Int, MutableMap<Int, MutableList<DailyAttendance>>>()
         list.forEach {
             val year = it.date.year
@@ -61,7 +58,7 @@ class GetAttendanceHistoryUseCase @Inject constructor(
 
         return@withContext AttendanceHistory(
             member = member,
-            attendanceRate = (attendNum) / total,
+            attendanceRate = (attendNum) / total * 100,
             total = total,
             attendNum = attendNum,
             nonAttendNum = nonAttendNum,

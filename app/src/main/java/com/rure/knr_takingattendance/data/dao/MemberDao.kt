@@ -13,7 +13,7 @@ import java.time.LocalDate
 @Dao
 interface MemberDao {
     @Insert
-    fun insertMember(member: Member)
+    fun insertMember(member: Member): Long
     @Update
     fun updateMember(member: Member)
     @Delete
