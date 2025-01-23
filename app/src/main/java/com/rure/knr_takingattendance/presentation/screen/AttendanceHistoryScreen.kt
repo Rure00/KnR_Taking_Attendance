@@ -10,9 +10,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +22,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -37,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,13 +51,18 @@ import com.rure.knr_takingattendance.data.entities.Position
 import com.rure.knr_takingattendance.presentation.component.PositionButton
 import com.rure.knr_takingattendance.presentation.state.UiResult
 import com.rure.knr_takingattendance.presentation.state.detail.AttendanceHistory
+import com.rure.knr_takingattendance.presentation.state.detail.DailyAttendance
+import com.rure.knr_takingattendance.presentation.state.detail.YearlyAttendance
+import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import com.rure.knr_takingattendance.presentation.utils.RequestPermission
 import com.rure.knr_takingattendance.presentation.utils.toPhoneFormat
 import com.rure.knr_takingattendance.presentation.viewmodels.AttendanceHistoryViewModel
 import com.rure.knr_takingattendance.ui.theme.Black
 import com.rure.knr_takingattendance.ui.theme.Gray
+import com.rure.knr_takingattendance.ui.theme.LightGray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.knr_takingattendance.ui.theme.WarningRed
 import com.rure.knr_takingattendance.ui.theme.White
 import kotlinx.coroutines.launch
 
@@ -97,10 +107,10 @@ fun AttendanceHistoryScreen(
 
     val listState = rememberLazyListState()
     LazyColumn(
-        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        modifier = Modifier.fillMaxWidth().wrapContentHeight()
+            .padding(top = 6.dp, start = 7.dp, end = 7.dp),
         state = listState,
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val history = attendanceHistory.value!!
         item {
@@ -122,9 +132,10 @@ fun AttendanceHistoryScreen(
             Spacer(modifier = Modifier.height(14.dp))
         }
 
-
-
-
+        Log.d(tag, "yearlyAttendance num: ${history.yearlyAttendance.size}")
+        itemsIndexed(history.yearlyAttendance) { index, item ->
+            AttendanceHistoryBox(item)
+        }
     }
 }
 
@@ -135,7 +146,6 @@ private fun MemberInformationBox(member: Member, atdRate: Int) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(top = 6.dp, start = 7.dp, end = 7.dp)
             .background(color = Color.White, shape = RoundedCornerShape(8.dp))
             .padding(horizontal = 7.dp, vertical = 7.dp)
     ) {
@@ -168,7 +178,7 @@ private fun MemberInformationBox(member: Member, atdRate: Int) {
             Image(
                 painter = painterResource(R.drawable.phone_with_blue_bg),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(1.25.dp))
             Text(
@@ -228,22 +238,22 @@ private fun PositionBox(member: Member) {
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             PositionButton(
-                Position.Forward, Typography.labelMedium, Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
+                Position.Forward, Typography.labelMedium,
                 initialState = member.position[Position.Forward] ?: false
             ) { _, _ -> }
             PositionButton(
-                Position.Defender, Typography.labelMedium,Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
+                Position.Defender, Typography.labelMedium,
                 initialState = member.position[Position.Defender] ?: false
             ) { _, _ -> }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             PositionButton(
-                Position.Midfielder, Typography.labelMedium,Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
+                Position.Midfielder, Typography.labelMedium,
                 initialState = member.position[Position.Midfielder] ?: false
             ) { _, _ -> }
             PositionButton(
-                Position.GoalKeeper, Typography.labelMedium,Modifier.padding(horizontal = 7.dp, vertical = 4.dp),
+                Position.GoalKeeper, Typography.labelMedium,
                 initialState = member.position[Position.GoalKeeper] ?: false
             ) { _, _ -> }
         }
@@ -262,5 +272,84 @@ private fun HolderView() {
         Box(
             modifier = Modifier.fillMaxWidth().height(140.dp).background(color = White).padding(10.dp)
         )
+    }
+}
+
+@Composable
+private fun AttendanceHistoryBox(yearlyAttendance: YearlyAttendance) {
+    Column(
+        modifier = Modifier.fillMaxWidth().wrapContentHeight().background(color = White, shape = RoundedCornerShape(5.dp))
+            .padding(6.dp),
+
+    ) {
+        Text(
+            text = yearlyAttendance.year.toString(),
+            style = Typography.bodyMedium,
+            color = Black
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            val availableWidth = maxWidth
+            val itemSpacing = 8.dp
+            val itemCount = 6
+
+            val oneToSix = (1..6).map {
+                yearlyAttendance.monthlyAttendances[it] ?: listOf()
+            }
+            val sevenToTwelve = (7..12).map {
+                yearlyAttendance.monthlyAttendances[it] ?: listOf()
+            }
+
+            val itemWidth = (availableWidth - itemSpacing * (itemCount - 1)) / itemCount
+
+            Column {
+                MonthRowBox(oneToSix, 1, itemWidth, itemSpacing)
+                Spacer(modifier = Modifier.height(6.dp))
+                MonthRowBox(sevenToTwelve, 7, itemWidth, itemSpacing)
+            }
+        }
+    }
+}
+
+@Composable
+private fun MonthRowBox(list: List<List<DailyAttendance>>, firstMonth: Int, itemWidth: Dp, itemSpacing: Dp) {
+    LazyRow(
+        modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+        horizontalArrangement = Arrangement.spacedBy(itemSpacing),
+        userScrollEnabled = false
+    ) {
+        itemsIndexed(list) { index, item ->
+            var attended = 0
+            var tardyOrAbsence = 0
+            item.forEach {
+                when(it.attendance) {
+                    AttendanceState.Attend -> attended++
+                    AttendanceState.Tardy, AttendanceState.Absence -> tardyOrAbsence++
+                    else -> null
+                }
+            }
+            val bodyColor = if(item.isEmpty()) LightGray
+                            else if(tardyOrAbsence == 0) TossBlue
+                            else WarningRed
+
+            Column(
+                modifier = Modifier.width(itemWidth).background(color = bodyColor, shape = RoundedCornerShape(3.dp)),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.month_str, index + firstMonth),
+                    style = Typography.bodyMedium,
+                    color = White
+                )
+                Text(
+                    text = "$attended/${item.size}",
+                    style = Typography.bodyMedium,
+                    color = White
+                )
+            }
+        }
     }
 }

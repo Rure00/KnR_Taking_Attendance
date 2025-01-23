@@ -1,5 +1,6 @@
 package com.rure.knr_takingattendance.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,7 @@ fun KoreanTextField(
         value = value,
         onValueChange = { newValue ->
             if (newValue.isEmpty() || regex.matches(newValue)) {
+                Log.d("KoreanTextField", newValue)
                 onValueChange(newValue)
             }
         },

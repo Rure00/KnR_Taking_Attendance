@@ -25,5 +25,5 @@ data class DailyAttendance(
 
 data class YearlyAttendance(
     val year: Int,
-    val monthlyAttendances: Map<Int, DailyAttendance>
+    val monthlyAttendances: Map<Int, List<DailyAttendance>>
 )

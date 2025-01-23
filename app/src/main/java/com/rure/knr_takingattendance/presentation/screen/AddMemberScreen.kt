@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
@@ -99,6 +101,8 @@ fun AddMemberScreen(
     )
 
     fun toNextPage(context: Context) {
+        if(!activateNextButton.value) return
+
         if(pageIndex.value < pages.lastIndex) {
             pageIndex.value++
         } else {
@@ -144,7 +148,8 @@ fun AddMemberScreen(
             modifier = Modifier.height(55.dp).fillMaxWidth().background(
                 if(activateNextButton.value) TossBlue
                 else LightGray
-            ).clickable { toNextPage(context) },
+            ).clickable {
+                toNextPage(context) },
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -243,33 +248,24 @@ private fun WritePositionPage(onChange: (Position, Boolean) -> Unit) {
         Spacer(modifier = Modifier.height(10.dp))
 
         val textStyle = Typography.bodySmall
-        val modifier = Modifier.height(40.dp).fillMaxWidth()
 
         Row(
-            //modifier = Modifier.padding(horizontal = 10.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            PositionButton(
-                Position.Forward, textStyle, modifier.weight(1f)
-            ) { isChecked, position ->
+            PositionButton(Position.Forward, textStyle,) { isChecked, position ->
                 onChange(position, isChecked)
             }
 
-            PositionButton(
-                Position.Midfielder, textStyle, modifier.weight(1f)
-            ) { isChecked, position ->
+            PositionButton(Position.Midfielder, textStyle) { isChecked, position ->
                 onChange(position, isChecked)
             }
 
-            PositionButton(
-                Position.Defender, textStyle, modifier.weight(1f)
-            ) { isChecked, position ->
+            PositionButton(Position.Defender, textStyle) { isChecked, position ->
                 onChange(position, isChecked)
             }
 
-            PositionButton(
-                Position.GoalKeeper, textStyle, modifier.weight(1f)
-            ) { isChecked, position ->
+            PositionButton(Position.GoalKeeper, textStyle) { isChecked, position ->
                 onChange(position, isChecked)
             }
         }

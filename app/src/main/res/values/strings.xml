@@ -20,4 +20,5 @@
     <string name="forcible_num">무단: %d</string>
     <string name="fail_load_atd_history">멤버 정보를 불러들이는데 실패하였습니다.</string>
     <string name="rate">%d%%</string>
+    <string name="month_str">%d월</string>
 </resources>

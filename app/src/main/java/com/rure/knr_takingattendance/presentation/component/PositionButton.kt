@@ -3,9 +3,12 @@ package com.rure.knr_takingattendance.presentation.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,6 +35,7 @@ fun PositionButton(
     position: Position,
     textStyle: TextStyle,
     modifier: Modifier = Modifier,
+    innerPadding: PaddingValues =  PaddingValues(vertical = 5.dp, horizontal = 15.dp),
     initialState: Boolean = false,
     onClick: (Boolean, Position) -> Unit
 ) {
@@ -44,25 +48,17 @@ fun PositionButton(
     }
     val unSelectedColor = LightGray
 
-    Card(
-        modifier = Modifier,
-        shape = RoundedCornerShape(7.dp),
-        colors = CardDefaults.cardColors(containerColor = if(isSelected.value) buttonColor else unSelectedColor)
-    ) {
-        Box(
-            modifier = modifier.clickable {
+
+    Text(
+        text = position.abbr,
+        style = textStyle,
+        color = White,
+        modifier = modifier.wrapContentSize()
+            .clickable {
                 isSelected.value = !isSelected.value
                 onClick(isSelected.value, position)
-            },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = position.abbr,
-                style = textStyle,
-                color = White
-            )
-        }
-    }
-
-
+            }
+            .background(color = if(isSelected.value) buttonColor else unSelectedColor, shape = RoundedCornerShape(7.dp))
+            .padding(innerPadding)
+    )
 }

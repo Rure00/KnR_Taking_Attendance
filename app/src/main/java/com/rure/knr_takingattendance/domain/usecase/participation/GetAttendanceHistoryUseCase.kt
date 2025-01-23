@@ -1,7 +1,10 @@
 package com.rure.knr_takingattendance.domain.usecase.participation
 
+import android.util.Log
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.presentation.state.detail.AttendanceHistory
+import com.rure.knr_takingattendance.presentation.state.detail.DailyAttendance
+import com.rure.knr_takingattendance.presentation.state.detail.YearlyAttendance
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -14,6 +17,8 @@ class GetAttendanceHistoryUseCase @Inject constructor(
     suspend operator fun invoke(
         member: Member
     ) = withContext(ioDispatcher) {
+        val tag = "GetAttendanceHistoryUseCase"
+
         val list = getParticipationByMemberUseCase.invoke(member)
         if(list.isEmpty()) return@withContext null
 
@@ -26,14 +31,12 @@ class GetAttendanceHistoryUseCase @Inject constructor(
         val yearly = mutableListOf<Map<Int, AttendanceState>>()
         val monthly = mutableMapOf<Int, AttendanceState>()
 
-        var year = list.first().date.year
+        val yearObject = mutableMapOf<Int, MutableMap<Int, MutableList<DailyAttendance>>>()
         list.forEach {
-            if(year != it.date.year) {
-                yearly.add(monthly)
-                monthly.clear()
-                year = it.date.year
-            }
-            monthly[it.date.monthValue] = it.attendanceStatus
+            val year = it.date.year
+            val month = it.date.monthValue
+
+            yearObject.getOrPut(year) { mutableMapOf(month to mutableListOf(DailyAttendance(it.date, it.attendanceStatus)) )}
 
             total++
             when(it.attendanceStatus) {
@@ -45,6 +48,17 @@ class GetAttendanceHistoryUseCase @Inject constructor(
             }
         }
 
+        val yearlyAttendanceList = mutableListOf<YearlyAttendance>()
+        yearObject.keys.sortedDescending().forEach {
+            yearlyAttendanceList.add(
+                YearlyAttendance(
+                    year = it, monthlyAttendances = yearObject[it]!!
+                )
+            )
+        }
+
+        Log.d(tag, "yearlyAttendanceList size: ${yearlyAttendanceList.size}")
+
         return@withContext AttendanceHistory(
             member = member,
             attendanceRate = (attendNum) / total,
@@ -53,7 +67,7 @@ class GetAttendanceHistoryUseCase @Inject constructor(
             nonAttendNum = nonAttendNum,
             lateNum = lateNum,
             forcibleNum = forcibleNum,
-            yearlyAttendance = listOf()
+            yearlyAttendance = yearlyAttendanceList
         )
     }
 }
