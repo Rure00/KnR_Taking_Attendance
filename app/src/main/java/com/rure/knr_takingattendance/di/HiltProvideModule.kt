@@ -29,4 +29,6 @@ class HiltProvideModule {
     fun provideMemberDao(appRoomDatabase: AppRoomDataBase) = appRoomDatabase.memberDao
     @Provides
     fun provideMemberParticipationDao(appRoomDatabase: AppRoomDataBase) = appRoomDatabase.memberParticipationDao
+    @Provides
+    fun provideActivityDateDao(appRoomDatabase: AppRoomDataBase) = appRoomDatabase.activityDateDao
 }

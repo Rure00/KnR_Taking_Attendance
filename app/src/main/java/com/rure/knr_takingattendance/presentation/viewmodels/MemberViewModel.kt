@@ -12,7 +12,6 @@ import com.rure.knr_takingattendance.domain.usecase.member.SaveMemberUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.SubscribeMemberFlowUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.UpdateMemberUseCase
 import com.rure.knr_takingattendance.presentation.intent.MemberIntent
-import com.rure.knr_takingattendance.presentation.intent.ParticipationIntent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -90,5 +89,4 @@ class MemberViewModel @Inject constructor(
     }
 
     fun getMemberById(id: Int) = memberList.value.firstOrNull { it.id == id }
-
 }

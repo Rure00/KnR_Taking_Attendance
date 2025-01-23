@@ -1,0 +1,9 @@
+package com.rure.knr_takingattendance.domain.repository
+
+import com.rure.knr_takingattendance.data.entities.ActivityDate
+import java.time.LocalDate
+
+interface ActivityDateRepository {
+    suspend fun insert(activityDate: ActivityDate)
+    suspend fun getActivitiesFrom(date: LocalDate): List<ActivityDate>
+}

@@ -1,7 +1,9 @@
 package com.rure.knr_takingattendance.di
 
+import com.rure.knr_takingattendance.data.repository.ActivityDateRepositoryImpl
 import com.rure.knr_takingattendance.data.repository.MemberParticipationRepositoryImpl
 import com.rure.knr_takingattendance.data.repository.MemberRepositoryImpl
+import com.rure.knr_takingattendance.domain.repository.ActivityDateRepository
 import com.rure.knr_takingattendance.domain.repository.MemberParticipationRepository
 import com.rure.knr_takingattendance.domain.repository.MemberRepository
 import dagger.Binds
@@ -20,4 +22,10 @@ abstract class HiltBindModule {
     @Binds
     @ViewModelScoped
     abstract fun provideMemberParticipationRepository(impl: MemberParticipationRepositoryImpl): MemberParticipationRepository
+
+
+    @Binds
+    @ViewModelScoped
+    abstract fun provideActivityDateRepository(impl: ActivityDateRepositoryImpl): ActivityDateRepository
+
 }

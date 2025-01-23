@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rure.knr_takingattendance.data.entities.ActivityDate
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.domain.result.MemberFlowResult
+import com.rure.knr_takingattendance.domain.usecase.activity_date.GetActivitiesFromUseCase
+import com.rure.knr_takingattendance.domain.usecase.activity_date.SaveActivityDateUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.SubscribeMemberFlowUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.DeleteMemberParticipationUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.GetParticipationByMemberUseCase
@@ -32,7 +35,10 @@ class DayAttendanceViewModel @Inject constructor(
     private val getParticipationByMemberUseCase: GetParticipationByMemberUseCase,
 
     private val subscribeMemberFlowUseCase: SubscribeMemberFlowUseCase,
-    private val initDayAttendanceUseCase: InitDayAttendanceUseCase
+    private val initDayAttendanceUseCase: InitDayAttendanceUseCase,
+
+    private val saveActivityDateUseCase: SaveActivityDateUseCase,
+    private val getActivitiesFromUseCase: GetActivitiesFromUseCase
 ): ViewModel() {
     private val tag = "DayAttendanceViewModel"
 
@@ -75,6 +81,7 @@ class DayAttendanceViewModel @Inject constructor(
         when(intent) {
             is ParticipationIntent.InitParticipation -> {
                 viewModelScope.launch {
+                    saveActivityDateUseCase.invoke(ActivityDate(selectedDay.value))
                     _memberParticipation.value = initDayAttendanceUseCase.invoke(selectedDay.value)
                 }
             }
