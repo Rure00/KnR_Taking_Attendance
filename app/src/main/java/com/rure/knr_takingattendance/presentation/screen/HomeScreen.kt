@@ -1,5 +1,6 @@
 package com.rure.knr_takingattendance.presentation.screen
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -61,6 +62,7 @@ import java.time.DayOfWeek
 @Composable
 fun HomeScreen(
     toAttendanceHistoryScreen: (Int) -> Unit,
+    context: Context = LocalContext.current,
     dayAttendanceViewModel: DayAttendanceViewModel = viewModel(LocalContext.current as MainActivity)
 ) {
     val showDatePicker = remember { mutableStateOf(false) }
@@ -73,14 +75,25 @@ fun HomeScreen(
         mutableStateOf(AttendanceState.All)
     }
 
-    val dayMemberAttendances = dayAttendanceViewModel.memberParticipation.collectAsState()
-
     val listState = rememberLazyListState()
 
     val showArrangeDropDown = remember { mutableStateOf(false) }
     val arrangeEnum = remember {
         mutableStateOf<ArrangeEnum>(ArrangeEnum.Name)
     }
+
+    val dayMemberAttendances = dayAttendanceViewModel.memberParticipation
+        .collectAsState().value.let { list ->
+            when(arrangeEnum.value) {
+                ArrangeEnum.Name -> {
+                    list.sortedBy { it.member.name }
+                }
+                ArrangeEnum.AttendanceState -> {
+                    list.sortedBy { it.attendanceStatus }
+                }
+            }
+        }
+
 
     val bottomSheetStateHolder = remember { mutableStateOf(AttendanceSheetStateHolder(false)) }
 
@@ -124,7 +137,6 @@ fun HomeScreen(
                 Box {
                     DropdownMenu(
                         expanded = showArrangeDropDown.value,
-                        modifier = Modifier,
                         onDismissRequest = { showArrangeDropDown.value = false },
                         offset = DpOffset(10.dp, 0.dp)
                     ) {
@@ -151,46 +163,10 @@ fun HomeScreen(
             Spacer(modifier = Modifier.padding(bottom = 9.dp))
         }
 
+        if(dayMemberAttendances.isEmpty()) return@LazyColumn
 
+        itemsIndexed(getAttendanceByStatus(dayMemberAttendances, selectedAttendanceStatus.value)) { index, item ->
 
-        if(dayMemberAttendances.value.isEmpty()) {
-//            item {
-//                Column(
-//                    modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(10.dp),
-//                    horizontalAlignment = Alignment.CenterHorizontally
-//                ) {
-//                    Box(
-//                        modifier = Modifier.padding(top = 60.dp),
-//                        contentAlignment = Alignment.Center
-//                    ) {
-//                        Text(
-//                            text = stringResource(R.string.not_today),
-//                            style = Typography.labelMedium,
-//                            color = TossBlue
-//                        )
-//                    }
-//
-//                    Text(
-//                        text = stringResource(R.string.start_attendance),
-//                        style = Typography.bodyLarge,
-//                        color = White,
-//                        modifier = Modifier
-//                            .fillMaxWidth().wrapContentHeight()
-//                            .background(color = TossBlue)
-//                            .clip(RoundedCornerShape(8.dp))
-//                            .clickable {
-//                                //TODO: Load Data in Selected Day.
-//                                dayAttendanceViewModel.emit(ParticipationIntent.InitParticipation)
-//                            }
-//                    )
-//                }
-//            }
-
-            return@LazyColumn
-        }
-
-        itemsIndexed(getAttendanceByStatus(dayMemberAttendances.value, selectedAttendanceStatus.value)) { index, item ->
-            val context = LocalContext.current
             val requestPermission = remember {
                 RequestPermission(context as MainActivity, context)
             }
@@ -218,12 +194,9 @@ fun HomeScreen(
         )
     }
 
-    Log.d("HomeScreen", "showBottomSheet: ${bottomSheetStateHolder.value.showBottomSheet}")
     if(bottomSheetStateHolder.value.showBottomSheet) {
         val item = bottomSheetStateHolder.value.participation!!
-        //val changedState = bottomSheetStateHolder.value.selectedState!!
         AttendanceBottomSheet(item) {
-            Log.d("AttendanceBottomSheet", "item: ${item.attendanceStatus.kr} changed to ${it.kr}")
             bottomSheetStateHolder.value = AttendanceSheetStateHolder(false)
             dayAttendanceViewModel.emit(
                 ParticipationIntent.SaveParticipation(item.copy(attendanceStatus = it))
@@ -231,7 +204,7 @@ fun HomeScreen(
         }
     }
 
-    if(dayMemberAttendances.value.isEmpty()) {
+    if(dayMemberAttendances.isEmpty()) {
         Column(
             modifier = Modifier.fillMaxSize().padding(vertical = 10.dp, horizontal = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -257,7 +230,6 @@ fun HomeScreen(
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = TossBlue)
                     .clickable {
-                        //TODO: Load Data in Selected Day.
                         dayAttendanceViewModel.emit(ParticipationIntent.InitParticipation)
                     }
                     .padding(vertical = 10.dp)
@@ -274,10 +246,3 @@ private fun getAttendanceByStatus(list: List<MemberParticipation>, status: Atten
             it.attendanceStatus == status
         }
     }
-
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun Preview() {
-//
-//}

@@ -78,20 +78,19 @@ fun AttendanceHistoryScreen(
 
     LaunchedEffect(Unit) {
         coroutineScope.launch {
-            attendanceHistoryViewModel.attendanceHistory
-                .collect {
-                    when(it) {
-                        is UiResult.Success -> {
-                            attendanceHistory.value = it.value
-                        }
-                        is UiResult.Fail-> {
-                            Toast.makeText(context, context.getString(R.string.fail_load_atd_history), Toast.LENGTH_SHORT).show()
-                            backPressedDispatcher?.onBackPressed()
-                            return@collect
-                        }
-                        else -> null
+            attendanceHistoryViewModel.attendanceHistory.collect {
+                when(it) {
+                    is UiResult.Success -> {
+                        attendanceHistory.value = it.value
                     }
+                    is UiResult.Fail-> {
+                        Toast.makeText(context, context.getString(R.string.fail_load_atd_history), Toast.LENGTH_SHORT).show()
+                        backPressedDispatcher?.onBackPressed()
+                        return@collect
+                    }
+                    else -> null
                 }
+            }
         }
 
         attendanceHistoryViewModel.getHistory(memberId = memberId)
