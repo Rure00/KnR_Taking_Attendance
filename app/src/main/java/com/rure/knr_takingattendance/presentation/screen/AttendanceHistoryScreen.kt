@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +41,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rure.knr_takingattendance.R
 import com.rure.knr_takingattendance.data.entities.Member
@@ -238,23 +235,28 @@ private fun PositionBox(member: Member) {
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             PositionButton(
-                Position.Forward, Typography.labelMedium,
-                initialState = member.position[Position.Forward] ?: false
+                isSelected = member.position[Position.Forward] ?: false,
+                position = Position.Forward,
+                textStyle =  Typography.labelMedium,
             ) { _, _ -> }
             PositionButton(
-                Position.Defender, Typography.labelMedium,
-                initialState = member.position[Position.Defender] ?: false
+                isSelected = member.position[Position.Defender] ?: false,
+                position = Position.Defender,
+                textStyle = Typography.labelMedium,
+
             ) { _, _ -> }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             PositionButton(
-                Position.Midfielder, Typography.labelMedium,
-                initialState = member.position[Position.Midfielder] ?: false
+                isSelected = member.position[Position.Midfielder] ?: false,
+                position = Position.Midfielder,
+                textStyle = Typography.labelMedium,
             ) { _, _ -> }
             PositionButton(
-                Position.GoalKeeper, Typography.labelMedium,
-                initialState = member.position[Position.GoalKeeper] ?: false
+                isSelected = member.position[Position.GoalKeeper] ?: false,
+                position = Position.GoalKeeper,
+                textStyle = Typography.labelMedium,
             ) { _, _ -> }
         }
     }

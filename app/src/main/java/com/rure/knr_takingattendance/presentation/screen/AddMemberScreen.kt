@@ -86,7 +86,7 @@ fun AddMemberScreen(
                 activateNextButton.value = MemberRegisterValidation.checkPhoneNumber(it)
             }
         },
-        {WritePositionPage { position, isChecked ->
+        {WritePositionPage(positionState.value) { position, isChecked ->
                 positionState.value = positionState.value.toMutableMap().apply {
                     this[position] = isChecked
                 }
@@ -235,7 +235,7 @@ private fun WritePhoneNumberPage(phoneNumberState: String, onChange: (String) ->
 }
 
 @Composable
-private fun WritePositionPage(onChange: (Position, Boolean) -> Unit) {
+private fun WritePositionPage(positionMap: Map<Position, Boolean>, onChange: (Position, Boolean) -> Unit) {
     Column(
         modifier = Modifier.padding(horizontal = 10.dp)
     ) {
@@ -253,19 +253,35 @@ private fun WritePositionPage(onChange: (Position, Boolean) -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            PositionButton(Position.Forward, textStyle,) { isChecked, position ->
+            PositionButton(
+                isSelected = positionMap[Position.Forward] ?: false,
+                position = Position.Forward,
+                textStyle = textStyle
+            ) { isChecked, position ->
                 onChange(position, isChecked)
             }
 
-            PositionButton(Position.Midfielder, textStyle) { isChecked, position ->
+            PositionButton(
+                isSelected = positionMap[Position.Defender] ?: false,
+                position = Position.Defender,
+                textStyle = textStyle
+            ) { isChecked, position ->
                 onChange(position, isChecked)
             }
 
-            PositionButton(Position.Defender, textStyle) { isChecked, position ->
+            PositionButton(
+                isSelected = positionMap[Position.Midfielder] ?: false,
+                position = Position.Midfielder,
+                textStyle = textStyle
+            ) { isChecked, position ->
                 onChange(position, isChecked)
             }
 
-            PositionButton(Position.GoalKeeper, textStyle) { isChecked, position ->
+            PositionButton(
+                isSelected = positionMap[Position.GoalKeeper] ?: false,
+                position = Position.GoalKeeper,
+                textStyle = textStyle
+            ) { isChecked, position ->
                 onChange(position, isChecked)
             }
         }
