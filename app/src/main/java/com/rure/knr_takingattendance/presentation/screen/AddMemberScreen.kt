@@ -47,7 +47,7 @@ fun AddMemberScreen(
 
     val nameState = remember { mutableStateOf("") }
     val birthState = remember { mutableStateOf(LocalDate.now()) }
-    val phoneNumberState = remember { mutableStateOf("010") }
+    val phoneNumberState = remember { mutableStateOf("") }
     val positionState = remember { mutableStateOf(getPositionFalseMap()) }
     val joiningDayState = remember { mutableStateOf(LocalDate.now()) }
     val activateNextButton = remember { mutableStateOf(false) }
@@ -65,7 +65,7 @@ fun AddMemberScreen(
         {
             WritePhoneNumberPage(phoneNumberState.value) {
                 phoneNumberState.value = it
-                activateNextButton.value = MemberRegisterValidation.checkPhoneNumber(it)
+                activateNextButton.value = MemberRegisterValidation.checkPhoneNumber("010$it")
             }
         },
         {WritePositionPage(positionState.value) { position, isChecked ->
@@ -93,7 +93,7 @@ fun AddMemberScreen(
                     birth = birthState.value,
                     position = positionState.value,
                     joinDate =joiningDayState.value,
-                    phoneNumber = phoneNumberState.value,
+                    phoneNumber = "010" + phoneNumberState.value,
                 )
             )
 
