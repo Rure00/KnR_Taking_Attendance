@@ -89,14 +89,17 @@ fun AddMemberScreen(
 
     LaunchedEffect(Unit) {
         if(isAmend) {
-            val member = memberViewModel.getMemberById(id)?: throw Exception("AddMemberScreen Has Id but isAmend Parameter is ${isAmend}")
+            val member = memberViewModel.getMemberById(id)
+                ?: throw Exception("AddMemberScreen Has Id but isAmend Parameter is ${isAmend}")
             with(member) {
                 nameState.value = name
                 birthState.value = birth
                 positionState.value = position
-                phoneNumberState.value = phoneNumber
+                phoneNumberState.value = phoneNumber.drop(3)
                 joiningDayState.value = joinDate
             }
+
+            activateNextButton.value = true
         }
     }
 
@@ -106,15 +109,26 @@ fun AddMemberScreen(
         if(pageIndex.value < pages.lastIndex) {
             pageIndex.value++
         } else {
-            memberViewModel.emit(
-                MemberIntent.SaveMember(
+            if(isAmend) {
+                val updated = memberViewModel.getMemberById(id)!!.copy(
                     name = nameState.value,
                     birth = birthState.value,
                     position = positionState.value,
-                    joinDate =joiningDayState.value,
-                    phoneNumber = "010" + phoneNumberState.value,
+                    joinDate = joiningDayState.value,
+                    phoneNumber = phoneNumberState.value
                 )
-            )
+                memberViewModel.emit(MemberIntent.UpdateMember(updated))
+            } else {
+                memberViewModel.emit(
+                    MemberIntent.SaveMember(
+                        name = nameState.value,
+                        birth = birthState.value,
+                        position = positionState.value,
+                        joinDate =joiningDayState.value,
+                        phoneNumber = "010" + phoneNumberState.value,
+                    )
+                )
+            }
 
             Toast.makeText(context, context.getString(R.string.success_save_member), Toast.LENGTH_SHORT).show()
             toBack()
@@ -161,8 +175,6 @@ fun AddMemberScreen(
             )
         }
     }
-
-
 }
 
 

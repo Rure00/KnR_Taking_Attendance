@@ -2,6 +2,8 @@ package com.rure.knr_takingattendance.presentation.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -45,7 +47,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
             val id = it.arguments?.getInt("id") ?: throw  Exception("No Arguments For id.")
             AttendanceHistoryScreen(
                 memberId = id,
-                toAmendScreen = { navController.navigate(Destination.AmendMember.route + "/${id}") }
+                toAmendScreen = {
+                    navController.navigate(Destination.AmendMember.route + "/${id}")
+                }
             )
             onScreenChanged(Destination.MemberDetail)
         }
