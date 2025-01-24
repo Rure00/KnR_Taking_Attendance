@@ -2,10 +2,8 @@ package com.rure.knr_takingattendance.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.domain.usecase.member.GetMemberByIdUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.GetAttendanceHistoryUseCase
-import com.rure.knr_takingattendance.presentation.intent.MemberIntent
 import com.rure.knr_takingattendance.presentation.state.UiResult
 import com.rure.knr_takingattendance.presentation.state.detail.AttendanceHistory
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +29,7 @@ class AttendanceHistoryViewModel @Inject constructor(
             if(member == null || history == null) {
                 emit(UiResult.Fail)
             } else emit(UiResult.Success(history))
+
         }
     }
 

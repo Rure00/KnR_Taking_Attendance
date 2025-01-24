@@ -8,49 +8,31 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.Position
 import com.rure.knr_takingattendance.data.entities.getPositionFalseMap
 import com.rure.knr_takingattendance.presentation.MainActivity
-import com.rure.knr_takingattendance.presentation.component.KoreanTextField
-import com.rure.knr_takingattendance.presentation.component.Picker
-import com.rure.knr_takingattendance.presentation.component.PositionButton
-import com.rure.knr_takingattendance.presentation.component.option.BirthPicker
 import com.rure.knr_takingattendance.presentation.intent.MemberIntent
+import com.rure.knr_takingattendance.presentation.screen.pages.WriteBirthPage
+import com.rure.knr_takingattendance.presentation.screen.pages.WriteJoiningDatePage
+import com.rure.knr_takingattendance.presentation.screen.pages.WriteNamePage
+import com.rure.knr_takingattendance.presentation.screen.pages.WritePhoneNumberPage
+import com.rure.knr_takingattendance.presentation.screen.pages.WritePositionPage
 import com.rure.knr_takingattendance.presentation.validation.MemberRegisterValidation
-import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewModel
 import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
-import com.rure.knr_takingattendance.ui.theme.Black
 import com.rure.knr_takingattendance.ui.theme.LightGray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
 import com.rure.knr_takingattendance.ui.theme.Typography
@@ -65,7 +47,7 @@ fun AddMemberScreen(
 
     val nameState = remember { mutableStateOf("") }
     val birthState = remember { mutableStateOf(LocalDate.now()) }
-    val phoneNumberState = remember { mutableStateOf("010") }
+    val phoneNumberState = remember { mutableStateOf("") }
     val positionState = remember { mutableStateOf(getPositionFalseMap()) }
     val joiningDayState = remember { mutableStateOf(LocalDate.now()) }
     val activateNextButton = remember { mutableStateOf(false) }
@@ -83,7 +65,7 @@ fun AddMemberScreen(
         {
             WritePhoneNumberPage(phoneNumberState.value) {
                 phoneNumberState.value = it
-                activateNextButton.value = MemberRegisterValidation.checkPhoneNumber(it)
+                activateNextButton.value = MemberRegisterValidation.checkPhoneNumber("010$it")
             }
         },
         {WritePositionPage(positionState.value) { position, isChecked ->
@@ -97,7 +79,6 @@ fun AddMemberScreen(
             joiningDayState.value = it
             activateNextButton.value = true
         } }
-
     )
 
     fun toNextPage(context: Context) {
@@ -112,7 +93,7 @@ fun AddMemberScreen(
                     birth = birthState.value,
                     position = positionState.value,
                     joinDate =joiningDayState.value,
-                    phoneNumber = phoneNumberState.value,
+                    phoneNumber = "010" + phoneNumberState.value,
                 )
             )
 
@@ -165,156 +146,8 @@ fun AddMemberScreen(
 
 }
 
-@Composable
-private fun WriteNamePage(nameState: String, onChange: (String) -> Unit) {
-    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
-        Text(
-            text = stringResource(R.string.enter_name),
-            style = Typography.titleSmall,
-            color = Black
-        )
 
-        Spacer(modifier = Modifier.height(12.dp).fillMaxWidth())
 
-        KoreanTextField(
-            value = nameState,
-            onValueChange = { onChange(it) },
-        )
-    }
-}
 
-@Composable
-private fun WriteBirthPage(birthState: LocalDate, onChange: (LocalDate) -> Unit) {
-    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
-        val selectedDate = remember {
-            mutableStateOf(birthState)
-        }
-
-        Text(
-            text = stringResource(R.string.enter_birth),
-            style = Typography.titleSmall,
-            color = Black
-        )
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        BirthPicker(
-            date = selectedDate.value,
-            modifier = Modifier,
-            itemModifier = Modifier,
-            visibleItemNum = 5,
-            dividerColor = LightGray
-        ) {
-            selectedDate.value = it
-            onChange(it)
-        }
-    }
-}
-
-@Composable
-private fun WritePhoneNumberPage(phoneNumberState: String, onChange: (String) -> Unit) {
-    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
-        Text(
-            text = stringResource(R.string.enter_phone_number),
-            style = Typography.titleSmall,
-            color = Black
-        )
-
-        Spacer(modifier = Modifier.height(12.dp).fillMaxWidth())
-
-        BasicTextField(
-            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(8.dp),
-            value = phoneNumberState,
-            onValueChange = { onChange(it) },
-            textStyle = Typography.bodyMedium,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-        )
-
-        Spacer(modifier = Modifier.height(1.dp).fillMaxWidth().background(LightGray))
-    }
-}
-
-@Composable
-private fun WritePositionPage(positionMap: Map<Position, Boolean>, onChange: (Position, Boolean) -> Unit) {
-    Column(
-        modifier = Modifier.padding(horizontal = 10.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.enter_position),
-            style = Typography.titleSmall,
-            color = Black
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        val textStyle = Typography.bodySmall
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            PositionButton(
-                isSelected = positionMap[Position.Forward] ?: false,
-                position = Position.Forward,
-                textStyle = textStyle
-            ) { isChecked, position ->
-                onChange(position, isChecked)
-            }
-
-            PositionButton(
-                isSelected = positionMap[Position.Defender] ?: false,
-                position = Position.Defender,
-                textStyle = textStyle
-            ) { isChecked, position ->
-                onChange(position, isChecked)
-            }
-
-            PositionButton(
-                isSelected = positionMap[Position.Midfielder] ?: false,
-                position = Position.Midfielder,
-                textStyle = textStyle
-            ) { isChecked, position ->
-                onChange(position, isChecked)
-            }
-
-            PositionButton(
-                isSelected = positionMap[Position.GoalKeeper] ?: false,
-                position = Position.GoalKeeper,
-                textStyle = textStyle
-            ) { isChecked, position ->
-                onChange(position, isChecked)
-            }
-        }
-    }
-
-}
-
-@Composable
-private fun WriteJoiningDatePage(joiningDateState: LocalDate, onChange: (LocalDate) -> Unit) {
-    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
-        val selectedDate = remember {
-            mutableStateOf(joiningDateState)
-        }
-
-        Text(
-            text = stringResource(R.string.enter_joining_date),
-            style = Typography.titleSmall,
-            color = Black
-        )
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        BirthPicker(
-            date = selectedDate.value,
-            modifier = Modifier,
-            itemModifier = Modifier,
-            visibleItemNum = 5,
-            dividerColor = LightGray
-        ) {
-            selectedDate.value = it
-            onChange(it)
-        }
-    }
-}
 
 

@@ -17,7 +17,7 @@ class ActivityDateRepositoryImpl @Inject constructor(
 
     override suspend fun getActivitiesFrom(date: LocalDate): List<ActivityDate> {
         return kotlin.runCatching {
-            dao.getAllMembers(date.toString())
+            dao.getAllActivityFromWhen(date.toString())
         }.getOrDefault(listOf())
     }
 }
