@@ -43,7 +43,10 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
             )
         ) {
             val id = it.arguments?.getInt("id") ?: throw  Exception("No Arguments For id.")
-            AttendanceHistoryScreen(id)
+            AttendanceHistoryScreen(
+                memberId = id,
+                toAmendScreen = { navController.navigate(Destination.AmendMember.route + "/${id}") }
+            )
             onScreenChanged(Destination.MemberDetail)
         }
 
@@ -54,35 +57,16 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
             onScreenChanged(Destination.AddMember)
         }
         composable(
-            route = Destination.AmendMember.route  + "/{name}"  + "/{birth}"  + "/{phoneNumber}"  + "/{position}"  + "/{joinDate}",
+            route = Destination.AmendMember.route  + "/{id}",
             arguments = listOf(
-                navArgument("name") { type = NavType.StringType },
-                navArgument("birth") { type = NavType.StringType },
-                navArgument("phoneNumber") { type = NavType.StringType },
-                navArgument("position") { type = NavType.StringType },
-                navArgument("joinDate") { type = NavType.StringType },
+                navArgument("id") { type = NavType.IntType },
             )
         ) {
-            val nameArg = it.arguments?.getString("name") ?: throw  Exception("No Arguments For name.")
-            val birthArg = it.arguments?.getString("birth").let { str ->
-                LocalDate.parse(str)
-            } ?: throw  Exception("No Arguments For birth.")
-            val numberArg = it.arguments?.getString("phoneNumber") ?: throw  Exception("No Arguments For phoneNumber.")
-            val positionArg = it.arguments?.getString("position").let { str ->
-                val typeToken = object: TypeToken<Map<Position, Boolean>>() { } .type
-                Gson().fromJson<Map<Position, Boolean>>(str, typeToken)
-            } ?: throw  Exception("No Arguments For position.")
-            val joinDateArg = it.arguments?.getString("joinDate").let { str ->
-                LocalDate.parse(str)
-            } ?: throw  Exception("No Arguments For joinDate.")
-
+            val id = it.arguments?.getInt("id") ?: throw  Exception("No Arguments For id.")
             AddMemberScreen(
                 { navController.popBackStack() },
-                name = nameArg,
-                birth = birthArg,
-                phoneNumber = numberArg,
-                position = positionArg,
-                joinDate = joinDateArg,
+                isAmend = true,
+                id = id
             )
             onScreenChanged(Destination.AmendMember)
         }
