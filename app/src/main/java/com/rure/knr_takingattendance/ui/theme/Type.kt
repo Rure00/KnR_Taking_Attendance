@@ -17,6 +17,12 @@ val pretendard = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    titleLarge = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp
+    ),
+
     titleMedium = TextStyle(
         fontFamily = pretendard,
         fontWeight = FontWeight.Bold,
