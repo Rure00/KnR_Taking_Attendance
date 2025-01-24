@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,8 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rure.knr_takingattendance.R
+import com.rure.knr_takingattendance.data.entities.Position
 import com.rure.knr_takingattendance.data.entities.getPositionFalseMap
 import com.rure.knr_takingattendance.presentation.MainActivity
 import com.rure.knr_takingattendance.presentation.intent.MemberIntent
@@ -42,6 +45,8 @@ import java.time.LocalDate
 @Composable
 fun AddMemberScreen(
     toBack: () -> Unit,
+    isAmend: Boolean = false,
+    id: Int = -1,
     memberViewModel: MemberViewModel = viewModel(LocalContext.current as MainActivity)
 ) {
 
@@ -50,6 +55,7 @@ fun AddMemberScreen(
     val phoneNumberState = remember { mutableStateOf("") }
     val positionState = remember { mutableStateOf(getPositionFalseMap()) }
     val joiningDayState = remember { mutableStateOf(LocalDate.now()) }
+
     val activateNextButton = remember { mutableStateOf(false) }
 
     val pageIndex = remember { mutableStateOf(0) }
@@ -80,6 +86,19 @@ fun AddMemberScreen(
             activateNextButton.value = true
         } }
     )
+
+    LaunchedEffect(Unit) {
+        if(isAmend) {
+            val member = memberViewModel.getMemberById(id)?: throw Exception("AddMemberScreen Has Id but isAmend Parameter is ${isAmend}")
+            with(member) {
+                nameState.value = name
+                birthState.value = birth
+                positionState.value = position
+                phoneNumberState.value = phoneNumber
+                joiningDayState.value = joinDate
+            }
+        }
+    }
 
     fun toNextPage(context: Context) {
         if(!activateNextButton.value) return

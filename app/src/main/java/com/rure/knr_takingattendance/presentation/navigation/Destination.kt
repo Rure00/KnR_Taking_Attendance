@@ -21,4 +21,7 @@ sealed class Destination(
     data object AddMember: Destination(
         "팀원 추가", "addMember",false, true
     )
+    data object AmendMember: Destination(
+        "팀원 정보 수정", "amendMember",false, true
+    )
 }
