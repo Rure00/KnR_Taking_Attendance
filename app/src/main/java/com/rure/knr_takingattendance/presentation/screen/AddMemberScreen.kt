@@ -175,6 +175,10 @@ fun AddMemberScreen(
             )
         }
     }
+
+    //TODO
+    // 1. member 정보 업데이트 시 MemberParticipation도 수정해야됨. 개빡치네;
+    // 2. 전화번호 수정 이상함.
 }
 
 

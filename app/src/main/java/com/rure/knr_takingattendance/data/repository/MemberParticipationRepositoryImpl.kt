@@ -1,5 +1,6 @@
 package com.rure.knr_takingattendance.data.repository
 
+import android.util.Log
 import com.rure.knr_takingattendance.data.dao.MemberParticipationDao
 import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.domain.repository.MemberParticipationRepository
@@ -30,7 +31,18 @@ class MemberParticipationRepositoryImpl @Inject constructor(
 
     override suspend fun getMemberParticipationWhen(date: LocalDate): List<MemberParticipation> {
         return kotlin.runCatching {
-            participationDao.getMemberParticipationWhen(date)
+//            val list = participationDao.getMemberParticipationWhen(date)
+//
+//            val str = list.map {
+//                "(${it.memberId}, ${it.member.name})"
+//            }
+//            Log.d("MemberParticipationRepositoryImpl", "${date.toString()}: ${str}")
+//
+//            list
+
+            val map = participationDao.getMemberParticipationWhen(date)
+
+            
         }.getOrDefault(listOf())
     }
 
