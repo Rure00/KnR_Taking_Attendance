@@ -2,13 +2,11 @@ package com.rure.knr_takingattendance.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.rure.knr_takingattendance.data.data_source.AppRoomDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -28,7 +26,7 @@ class HiltProvideModule {
     @Provides
     fun provideMemberDao(appRoomDatabase: AppRoomDataBase) = appRoomDatabase.memberDao
     @Provides
-    fun provideMemberParticipationDao(appRoomDatabase: AppRoomDataBase) = appRoomDatabase.memberParticipationDao
+    fun provideMemberParticipationDao(appRoomDatabase: AppRoomDataBase) = appRoomDatabase.participationToMemberDao
     @Provides
     fun provideActivityDateDao(appRoomDatabase: AppRoomDataBase) = appRoomDatabase.activityDateDao
 }

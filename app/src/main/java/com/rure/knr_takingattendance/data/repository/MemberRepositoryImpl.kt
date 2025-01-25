@@ -45,7 +45,7 @@ class MemberRepositoryImpl @Inject constructor(
 
     override suspend fun updateMember(member: Member) {
         kotlin.runCatching {
-            memberDao.updateMember(member)
+            memberDao.insertMember(member)
         }
     }
 

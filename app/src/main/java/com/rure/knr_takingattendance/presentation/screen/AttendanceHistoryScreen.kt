@@ -41,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rure.knr_takingattendance.R
 import com.rure.knr_takingattendance.data.entities.Member
@@ -56,8 +57,10 @@ import com.rure.knr_takingattendance.presentation.utils.toPhoneFormat
 import com.rure.knr_takingattendance.presentation.viewmodels.AttendanceHistoryViewModel
 import com.rure.knr_takingattendance.ui.theme.Black
 import com.rure.knr_takingattendance.ui.theme.Gray
+import com.rure.knr_takingattendance.ui.theme.Gray2
 import com.rure.knr_takingattendance.ui.theme.LightGray
 import com.rure.knr_takingattendance.ui.theme.TossBlue
+import com.rure.knr_takingattendance.ui.theme.TossGray
 import com.rure.knr_takingattendance.ui.theme.Typography
 import com.rure.knr_takingattendance.ui.theme.WarningRed
 import com.rure.knr_takingattendance.ui.theme.White
@@ -66,6 +69,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AttendanceHistoryScreen(
     memberId: Int,
+    toAmendScreen: () -> Unit,
     context: Context = LocalContext.current,
     attendanceHistoryViewModel: AttendanceHistoryViewModel = hiltViewModel()
 ) {
@@ -110,7 +114,7 @@ fun AttendanceHistoryScreen(
     ) {
         val history = attendanceHistory.value!!
         item {
-            MemberInformationBox(history.member, history.attendanceRate)
+            MemberInformationBox(history.member, history.attendanceRate, toAmendScreen)
             Spacer(modifier = Modifier.height(14.dp))
 
             Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
@@ -136,7 +140,7 @@ fun AttendanceHistoryScreen(
 }
 
 @Composable
-private fun MemberInformationBox(member: Member, atdRate: Int) {
+private fun MemberInformationBox(member: Member, atdRate: Int, toAmendScreen: () -> Unit) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -153,23 +157,25 @@ private fun MemberInformationBox(member: Member, atdRate: Int) {
             Text(
                 text = member.name,
                 style = Typography.bodyLarge,
+                fontSize = 22.sp,
                 color = Black
             )
 
             Text(
-                text = stringResource(R.string.join_date_in, member.joinDate.toString().replace("-", ".")),
-                style = Typography.labelSmall,
-                color = Gray
+                text = stringResource(R.string.amend_str),
+                style = Typography.labelLarge,
+                color = Gray2,
+                modifier = Modifier.clickable {
+                    toAmendScreen()
+                }
             )
         }
         Spacer(modifier = Modifier.height(15.dp))
 
 
         Row(
-            modifier = Modifier.clickable {
-                val requestCall = RequestPermission(context as Activity, context)
-                requestCall.requestCall(member.phoneNumber)
-            }
+            modifier = Modifier,
+            verticalAlignment = Alignment.Bottom
         ) {
             Image(
                 painter = painterResource(R.drawable.phone_with_blue_bg),
@@ -192,7 +198,18 @@ private fun MemberInformationBox(member: Member, atdRate: Int) {
                         Offset(size.width, y),
                         strokeWidth
                     )
+                }.clickable {
+                    val requestCall = RequestPermission(context as Activity, context)
+                    requestCall.requestCall(member.phoneNumber)
                 }
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                text = stringResource(R.string.join_date_in, member.joinDate.toString().replace("-", ".")),
+                style = Typography.labelSmall,
+                color = Gray
             )
         }
         Spacer(modifier = Modifier.height(15.dp))
