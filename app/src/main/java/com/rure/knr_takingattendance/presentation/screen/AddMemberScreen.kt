@@ -115,7 +115,7 @@ fun AddMemberScreen(
                     birth = birthState.value,
                     position = positionState.value,
                     joinDate = joiningDayState.value,
-                    phoneNumber = phoneNumberState.value
+                    phoneNumber = "010" + phoneNumberState.value
                 )
                 memberViewModel.emit(MemberIntent.UpdateMember(updated))
             } else {
@@ -134,7 +134,7 @@ fun AddMemberScreen(
             toBack()
         }
 
-        activateNextButton.value = false
+        activateNextButton.value = (isAmend)
     }
 
     BackHandler {
@@ -175,13 +175,7 @@ fun AddMemberScreen(
             )
         }
     }
-
-    //TODO
-    // 1. member 정보 업데이트 시 MemberParticipation도 수정해야됨. 개빡치네;
-    // 2. 전화번호 수정 이상함.
 }
-
-
 
 
 
