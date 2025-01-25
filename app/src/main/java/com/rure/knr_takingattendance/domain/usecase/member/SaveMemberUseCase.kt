@@ -1,15 +1,13 @@
 package com.rure.knr_takingattendance.domain.usecase.member
 
 import android.util.Log
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.MemberParticipation
+import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
 import com.rure.knr_takingattendance.data.entities.Position
 import com.rure.knr_takingattendance.domain.repository.MemberRepository
 import com.rure.knr_takingattendance.domain.usecase.activity_date.GetActivitiesFromUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.SaveMemberParticipationUseCase
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import javax.inject.Inject

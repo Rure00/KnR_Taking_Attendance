@@ -1,8 +1,6 @@
 package com.rure.knr_takingattendance.domain.usecase.participation
 
-import android.util.Log
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.MemberParticipation
+import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
 import com.rure.knr_takingattendance.domain.repository.MemberRepository
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,10 +1,6 @@
-package com.rure.knr_takingattendance.data.entities
+package com.rure.knr_takingattendance.domain.usecase.models
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import java.time.LocalDate
 

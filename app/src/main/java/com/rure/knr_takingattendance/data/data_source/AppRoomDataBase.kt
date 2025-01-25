@@ -8,7 +8,6 @@ import com.rure.knr_takingattendance.data.dao.ParticipationToMemberDao
 import com.rure.knr_takingattendance.data.dao.MemberDao
 import com.rure.knr_takingattendance.data.entities.ActivityDate
 import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.MemberParticipation
 import com.rure.knr_takingattendance.data.entities.ParticipationToMember
 import com.rure.knr_takingattendance.data.utils.LocalDateConverter
 import com.rure.knr_takingattendance.data.utils.PositionMapConverter

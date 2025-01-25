@@ -2,11 +2,9 @@ package com.rure.knr_takingattendance.data.repository
 
 import com.rure.knr_takingattendance.data.dao.MemberDao
 import com.rure.knr_takingattendance.data.dao.ParticipationToMemberDao
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.MemberParticipation
+import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
 import com.rure.knr_takingattendance.data.entities.ParticipationToMember
 import com.rure.knr_takingattendance.domain.repository.MemberParticipationRepository
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

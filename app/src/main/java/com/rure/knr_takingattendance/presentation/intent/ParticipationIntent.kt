@@ -1,8 +1,7 @@
 package com.rure.knr_takingattendance.presentation.intent
 
 import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.MemberParticipation
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
 import java.time.LocalDate
 
 sealed class ParticipationIntent {

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rure.knr_takingattendance.data.entities.ActivityDate
 import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.MemberParticipation
+import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
 import com.rure.knr_takingattendance.domain.result.MemberFlowResult
 import com.rure.knr_takingattendance.domain.usecase.activity_date.GetActivitiesFromUseCase
 import com.rure.knr_takingattendance.domain.usecase.activity_date.SaveActivityDateUseCase
