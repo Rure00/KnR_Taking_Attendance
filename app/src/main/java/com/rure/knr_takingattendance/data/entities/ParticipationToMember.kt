@@ -7,7 +7,7 @@ import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
 import java.time.LocalDate
 
 @Entity(
-    tableName = "member_participation",
+    tableName = "participation_to_member",
     primaryKeys = ["date", "member_id"]
 )
 data class ParticipationToMember(
