@@ -78,7 +78,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
 
         composable(route = Destination.MemberList.route) {
             MemberListScreen(
-
+                toDetail = { navController.navigate(Destination.MemberDetail.route + "/$it") }
             )
             onScreenChanged(Destination.MemberList)
         }
