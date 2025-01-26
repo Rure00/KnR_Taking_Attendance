@@ -30,13 +30,17 @@ fun MemberListScreen(
 ) {
     val memberList = memberViewModel.memberList.collectAsState()
 
-    Spacer(modifier = Modifier.height(6.dp))
+
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(6.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        item {
+            Spacer(modifier = Modifier.height(6.dp))
+        }
+
         itemsIndexed(memberList.value) { index, member ->
             MemberListItem(
                 member = member,
