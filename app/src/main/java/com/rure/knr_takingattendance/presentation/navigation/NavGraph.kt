@@ -22,6 +22,7 @@ import com.rure.knr_takingattendance.domain.usecase.participation.SaveMemberPart
 import com.rure.knr_takingattendance.presentation.screen.AddMemberScreen
 import com.rure.knr_takingattendance.presentation.screen.HomeScreen
 import com.rure.knr_takingattendance.presentation.screen.AttendanceHistoryScreen
+import com.rure.knr_takingattendance.presentation.screen.MemberListScreen
 import com.rure.knr_takingattendance.presentation.screen.OptionScreen
 import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
 import java.time.LocalDate
@@ -75,9 +76,17 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: 
             onScreenChanged(Destination.AmendMember)
         }
 
+        composable(route = Destination.MemberList.route) {
+            MemberListScreen(
+                toDetail = { navController.navigate(Destination.MemberDetail.route + "/$it") }
+            )
+            onScreenChanged(Destination.MemberList)
+        }
+
         composable(route = Destination.Option.route) {
             OptionScreen(
                 toAddMember = { navController.navigate(Destination.AddMember.route) },
+                toMemberList = { navController.navigate(Destination.MemberList.route) },
                 toSaveAttendance = {  }
             )
             onScreenChanged(Destination.Option)

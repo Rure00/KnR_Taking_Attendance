@@ -11,6 +11,7 @@ import com.rure.knr_takingattendance.domain.usecase.member.GetMemberByIdUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.SaveMemberUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.SubscribeMemberFlowUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.UpdateMemberUseCase
+import com.rure.knr_takingattendance.domain.usecase.participation.DeleteMemberParticipationUseCase
 import com.rure.knr_takingattendance.presentation.intent.MemberIntent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +28,7 @@ class MemberViewModel @Inject constructor(
     private val getAllMembersUseCase: GetAllMembersUseCase,
     private val getMemberByIdUseCase: GetMemberByIdUseCase,
 
-    private val subscribeMemberFlowUseCase: SubscribeMemberFlowUseCase
+    private val subscribeMemberFlowUseCase: SubscribeMemberFlowUseCase,
 ): ViewModel() {
 
     private val tag = "MemberViewModel"

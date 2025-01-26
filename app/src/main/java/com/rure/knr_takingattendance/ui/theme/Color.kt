@@ -19,10 +19,14 @@ val SkyBlue = Color(0xFF8DBAFF)
 val TossGray = Color(0xFF202632)
 val Gray = Color(0xFF727272)
 val Gray2 = Color(0xFF484646)
+
 val LightGray = Color(0xFFE2E2E2)
+val LightGray2 = Color(0xFF727272)
 
 val CautionOrange = Color(0xFFFFAC49)
 val WarningRed = Color(0xFFFF5353)
+
+val BackgroundRed = Color(0xFFF75F5F)
 
 val FwColor = Color(0xFFE74343)
 val MfColor = Color(0xFF92B271)
