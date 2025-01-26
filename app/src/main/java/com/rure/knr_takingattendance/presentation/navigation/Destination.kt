@@ -24,4 +24,8 @@ sealed class Destination(
     data object AmendMember: Destination(
         "팀원 정보 수정", "amendMember",false, true
     )
+
+    data object MemberList: Destination(
+        "팀원 목록", "memberList",false, true
+    )
 }
