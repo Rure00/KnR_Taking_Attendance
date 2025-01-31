@@ -6,4 +6,5 @@ import java.time.LocalDate
 interface ActivityDateRepository {
     suspend fun insert(activityDate: ActivityDate)
     suspend fun getActivitiesFrom(date: LocalDate): List<ActivityDate>
+    suspend fun getAllActivities(): List<ActivityDate>
 }

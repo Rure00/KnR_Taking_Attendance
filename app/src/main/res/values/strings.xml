@@ -30,4 +30,5 @@
     <string name="cancel_str">취소</string>
     <string name="confirm_str">확인</string>
     <string name="no_member_str">팀원이 없습니다.</string>
+    <string name="member_num">%d명</string>
 </resources>

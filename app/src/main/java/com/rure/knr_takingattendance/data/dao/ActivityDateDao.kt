@@ -11,6 +11,9 @@ interface ActivityDateDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertActivity(activityDate: ActivityDate)
 
+    @Query("SELECT * FROM activity_date")
+    fun getAll(): List<ActivityDate>
+
     @Query("SELECT * FROM activity_date WHERE date >= :givenDate")
     fun getAllActivityFromWhen(givenDate: String): List<ActivityDate>
 }
