@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -117,13 +118,28 @@ fun HomeScreen(
             }
 
 
-            Text(
-                modifier = Modifier.padding(start = 9.dp)
-                    .clickable { showArrangeDropDown.value = !showArrangeDropDown.value },
-                text = stringResource(R.string.arrange_text, arrangeEnum.value.data),
-                style = Typography.labelMedium,
-                color = Gray
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 9.dp)
+                        .clickable { showArrangeDropDown.value = !showArrangeDropDown.value }
+                        .weight(1f),
+                    text = stringResource(R.string.arrange_text, arrangeEnum.value.data),
+                    style = Typography.labelMedium,
+                    color = Gray
+                )
+
+                Text(
+                    text = stringResource(R.string.delete_activity),
+                    style = Typography.labelMedium,
+                    color = Gray,
+                    modifier = Modifier.padding(end = 9.dp).clickable {
+
+                    }
+                )
+            }
+
 
             if(showArrangeDropDown.value) {
                 Box {
