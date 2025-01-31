@@ -110,7 +110,7 @@ fun AttendanceHistoryScreen(
         modifier = Modifier.fillMaxWidth().wrapContentHeight()
             .padding(top = 6.dp, start = 7.dp, end = 7.dp),
         state = listState,
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.spacedBy(7.dp),
     ) {
         val history = attendanceHistory.value!!
         item {
@@ -129,7 +129,7 @@ fun AttendanceHistoryScreen(
                     color = Gray
                 )
             }
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(7.dp))
         }
 
         Log.d(tag, "yearlyAttendance num: ${history.yearlyAttendance.size}")
