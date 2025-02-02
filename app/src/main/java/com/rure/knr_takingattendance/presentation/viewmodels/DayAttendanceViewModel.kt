@@ -8,7 +8,7 @@ import com.rure.knr_takingattendance.data.entities.ActivityDate
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
 import com.rure.knr_takingattendance.domain.result.MemberFlowResult
-import com.rure.knr_takingattendance.domain.usecase.activity_date.GetActivitiesFromUseCase
+import com.rure.knr_takingattendance.domain.usecase.activity_date.DeleteActivityUseCase
 import com.rure.knr_takingattendance.domain.usecase.activity_date.SaveActivityDateUseCase
 import com.rure.knr_takingattendance.domain.usecase.member.SubscribeMemberFlowUseCase
 import com.rure.knr_takingattendance.domain.usecase.participation.DeleteMemberParticipationUseCase
@@ -38,7 +38,7 @@ class DayAttendanceViewModel @Inject constructor(
     private val initDayAttendanceUseCase: InitDayAttendanceUseCase,
 
     private val saveActivityDateUseCase: SaveActivityDateUseCase,
-    private val getActivitiesFromUseCase: GetActivitiesFromUseCase
+    private val deleteActivityUseCase: DeleteActivityUseCase
 ): ViewModel() {
     private val tag = "DayAttendanceViewModel"
 
@@ -54,9 +54,6 @@ class DayAttendanceViewModel @Inject constructor(
 
     private val _memberParticipation = MutableStateFlow(listOf<MemberParticipation>())
     val memberParticipation get() = _memberParticipation.asStateFlow()
-
-    private val _participationByMember = MutableStateFlow(listOf<MemberParticipation>())
-    val participationByMember get() = _participationByMember.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -79,10 +76,16 @@ class DayAttendanceViewModel @Inject constructor(
 
     fun emit(intent: ParticipationIntent) {
         when(intent) {
-            is ParticipationIntent.InitParticipation -> {
+            is ParticipationIntent.CreateActivityDate -> {
                 viewModelScope.launch {
                     saveActivityDateUseCase.invoke(ActivityDate(selectedDay.value))
                     _memberParticipation.value = initDayAttendanceUseCase.invoke(selectedDay.value)
+                }
+            }
+            is ParticipationIntent.DeleteActivityDate -> {
+                viewModelScope.launch {
+                    deleteActivityUseCase.invoke(ActivityDate(selectedDay.value))
+                    _memberParticipation.value = listOf()
                 }
             }
 
@@ -112,11 +115,6 @@ class DayAttendanceViewModel @Inject constructor(
                     _memberParticipation.value = membersAttendance
 
                     updateDaySummarize()
-                }
-            }
-            is ParticipationIntent.GetParticipationByMember -> {
-                viewModelScope.launch {
-                    _participationByMember.value = getParticipationByMemberUseCase.invoke(intent.member)
                 }
             }
         }

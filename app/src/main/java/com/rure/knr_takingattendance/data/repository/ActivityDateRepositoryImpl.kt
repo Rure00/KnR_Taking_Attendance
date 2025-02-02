@@ -15,6 +15,12 @@ class ActivityDateRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun delete(activityDate: ActivityDate) {
+        kotlin.runCatching {
+            dao.deleteActivity(activityDate)
+        }
+    }
+
     override suspend fun getActivitiesFrom(date: LocalDate): List<ActivityDate> {
         return kotlin.runCatching {
             dao.getAllActivityFromWhen(date.toString())

@@ -135,7 +135,7 @@ fun HomeScreen(
                     style = Typography.labelMedium,
                     color = Gray,
                     modifier = Modifier.padding(end = 9.dp).clickable {
-
+                        dayAttendanceViewModel.emit(ParticipationIntent.DeleteActivityDate)
                     }
                 )
             }
@@ -238,7 +238,7 @@ fun HomeScreen(
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = TossBlue)
                     .clickable {
-                        dayAttendanceViewModel.emit(ParticipationIntent.InitParticipation)
+                        dayAttendanceViewModel.emit(ParticipationIntent.CreateActivityDate)
                     }
                     .padding(vertical = 10.dp)
             )
