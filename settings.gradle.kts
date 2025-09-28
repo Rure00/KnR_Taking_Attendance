@@ -23,3 +23,4 @@ rootProject.name = "KnR_TakingAttendance"
 include(":app")
 include(":data")
 include(":domain")
+include(":presentation")
