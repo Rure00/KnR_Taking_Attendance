@@ -1,6 +1,6 @@
 package com.rure.presentation.intent
 
-import com.rure.domain.usecase.models.MemberParticipation
+import com.rure.domain.models.MemberParticipation
 import java.time.LocalDate
 
 sealed class ParticipationIntent {

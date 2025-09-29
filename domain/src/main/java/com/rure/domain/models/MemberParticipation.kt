@@ -1,7 +1,6 @@
-package com.rure.domain.usecase.models
+package com.rure.domain.models
 
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import com.rure.data.entities.Member
 import java.time.LocalDate
 
 

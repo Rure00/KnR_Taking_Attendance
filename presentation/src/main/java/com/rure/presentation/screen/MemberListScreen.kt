@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rure.presentation.R
 import com.rure.presentation.component.MemberListItem
+import com.rure.presentation.intent.MemberIntent
 import com.rure.presentation.viewmodels.MemberViewModel
 import com.rure.presentation.ui.theme.Black
 import com.rure.presentation.ui.theme.TossBlue
@@ -54,6 +55,7 @@ fun MemberListScreen(
             MemberListItem(
                 member = member,
                 toDetail = toDetail,
+                onDelete = { memberViewModel.emit(MemberIntent.DeleteMember(member)) }
             )
         }
     }

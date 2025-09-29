@@ -64,7 +64,7 @@ private const val DragCompensation = -20f
 fun MemberListItem(
     member: Member,
     toDetail: (Int) -> Unit,
-    memberViewMode: MemberViewModel
+    onDelete: () -> Unit,
 ) {
 
     val showDialog = remember { mutableStateOf(false) }
@@ -134,7 +134,7 @@ fun MemberListItem(
         DeleteConfirmDialog(
             member = member,
             onConfirm = {
-                memberViewMode.emit(MemberIntent.DeleteMember(member))
+                onDelete()
                 showDialog.value = false
             },
             onCancel = { showDialog.value = false }

@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.rure.presentation.state.home.AttendanceState
-import com.rure.presentation.state.home.DayAttendanceSummary
+import com.rure.domain.entities.DayAttendanceSummary
+import com.rure.domain.models.AttendanceState
 import com.rure.presentation.ui.theme.Gray
 import com.rure.presentation.ui.theme.LightGray
 import com.rure.presentation.ui.theme.TossBlue

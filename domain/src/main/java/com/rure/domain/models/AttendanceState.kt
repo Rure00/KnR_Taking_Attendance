@@ -1,4 +1,4 @@
-package com.rure.presentation.state.home
+package com.rure.domain.models
 
 enum class AttendanceState(val kr: String) {
     All("전체"),

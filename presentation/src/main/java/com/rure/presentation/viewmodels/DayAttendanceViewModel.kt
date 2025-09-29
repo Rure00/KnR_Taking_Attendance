@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rure.data.entities.ActivityDate
 import com.rure.data.entities.Member
-import com.rure.domain.usecase.models.MemberParticipation
-import com.rure.domain.result.MemberFlowResult
+import com.rure.domain.entities.DayAttendanceSummary
+import com.rure.domain.models.AttendanceState
+import com.rure.domain.models.MemberParticipation
 import com.rure.domain.usecase.activity_date.DeleteActivityUseCase
 import com.rure.domain.usecase.activity_date.SaveActivityDateUseCase
 import com.rure.domain.usecase.member.SubscribeMemberFlowUseCase
@@ -17,8 +18,7 @@ import com.rure.domain.usecase.participation.GetParticipationWhenUseCase
 import com.rure.domain.usecase.participation.InitDayAttendanceUseCase
 import com.rure.domain.usecase.participation.SaveMemberParticipationUseCase
 import com.rure.presentation.intent.ParticipationIntent
-import com.rure.presentation.state.home.AttendanceState
-import com.rure.presentation.state.home.DayAttendanceSummary
+import com.rure.presentation.state.MemberFlowState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -59,12 +59,12 @@ class DayAttendanceViewModel @Inject constructor(
         viewModelScope.launch {
             subscribeMemberFlowUseCase.invoke().collectLatest {
                 when(it) {
-                    is MemberFlowResult.Loading -> { }
-                    is MemberFlowResult.Success ->{
+                    is MemberFlowState.Loading -> { }
+                    is MemberFlowState.Success ->{
                         _memberList.value = it.list
                         emit(ParticipationIntent.GetParticipationWhen(selectedDay.value))
                     }
-                    is MemberFlowResult.Fail -> {
+                    is MemberFlowState.Fail -> {
                         Log.e(tag, "Collect MemberFlow Failed: ${it.exception.message}")
                     }
                 }

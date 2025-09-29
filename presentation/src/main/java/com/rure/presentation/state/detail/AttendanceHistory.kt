@@ -1,7 +1,7 @@
 package com.rure.presentation.state.detail
 
 import com.rure.data.entities.Member
-import com.rure.presentation.state.home.AttendanceState
+import com.rure.domain.models.AttendanceState
 import java.time.LocalDate
 
 data class AttendanceHistory(

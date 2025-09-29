@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.rure.presentation.R
-import com.rure.domain.usecase.models.MemberParticipation
+import com.rure.domain.models.MemberParticipation
 import com.rure.presentation.component.home.AttendanceBottomSheet
 import com.rure.presentation.component.home.AttendantRadioGroup
 import com.rure.presentation.component.home.HomeDatePickerModal
@@ -41,8 +41,8 @@ import com.rure.presentation.component.home.MemberAttendanceBar
 import com.rure.presentation.intent.ParticipationIntent
 import com.rure.presentation.state.home.ArrangeEnum
 import com.rure.presentation.state.home.AttendanceSheetStateHolder
-import com.rure.presentation.state.home.AttendanceState
 import com.rure.core.utils.RequestPermission
+import com.rure.domain.models.AttendanceState
 import com.rure.presentation.viewmodels.DayAttendanceViewModel
 import com.rure.presentation.ui.theme.Gray
 import com.rure.presentation.ui.theme.TossBlue
@@ -174,7 +174,7 @@ fun HomeScreen(
         itemsIndexed(getAttendanceByStatus(dayMemberAttendances, selectedAttendanceStatus.value)) { index, item ->
 
             val requestPermission = remember {
-                RequestPermission(context as MainActivity, context)
+                // TODO: RequestPermission(context as MainActivity, context)
             }
             MemberAttendanceBar(
                 item,
@@ -185,7 +185,7 @@ fun HomeScreen(
                     )
                 },
                 {
-                    requestPermission.requestCall(item.member.phoneNumber)
+                    // TODO: requestPermission.requestCall(item.member.phoneNumber)
                 }
             )
             Spacer(modifier = Modifier.height(3.dp))

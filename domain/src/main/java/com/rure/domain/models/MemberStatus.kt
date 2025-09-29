@@ -1,4 +1,4 @@
-package com.rure.presentation.state
+package com.rure.domain.models
 
 import com.rure.presentation.state.home.AttendanceState
 import java.time.LocalDate

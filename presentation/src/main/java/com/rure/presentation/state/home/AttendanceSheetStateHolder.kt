@@ -1,6 +1,7 @@
 package com.rure.presentation.state.home
 
-import com.rure.domain.usecase.models.MemberParticipation
+import com.rure.domain.models.AttendanceState
+import com.rure.domain.models.MemberParticipation
 
 data class AttendanceSheetStateHolder(
     val showBottomSheet: Boolean,

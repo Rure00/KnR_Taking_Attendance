@@ -1,4 +1,4 @@
-package com.rure.presentation.state.home
+package com.rure.domain.entities
 
 import java.time.LocalDate
 

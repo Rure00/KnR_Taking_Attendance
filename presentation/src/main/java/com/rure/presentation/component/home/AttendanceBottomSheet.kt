@@ -23,9 +23,9 @@ import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.rure.domain.models.AttendanceState
 import com.rure.presentation.R
-import com.rure.domain.usecase.models.MemberParticipation
-import com.rure.presentation.state.home.AttendanceState
+import com.rure.domain.models.MemberParticipation
 import com.rure.presentation.ui.theme.Gray
 import com.rure.presentation.ui.theme.TossBlue
 import com.rure.presentation.ui.theme.Typography
