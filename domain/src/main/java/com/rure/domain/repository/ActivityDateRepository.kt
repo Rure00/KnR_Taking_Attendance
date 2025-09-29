@@ -1,6 +1,6 @@
 package com.rure.domain.repository
 
-import com.rure.knr_takingattendance.data.entities.ActivityDate
+import com.rure.domain.entities.ActivityDate
 import java.time.LocalDate
 
 interface ActivityDateRepository {

@@ -1,8 +1,7 @@
 package com.rure.domain.repository
 
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.domain.result.MemberFlowResult
+import com.rure.domain.entities.Position
+import com.rure.domain.entities.Member
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
@@ -20,6 +19,6 @@ interface MemberRepository {
     suspend fun getAllMembers(): List<Member>
     suspend fun getMemberById(id: Int): Member?
 
-    fun subscribeMemberFlow(): Flow<MemberFlowResult>
+    fun subscribeMemberFlow(): Flow<Boolean>
 
 }

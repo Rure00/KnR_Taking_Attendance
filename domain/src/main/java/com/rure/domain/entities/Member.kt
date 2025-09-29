@@ -1,4 +1,4 @@
-package com.rure.data.entities
+package com.rure.domain.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

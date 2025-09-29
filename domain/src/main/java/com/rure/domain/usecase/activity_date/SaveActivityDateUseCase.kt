@@ -1,12 +1,11 @@
 package com.rure.domain.usecase.activity_date
 
-import com.rure.knr_takingattendance.data.entities.ActivityDate
-import com.rure.knr_takingattendance.domain.repository.ActivityDateRepository
+import com.rure.domain.entities.ActivityDate
+import com.rure.domain.repository.ActivityDateRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class SaveActivityDateUseCase @Inject constructor(
+class SaveActivityDateUseCase(
     private val activityDateRepository: ActivityDateRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) {

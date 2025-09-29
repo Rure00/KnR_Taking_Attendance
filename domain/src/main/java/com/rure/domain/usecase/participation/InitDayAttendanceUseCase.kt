@@ -1,17 +1,16 @@
 package com.rure.domain.usecase.participation
 
-import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
-import com.rure.knr_takingattendance.domain.repository.MemberRepository
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import com.rure.domain.models.MemberParticipation
+import com.rure.domain.repository.MemberRepository
+import com.rure.domain.models.AttendanceState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import javax.inject.Inject
 
-class InitDayAttendanceUseCase @Inject constructor(
+class InitDayAttendanceUseCase(
     private val repository: MemberRepository,
     private val saveMemberParticipationUseCase: SaveMemberParticipationUseCase,
     private val ioDispatcher: CoroutineDispatcher

@@ -1,9 +1,9 @@
-package com.rure.data.entities
+package com.rure.domain.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import com.rure.domain.models.AttendanceState
 import java.time.LocalDate
 
 @Entity(

@@ -1,14 +1,13 @@
 package com.rure.domain.usecase.member
 
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.domain.repository.MemberRepository
+import com.rure.domain.entities.Member
+import com.rure.domain.entities.Position
+import com.rure.domain.repository.MemberRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import javax.inject.Inject
 
-class SubscribeMemberFlowUseCase @Inject constructor(
+class SubscribeMemberFlowUseCase(
     private val memberRepository: MemberRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) {

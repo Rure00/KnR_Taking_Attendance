@@ -1,16 +1,15 @@
 package com.rure.domain.usecase.activity_date
 
-import com.rure.knr_takingattendance.data.entities.ActivityDate
-import com.rure.knr_takingattendance.domain.repository.ActivityDateRepository
-import com.rure.knr_takingattendance.domain.usecase.participation.DeleteMemberParticipationUseCase
-import com.rure.knr_takingattendance.domain.usecase.participation.GetParticipationWhenUseCase
+import com.rure.domain.entities.ActivityDate
+import com.rure.domain.repository.ActivityDateRepository
+import com.rure.domain.usecase.participation.DeleteMemberParticipationUseCase
+import com.rure.domain.usecase.participation.GetParticipationWhenUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class DeleteActivityUseCase @Inject constructor(
+class DeleteActivityUseCase(
     private val activityDateRepository: ActivityDateRepository,
     private val getParticipationWhenUseCase: GetParticipationWhenUseCase,
     private val deleteMemberParticipationUseCase: DeleteMemberParticipationUseCase,

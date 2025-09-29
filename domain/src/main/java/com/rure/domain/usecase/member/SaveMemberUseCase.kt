@@ -1,18 +1,16 @@
 package com.rure.domain.usecase.member
 
-import android.util.Log
-import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.domain.repository.MemberRepository
-import com.rure.knr_takingattendance.domain.usecase.activity_date.GetActivitiesFromUseCase
-import com.rure.knr_takingattendance.domain.usecase.participation.SaveMemberParticipationUseCase
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import com.rure.domain.models.MemberParticipation
+import com.rure.domain.entities.Position
+import com.rure.domain.repository.MemberRepository
+import com.rure.domain.usecase.activity_date.GetActivitiesFromUseCase
+import com.rure.domain.usecase.participation.SaveMemberParticipationUseCase
+import com.rure.domain.models.AttendanceState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import javax.inject.Inject
 
-class SaveMemberUseCase @Inject constructor(
+class SaveMemberUseCase(
     private val memberRepository: MemberRepository,
     private val saveMemberParticipationUseCase: SaveMemberParticipationUseCase,
     private val getActivitiesFromUseCase: GetActivitiesFromUseCase,
@@ -27,11 +25,7 @@ class SaveMemberUseCase @Inject constructor(
         phoneNumber: String,
     ) = withContext(ioDispatcher) {
         val newMember = memberRepository.insertMember(name, birth, position, joinDate, phoneNumber)
-
-        if(newMember == null) {
-            Log.e(tag, "Try to Creating New Member but fail...")
-            return@withContext
-        }
+            ?: return@withContext
 
         getActivitiesFromUseCase.invoke(joinDate).forEach {
             saveMemberParticipationUseCase(

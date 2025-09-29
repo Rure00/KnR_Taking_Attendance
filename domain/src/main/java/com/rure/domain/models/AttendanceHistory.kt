@@ -1,6 +1,6 @@
-package com.rure.presentation.state.detail
+package com.rure.domain.models
 
-import com.rure.data.entities.Member
+import com.rure.domain.entities.Member
 import com.rure.domain.models.AttendanceState
 import java.time.LocalDate
 

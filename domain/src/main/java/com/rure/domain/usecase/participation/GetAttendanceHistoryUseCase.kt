@@ -1,17 +1,15 @@
 package com.rure.domain.usecase.participation
 
-import android.util.Log
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.domain.usecase.activity_date.GetAllActivitiesUseCase
-import com.rure.knr_takingattendance.presentation.state.detail.AttendanceHistory
-import com.rure.knr_takingattendance.presentation.state.detail.DailyAttendance
-import com.rure.knr_takingattendance.presentation.state.detail.YearlyAttendance
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
+import com.rure.domain.entities.Member
+import com.rure.domain.models.AttendanceHistory
+import com.rure.domain.models.AttendanceState
+import com.rure.domain.models.DailyAttendance
+import com.rure.domain.models.YearlyAttendance
+import com.rure.domain.usecase.activity_date.GetAllActivitiesUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class GetAttendanceHistoryUseCase @Inject constructor(
+class GetAttendanceHistoryUseCase(
     private val getParticipationByMemberUseCase: GetParticipationByMemberUseCase,
     private val getAllActivitiesUseCase: GetAllActivitiesUseCase,
     private val ioDispatcher: CoroutineDispatcher

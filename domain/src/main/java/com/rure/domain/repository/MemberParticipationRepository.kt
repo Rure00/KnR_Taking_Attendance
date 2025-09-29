@@ -1,6 +1,6 @@
 package com.rure.domain.repository
 
-import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
+import com.rure.domain.models.MemberParticipation
 import java.time.LocalDate
 
 interface MemberParticipationRepository {

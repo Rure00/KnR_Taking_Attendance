@@ -1,6 +1,6 @@
 package com.rure.presentation.state
 
-import com.rure.data.entities.Member
+import com.rure.domain.entities.Member
 
 sealed class MemberFlowState {
     data object Loading: MemberFlowState()

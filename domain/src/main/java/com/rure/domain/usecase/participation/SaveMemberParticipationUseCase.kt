@@ -1,12 +1,11 @@
 package com.rure.domain.usecase.participation
 
-import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
-import com.rure.knr_takingattendance.domain.repository.MemberParticipationRepository
+import com.rure.domain.models.MemberParticipation
+import com.rure.domain.repository.MemberParticipationRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class SaveMemberParticipationUseCase @Inject constructor(
+class SaveMemberParticipationUseCase(
     private val participationRepository: MemberParticipationRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) {
