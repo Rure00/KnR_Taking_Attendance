@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rure.presentation"
+    namespace = "com.rure.core"
     compileSdk = 35
 
     defaultConfig {
@@ -40,8 +40,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // project module
-    implementation(project(":domain"))
-    implementation(project(":core"))
 }

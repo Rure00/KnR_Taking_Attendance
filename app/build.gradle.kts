@@ -96,4 +96,10 @@ dependencies {
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // project module
+    implementation(project(":data"))
+    implementation(project(":presentation"))
+    implementation(project(":domain"))
+    implementation(project(":core"))
 }
