@@ -10,22 +10,11 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.domain.usecase.activity_date.GetActivitiesFromUseCase
-import com.rure.knr_takingattendance.domain.usecase.member.DeleteMemberUseCase
-import com.rure.knr_takingattendance.domain.usecase.member.GetAllMembersUseCase
-import com.rure.knr_takingattendance.domain.usecase.member.GetMemberByIdUseCase
-import com.rure.knr_takingattendance.domain.usecase.member.SaveMemberUseCase
-import com.rure.knr_takingattendance.domain.usecase.member.SubscribeMemberFlowUseCase
-import com.rure.knr_takingattendance.domain.usecase.member.UpdateMemberUseCase
-import com.rure.knr_takingattendance.domain.usecase.participation.SaveMemberParticipationUseCase
-import com.rure.knr_takingattendance.presentation.screen.AddMemberScreen
-import com.rure.knr_takingattendance.presentation.screen.HomeScreen
-import com.rure.knr_takingattendance.presentation.screen.AttendanceHistoryScreen
-import com.rure.knr_takingattendance.presentation.screen.MemberListScreen
-import com.rure.knr_takingattendance.presentation.screen.OptionScreen
-import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
-import java.time.LocalDate
+import com.rure.presentation.screen.AddMemberScreen
+import com.rure.presentation.screen.HomeScreen
+import com.rure.presentation.screen.AttendanceHistoryScreen
+import com.rure.presentation.screen.MemberListScreen
+import com.rure.presentation.screen.OptionScreen
 
 fun NavGraphBuilder.mainNavGraph(navController: NavController, onScreenChanged: (Destination) -> Unit) {
     navigation(

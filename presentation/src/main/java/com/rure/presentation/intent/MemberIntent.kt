@@ -1,7 +1,7 @@
 package com.rure.presentation.intent
 
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.Position
+import com.rure.data.entities.Member
+import com.rure.data.entities.Position
 import java.time.LocalDate
 
 sealed class MemberIntent {

@@ -30,16 +30,16 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
-import com.rure.knr_takingattendance.ui.theme.Black
-import com.rure.knr_takingattendance.ui.theme.Gray
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.SkyBlue
-import com.rure.knr_takingattendance.ui.theme.TossBlue
-import com.rure.knr_takingattendance.ui.theme.Typography
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.presentation.R
+import com.rure.domain.usecase.models.MemberParticipation
+import com.rure.presentation.state.home.AttendanceState
+import com.rure.presentation.ui.theme.Black
+import com.rure.presentation.ui.theme.Gray
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.SkyBlue
+import com.rure.presentation.ui.theme.TossBlue
+import com.rure.presentation.ui.theme.Typography
+import com.rure.presentation.ui.theme.White
 
 
 private const val MaxDragOffset = -150f

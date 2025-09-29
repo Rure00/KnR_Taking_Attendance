@@ -16,13 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
-import com.rure.knr_takingattendance.presentation.state.home.DayAttendanceSummary
-import com.rure.knr_takingattendance.ui.theme.Gray
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.TossBlue
-import com.rure.knr_takingattendance.ui.theme.Typography
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.presentation.state.home.AttendanceState
+import com.rure.presentation.state.home.DayAttendanceSummary
+import com.rure.presentation.ui.theme.Gray
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.TossBlue
+import com.rure.presentation.ui.theme.Typography
+import com.rure.presentation.ui.theme.White
 
 @Composable
 fun AttendantRadioGroup(selected: AttendanceState, attendanceSummary: DayAttendanceSummary, onSelect: (AttendanceState) -> Unit) {

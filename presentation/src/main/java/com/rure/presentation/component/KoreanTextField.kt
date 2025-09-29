@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.Typography
 
 @Composable
 fun KoreanTextField(

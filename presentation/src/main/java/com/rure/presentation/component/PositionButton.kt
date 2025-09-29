@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.ui.theme.DfColor
-import com.rure.knr_takingattendance.ui.theme.FwColor
-import com.rure.knr_takingattendance.ui.theme.GkColor
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.MfColor
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.data.entities.Position
+import com.rure.presentation.ui.theme.DfColor
+import com.rure.presentation.ui.theme.FwColor
+import com.rure.presentation.ui.theme.GkColor
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.MfColor
+import com.rure.presentation.ui.theme.White
 
 @Composable
 fun PositionButton(

@@ -31,9 +31,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.wear.compose.material3.Text
-import com.rure.knr_takingattendance.ui.theme.Black
-import com.rure.knr_takingattendance.ui.theme.Gray
-import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.presentation.ui.theme.Black
+import com.rure.presentation.ui.theme.Gray
+import com.rure.presentation.ui.theme.Typography
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map

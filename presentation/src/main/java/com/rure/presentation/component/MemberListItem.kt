@@ -44,17 +44,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.presentation.MainActivity
-import com.rure.knr_takingattendance.presentation.intent.MemberIntent
-import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
-import com.rure.knr_takingattendance.ui.theme.BackgroundRed
-import com.rure.knr_takingattendance.ui.theme.Black
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.LightGray2
-import com.rure.knr_takingattendance.ui.theme.Typography
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.presentation.R
+import com.rure.data.entities.Member
+import com.rure.presentation.intent.MemberIntent
+import com.rure.presentation.viewmodels.MemberViewModel
+import com.rure.presentation.ui.theme.BackgroundRed
+import com.rure.presentation.ui.theme.Black
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.LightGray2
+import com.rure.presentation.ui.theme.Typography
+import com.rure.presentation.ui.theme.White
 
 
 private const val MaxDragOffset = 150f
@@ -65,7 +64,7 @@ private const val DragCompensation = -20f
 fun MemberListItem(
     member: Member,
     toDetail: (Int) -> Unit,
-    memberViewMode: MemberViewModel = viewModel(LocalContext.current as MainActivity)
+    memberViewMode: MemberViewModel
 ) {
 
     val showDialog = remember { mutableStateOf(false) }

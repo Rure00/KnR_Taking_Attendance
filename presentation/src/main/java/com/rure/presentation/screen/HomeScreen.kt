@@ -32,31 +32,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
-import com.rure.knr_takingattendance.presentation.MainActivity
-import com.rure.knr_takingattendance.presentation.component.home.AttendanceBottomSheet
-import com.rure.knr_takingattendance.presentation.component.home.AttendantRadioGroup
-import com.rure.knr_takingattendance.presentation.component.home.HomeDatePickerModal
-import com.rure.knr_takingattendance.presentation.component.home.MemberAttendanceBar
-import com.rure.knr_takingattendance.presentation.intent.ParticipationIntent
-import com.rure.knr_takingattendance.presentation.state.home.ArrangeEnum
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceSheetStateHolder
-import com.rure.knr_takingattendance.presentation.state.home.AttendanceState
-import com.rure.knr_takingattendance.presentation.utils.RequestPermission
-import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewModel
-import com.rure.knr_takingattendance.ui.theme.Gray
-import com.rure.knr_takingattendance.ui.theme.TossBlue
-import com.rure.knr_takingattendance.ui.theme.Typography
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.presentation.R
+import com.rure.domain.usecase.models.MemberParticipation
+import com.rure.presentation.component.home.AttendanceBottomSheet
+import com.rure.presentation.component.home.AttendantRadioGroup
+import com.rure.presentation.component.home.HomeDatePickerModal
+import com.rure.presentation.component.home.MemberAttendanceBar
+import com.rure.presentation.intent.ParticipationIntent
+import com.rure.presentation.state.home.ArrangeEnum
+import com.rure.presentation.state.home.AttendanceSheetStateHolder
+import com.rure.presentation.state.home.AttendanceState
+import com.rure.core.utils.RequestPermission
+import com.rure.presentation.viewmodels.DayAttendanceViewModel
+import com.rure.presentation.ui.theme.Gray
+import com.rure.presentation.ui.theme.TossBlue
+import com.rure.presentation.ui.theme.Typography
+import com.rure.presentation.ui.theme.White
 
 
 @Composable
 fun HomeScreen(
     toAttendanceHistoryScreen: (Int) -> Unit,
     context: Context = LocalContext.current,
-    dayAttendanceViewModel: DayAttendanceViewModel = viewModel(LocalContext.current as MainActivity)
+    dayAttendanceViewModel: DayAttendanceViewModel
 ) {
     val showDatePicker = remember { mutableStateOf(false) }
     val selectedDay = remember {

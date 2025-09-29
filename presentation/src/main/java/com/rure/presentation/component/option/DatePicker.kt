@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PaintingStyle
 import androidx.compose.ui.text.TextStyle
-import com.rure.knr_takingattendance.presentation.component.Picker
+import com.rure.presentation.component.Picker
 import java.time.LocalDate
 import java.time.YearMonth
 

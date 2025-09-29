@@ -29,10 +29,10 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.ui.theme.Black
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.presentation.R
+import com.rure.presentation.ui.theme.Black
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.Typography
 
 
 @Composable

@@ -31,20 +31,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.presentation.MainActivity
-import com.rure.knr_takingattendance.presentation.viewmodels.DayAttendanceViewModel
-import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.Typography
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.presentation.R
+import com.rure.presentation.MainActivity
+import com.rure.presentation.viewmodels.DayAttendanceViewModel
+import com.rure.presentation.viewmodels.MemberViewModel
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.Typography
+import com.rure.presentation.ui.theme.White
 
 @Composable
 fun OptionScreen(
     toAddMember: () -> Unit,
     toMemberList: () -> Unit,
     toSaveAttendance: () -> Unit,
-    memberViewModel: MemberViewModel = viewModel(LocalContext.current as MainActivity)
+    memberViewModel: MemberViewModel
 ) {
     Column(
         modifier = Modifier.fillMaxSize().background(LightGray).padding(top = 6.dp, start = 6.dp, end = 6.dp),

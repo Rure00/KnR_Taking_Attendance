@@ -20,18 +20,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.presentation.MainActivity
-import com.rure.knr_takingattendance.presentation.component.MemberListItem
-import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
-import com.rure.knr_takingattendance.ui.theme.Black
-import com.rure.knr_takingattendance.ui.theme.TossBlue
-import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.presentation.R
+import com.rure.presentation.component.MemberListItem
+import com.rure.presentation.viewmodels.MemberViewModel
+import com.rure.presentation.ui.theme.Black
+import com.rure.presentation.ui.theme.TossBlue
+import com.rure.presentation.ui.theme.Typography
 
 @Composable
 fun MemberListScreen(
     toDetail: (Int) -> Unit,
-    memberViewModel: MemberViewModel = viewModel(LocalContext.current as MainActivity)
+    memberViewModel: MemberViewModel
 ) {
     val memberList = memberViewModel.memberList.collectAsState()
 

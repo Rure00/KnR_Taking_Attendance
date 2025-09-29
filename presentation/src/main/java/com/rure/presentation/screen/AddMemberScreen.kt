@@ -22,24 +22,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.data.entities.getPositionFalseMap
-import com.rure.knr_takingattendance.presentation.MainActivity
-import com.rure.knr_takingattendance.presentation.intent.MemberIntent
-import com.rure.knr_takingattendance.presentation.screen.pages.WriteBirthPage
-import com.rure.knr_takingattendance.presentation.screen.pages.WriteJoiningDatePage
-import com.rure.knr_takingattendance.presentation.screen.pages.WriteNamePage
-import com.rure.knr_takingattendance.presentation.screen.pages.WritePhoneNumberPage
-import com.rure.knr_takingattendance.presentation.screen.pages.WritePositionPage
-import com.rure.knr_takingattendance.presentation.validation.MemberRegisterValidation
-import com.rure.knr_takingattendance.presentation.viewmodels.MemberViewModel
-import com.rure.knr_takingattendance.ui.theme.LightGray
-import com.rure.knr_takingattendance.ui.theme.TossBlue
-import com.rure.knr_takingattendance.ui.theme.Typography
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.core.validation.MemberRegisterValidation
+import com.rure.data.entities.getPositionFalseMap
+import com.rure.presentation.R
+import com.rure.presentation.intent.MemberIntent
+import com.rure.presentation.screen.pages.WriteBirthPage
+import com.rure.presentation.screen.pages.WriteJoiningDatePage
+import com.rure.presentation.screen.pages.WriteNamePage
+import com.rure.presentation.screen.pages.WritePhoneNumberPage
+import com.rure.presentation.screen.pages.WritePositionPage
+import com.rure.presentation.ui.theme.LightGray
+import com.rure.presentation.ui.theme.TossBlue
+import com.rure.presentation.ui.theme.Typography
+import com.rure.presentation.ui.theme.White
+import com.rure.presentation.viewmodels.MemberViewModel
 import java.time.LocalDate
 
 @Composable
@@ -47,7 +43,7 @@ fun AddMemberScreen(
     toBack: () -> Unit,
     isAmend: Boolean = false,
     id: Int = -1,
-    memberViewModel: MemberViewModel = viewModel(LocalContext.current as MainActivity)
+    memberViewModel: MemberViewModel
 ) {
 
     val nameState = remember { mutableStateOf("") }

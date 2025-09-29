@@ -2,10 +2,10 @@ package com.rure.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rure.knr_takingattendance.domain.usecase.member.GetMemberByIdUseCase
-import com.rure.knr_takingattendance.domain.usecase.participation.GetAttendanceHistoryUseCase
-import com.rure.knr_takingattendance.presentation.state.UiResult
-import com.rure.knr_takingattendance.presentation.state.detail.AttendanceHistory
+import com.rure.domain.usecase.member.GetMemberByIdUseCase
+import com.rure.domain.usecase.participation.GetAttendanceHistoryUseCase
+import com.rure.presentation.state.UiResult
+import com.rure.presentation.state.detail.AttendanceHistory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

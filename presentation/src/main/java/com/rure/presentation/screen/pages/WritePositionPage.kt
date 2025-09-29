@@ -12,11 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.presentation.component.PositionButton
-import com.rure.knr_takingattendance.ui.theme.Black
-import com.rure.knr_takingattendance.ui.theme.Typography
+import com.rure.presentation.R
+import com.rure.data.entities.Position
+import com.rure.presentation.component.PositionButton
+import com.rure.presentation.ui.theme.Black
+import com.rure.presentation.ui.theme.Typography
 
 
 @Composable

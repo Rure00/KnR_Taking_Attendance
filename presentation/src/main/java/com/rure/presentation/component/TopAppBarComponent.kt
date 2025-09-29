@@ -16,11 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rure.knr_takingattendance.R
-import com.rure.knr_takingattendance.presentation.navigation.Destination
-import com.rure.knr_takingattendance.ui.theme.TossBlue
-import com.rure.knr_takingattendance.ui.theme.Typography
-import com.rure.knr_takingattendance.ui.theme.White
+import com.rure.presentation.R
+import com.rure.presentation.navigation.Destination
+import com.rure.presentation.ui.theme.TossBlue
+import com.rure.presentation.ui.theme.Typography
+import com.rure.presentation.ui.theme.White
 
 @Composable
 fun TopAppBarComponent(navController: NavController, screen: Destination) {
