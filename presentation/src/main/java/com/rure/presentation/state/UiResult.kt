@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.state
+package com.rure.presentation.state
 
 sealed class UiResult<out T> {
     data class Success<out T>(val value: T): UiResult<T>()

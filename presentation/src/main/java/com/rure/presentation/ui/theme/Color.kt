@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.ui.theme
+package com.rure.presentation.ui.theme
 
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.ui.graphics.Color

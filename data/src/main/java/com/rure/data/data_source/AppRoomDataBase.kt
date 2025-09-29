@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.data.data_source
+package com.rure.data.data_source
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

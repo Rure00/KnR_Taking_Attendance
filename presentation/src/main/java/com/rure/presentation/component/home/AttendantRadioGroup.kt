@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.component.home
+package com.rure.presentation.component.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

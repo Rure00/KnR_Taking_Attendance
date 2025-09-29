@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.screen
+package com.rure.presentation.screen
 
 import android.content.Context
 import android.widget.Toast

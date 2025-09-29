@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.ui.theme
+package com.rure.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

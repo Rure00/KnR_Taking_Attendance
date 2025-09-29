@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.state.detail
+package com.rure.presentation.state.detail
 
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState

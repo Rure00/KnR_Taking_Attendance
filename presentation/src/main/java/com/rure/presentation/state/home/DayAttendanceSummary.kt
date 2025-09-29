@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.state.home
+package com.rure.presentation.state.home
 
 import java.time.LocalDate
 

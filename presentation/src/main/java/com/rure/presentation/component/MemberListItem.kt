@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.component
+package com.rure.presentation.component
 
 import android.util.Log
 import androidx.compose.animation.core.Spring

@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.screen.pages
+package com.rure.presentation.screen.pages
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

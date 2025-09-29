@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.data.entities
+package com.rure.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

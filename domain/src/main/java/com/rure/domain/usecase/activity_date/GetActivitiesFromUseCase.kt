@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.domain.usecase.activity_date
+package com.rure.domain.usecase.activity_date
 
 import com.rure.knr_takingattendance.domain.repository.ActivityDateRepository
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.component.home
+package com.rure.presentation.component.home
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState

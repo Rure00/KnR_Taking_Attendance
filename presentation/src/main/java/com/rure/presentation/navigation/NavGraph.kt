@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.navigation
+package com.rure.presentation.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

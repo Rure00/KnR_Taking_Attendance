@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.data.repository
+package com.rure.data.repository
 
 import android.util.Log
 import com.rure.knr_takingattendance.data.dao.MemberDao

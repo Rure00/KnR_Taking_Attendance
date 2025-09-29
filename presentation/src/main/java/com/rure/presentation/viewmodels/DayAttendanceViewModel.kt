@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.viewmodels
+package com.rure.presentation.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf

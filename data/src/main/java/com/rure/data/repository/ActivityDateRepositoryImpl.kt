@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.data.repository
+package com.rure.data.repository
 
 import com.rure.knr_takingattendance.data.dao.ActivityDateDao
 import com.rure.knr_takingattendance.data.entities.ActivityDate

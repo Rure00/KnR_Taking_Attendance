@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.domain.usecase.models
+package com.rure.domain.usecase.models
 
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.presentation.state.home.AttendanceState

@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.screen.pages
+package com.rure.presentation.screen.pages
 
 import android.icu.number.FormattedNumber
 import android.telephony.PhoneNumberFormattingTextWatcher

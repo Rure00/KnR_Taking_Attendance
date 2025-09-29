@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.domain.repository
+package com.rure.domain.repository
 
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.Position

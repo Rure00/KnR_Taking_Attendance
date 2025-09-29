@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.intent
+package com.rure.presentation.intent
 
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.Position

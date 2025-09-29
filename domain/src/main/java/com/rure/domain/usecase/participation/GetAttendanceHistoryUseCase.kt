@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.domain.usecase.participation
+package com.rure.domain.usecase.participation
 
 import android.util.Log
 import com.rure.knr_takingattendance.data.entities.Member

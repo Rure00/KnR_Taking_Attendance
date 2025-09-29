@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.viewmodels
+package com.rure.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

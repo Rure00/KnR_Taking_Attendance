@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.component.option
+package com.rure.presentation.component.option
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement

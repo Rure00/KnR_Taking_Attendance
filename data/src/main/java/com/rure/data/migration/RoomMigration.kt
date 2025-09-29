@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.data.migration
+package com.rure.data.migration
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase

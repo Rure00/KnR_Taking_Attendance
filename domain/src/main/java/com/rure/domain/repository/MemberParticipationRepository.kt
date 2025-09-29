@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.domain.repository
+package com.rure.domain.repository
 
 import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
 import java.time.LocalDate

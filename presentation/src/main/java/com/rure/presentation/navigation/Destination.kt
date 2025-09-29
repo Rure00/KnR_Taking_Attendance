@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.navigation
+package com.rure.presentation.navigation
 
 sealed class Destination(
     val label: String,

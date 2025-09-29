@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.domain.usecase.member
+package com.rure.domain.usecase.activity_date
 
 import com.rure.knr_takingattendance.data.entities.Member
 import com.rure.knr_takingattendance.data.entities.Position

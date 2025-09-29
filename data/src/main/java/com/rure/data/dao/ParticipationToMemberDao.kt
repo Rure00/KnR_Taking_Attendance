@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.data.dao
+package com.rure.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

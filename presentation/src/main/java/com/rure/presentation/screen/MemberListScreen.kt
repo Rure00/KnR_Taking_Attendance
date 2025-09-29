@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.screen
+package com.rure.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.rure.knr_takingattendance.presentation.component.home
+package com.rure.presentation.component.home
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
