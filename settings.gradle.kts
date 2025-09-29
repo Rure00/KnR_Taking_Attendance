@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "KnR_TakingAttendance"
 include(":app")
+include(":data")
+include(":presentation")
+include(":domain")
+include(":core")
