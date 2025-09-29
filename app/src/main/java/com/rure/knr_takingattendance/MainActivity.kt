@@ -20,8 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.rure.presentation.component.TopAppBarComponent
 import dagger.hilt.android.AndroidEntryPoint
 import com.rure.presentation.navigation.Destination
+import com.rure.presentation.navigation.mainNavGraph
+import com.rure.presentation.ui.theme.KnR_TakingAttendanceTheme
+import com.rure.presentation.ui.theme.LightGray
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

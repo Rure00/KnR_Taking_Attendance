@@ -1,6 +1,5 @@
 package com.rure.knr_takingattendance.di
 
-import com.rure.knr_takingattendance.data.data_source.AppRoomDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

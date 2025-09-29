@@ -1,11 +1,11 @@
 package com.rure.knr_takingattendance.di
 
-import com.rure.knr_takingattendance.data.repository.ActivityDateRepositoryImpl
-import com.rure.knr_takingattendance.data.repository.MemberParticipationRepositoryImpl
-import com.rure.knr_takingattendance.data.repository.MemberRepositoryImpl
-import com.rure.knr_takingattendance.domain.repository.ActivityDateRepository
-import com.rure.knr_takingattendance.domain.repository.MemberParticipationRepository
-import com.rure.knr_takingattendance.domain.repository.MemberRepository
+import com.rure.data.repository.ActivityDateRepositoryImpl
+import com.rure.data.repository.MemberParticipationRepositoryImpl
+import com.rure.data.repository.MemberRepositoryImpl
+import com.rure.domain.repository.ActivityDateRepository
+import com.rure.domain.repository.MemberParticipationRepository
+import com.rure.domain.repository.MemberRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

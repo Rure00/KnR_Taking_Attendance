@@ -2,6 +2,7 @@ package com.rure.knr_takingattendance.di
 
 import android.content.Context
 import androidx.room.Room
+import com.rure.data.data_source.AppRoomDataBase
 import com.rure.knr_takingattendance.data.data_source.AppRoomDataBase
 import dagger.Module
 import dagger.Provides
