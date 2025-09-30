@@ -1,7 +1,7 @@
 package com.rure.presentation.intent
 
-import com.rure.data.entities.Member
-import com.rure.data.entities.Position
+import com.rure.domain.models.MemberDto
+import com.rure.domain.models.Position
 import java.time.LocalDate
 
 sealed class MemberIntent {
@@ -13,9 +13,9 @@ sealed class MemberIntent {
         val phoneNumber: String
     ): MemberIntent()
 
-    data class DeleteMember(val member: Member): MemberIntent()
+    data class DeleteMember(val member: MemberDto): MemberIntent()
 
-    data class UpdateMember(val member: Member): MemberIntent()
+    data class UpdateMember(val member: MemberDto): MemberIntent()
 
     data object LoadAllMembers: MemberIntent()
 

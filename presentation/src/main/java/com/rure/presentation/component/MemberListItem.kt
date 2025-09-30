@@ -44,8 +44,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rure.domain.models.MemberDto
 import com.rure.presentation.R
-import com.rure.data.entities.Member
 import com.rure.presentation.intent.MemberIntent
 import com.rure.presentation.viewmodels.MemberViewModel
 import com.rure.presentation.ui.theme.BackgroundRed
@@ -62,7 +62,7 @@ private const val DragCompensation = -20f
 
 @Composable
 fun MemberListItem(
-    member: Member,
+    member: MemberDto,
     toDetail: (Int) -> Unit,
     onDelete: () -> Unit,
 ) {
@@ -145,7 +145,7 @@ fun MemberListItem(
 @Composable
 private fun MemberBar(
     animationOffset: Float,
-    member: Member,
+    member: MemberDto,
     toDetail: (Int) -> Unit
 ) {
     Row(
@@ -176,7 +176,7 @@ private fun MemberBar(
 
 @Composable
 fun DeleteConfirmDialog(
-    member: Member,
+    member: MemberDto,
     onConfirm: () -> Unit,
     onCancel: () -> Unit
 ) {

@@ -43,16 +43,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rure.presentation.R
-import com.rure.data.entities.Member
-import com.rure.data.entities.Position
 import com.rure.presentation.component.PositionButton
 import com.rure.presentation.state.UiResult
-import com.rure.presentation.state.detail.AttendanceHistory
-import com.rure.presentation.state.detail.DailyAttendance
-import com.rure.presentation.state.detail.YearlyAttendance
 import com.rure.core.utils.RequestPermission
 import com.rure.core.utils.toPhoneFormat
+import com.rure.domain.models.AttendanceHistory
 import com.rure.domain.models.AttendanceState
+import com.rure.domain.models.DailyAttendance
+import com.rure.domain.models.MemberDto
+import com.rure.domain.models.Position
+import com.rure.domain.models.YearlyAttendance
 import com.rure.presentation.viewmodels.AttendanceHistoryViewModel
 import com.rure.presentation.ui.theme.Black
 import com.rure.presentation.ui.theme.Gray
@@ -113,7 +113,7 @@ fun AttendanceHistoryScreen(
     ) {
         val history = attendanceHistory.value!!
         item {
-            MemberInformationBox(history.member, history.attendanceRate, toAmendScreen)
+            MemberInformationBox(history.memberDto, history.attendanceRate, toAmendScreen)
             Spacer(modifier = Modifier.height(14.dp))
 
             Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
@@ -132,14 +132,14 @@ fun AttendanceHistoryScreen(
         }
 
         Log.d(tag, "yearlyAttendance num: ${history.yearlyAttendance.size}")
-        itemsIndexed(history.yearlyAttendance) { index, item ->
+        itemsIndexed(history.yearlyAttendance) { _, item ->
             AttendanceHistoryBox(item)
         }
     }
 }
 
 @Composable
-private fun MemberInformationBox(member: Member, atdRate: Int, toAmendScreen: () -> Unit) {
+private fun MemberInformationBox(member: MemberDto, atdRate: Int, toAmendScreen: () -> Unit) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -244,7 +244,7 @@ private fun MemberInformationBox(member: Member, atdRate: Int, toAmendScreen: ()
 }
 
 @Composable
-private fun PositionBox(member: Member) {
+private fun PositionBox(member: MemberDto) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {

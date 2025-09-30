@@ -1,7 +1,7 @@
 package com.rure.domain.usecase.member
 
 import com.rure.domain.models.MemberParticipation
-import com.rure.domain.entities.Position
+import com.rure.domain.models.Position
 import com.rure.domain.repository.MemberRepository
 import com.rure.domain.usecase.activity_date.GetActivitiesFromUseCase
 import com.rure.domain.usecase.participation.SaveMemberParticipationUseCase

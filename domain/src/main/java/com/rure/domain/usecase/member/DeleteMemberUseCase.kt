@@ -1,11 +1,10 @@
 package com.rure.domain.usecase.member
 
-import com.rure.domain.entities.Member
+import com.rure.domain.models.MemberDto
 import com.rure.domain.repository.MemberRepository
 import com.rure.domain.usecase.participation.DeleteMemberParticipationUseCase
 import com.rure.domain.usecase.participation.GetParticipationByMemberUseCase
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -17,11 +16,11 @@ class DeleteMemberUseCase(
     private val ioDispatcher: CoroutineDispatcher,
 ) {
     suspend operator fun invoke(
-        member: Member
+        memberDto: MemberDto
     ) = withContext(ioDispatcher) {
-        memberRepository.deleteMember(member)
+        memberRepository.deleteMember(memberDto)
 
-        getParticipationByMemberUseCase.invoke(member).map {
+        getParticipationByMemberUseCase.invoke(memberDto).map {
             async { deleteMemberParticipationUseCase.invoke(it) }
         }.awaitAll()
     }

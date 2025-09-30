@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.rure.knr_takingattendance.data.entities.Member
+import com.rure.data.entities.Member
 import kotlinx.coroutines.flow.Flow
 
 @Dao

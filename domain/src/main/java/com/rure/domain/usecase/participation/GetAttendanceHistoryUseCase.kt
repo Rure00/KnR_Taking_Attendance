@@ -1,6 +1,6 @@
 package com.rure.domain.usecase.participation
 
-import com.rure.domain.entities.Member
+import com.rure.domain.models.MemberDto
 import com.rure.domain.models.AttendanceHistory
 import com.rure.domain.models.AttendanceState
 import com.rure.domain.models.DailyAttendance
@@ -15,11 +15,11 @@ class GetAttendanceHistoryUseCase(
     private val ioDispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke(
-        member: Member
+        memberDto: MemberDto
     ) = withContext(ioDispatcher) {
         val tag = "GetAttendanceHistoryUseCase"
 
-        val list = getParticipationByMemberUseCase.invoke(member)
+        val list = getParticipationByMemberUseCase.invoke(memberDto)
         if(list.isEmpty()) return@withContext null
 
         var total = 0
@@ -71,7 +71,7 @@ class GetAttendanceHistoryUseCase(
 //        }
 
         return@withContext AttendanceHistory(
-            member = member,
+            memberDto = memberDto,
             attendanceRate = rate,
             total = total,
             attendNum = attendNum,

@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.rure.domain.entities.DayAttendanceSummary
+import com.rure.domain.models.DayAttendanceSummaryDto
 import com.rure.domain.models.AttendanceState
 import com.rure.presentation.ui.theme.Gray
 import com.rure.presentation.ui.theme.LightGray
@@ -25,7 +25,7 @@ import com.rure.presentation.ui.theme.Typography
 import com.rure.presentation.ui.theme.White
 
 @Composable
-fun AttendantRadioGroup(selected: AttendanceState, attendanceSummary: DayAttendanceSummary, onSelect: (AttendanceState) -> Unit) {
+fun AttendantRadioGroup(selected: AttendanceState, attendanceSummary: DayAttendanceSummaryDto, onSelect: (AttendanceState) -> Unit) {
     val attendanceToNum = mapOf(
         AttendanceState.All to attendanceSummary.allNum,
         AttendanceState.Attend to attendanceSummary.attendNum,

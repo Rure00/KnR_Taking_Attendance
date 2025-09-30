@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.ParticipationToMember
+import com.rure.data.entities.Member
+import com.rure.data.entities.ParticipationToMember
 import java.time.LocalDate
 
 @Dao

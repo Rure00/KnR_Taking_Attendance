@@ -1,18 +1,15 @@
 package com.rure.domain.usecase.member
 
-import com.rure.domain.entities.Member
-import com.rure.domain.entities.Position
+import com.rure.domain.models.MemberDto
 import com.rure.domain.repository.MemberRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
 
 class GetAllMembersUseCase(
     private val memberRepository: MemberRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(): List<Member> = withContext(ioDispatcher) {
+    suspend operator fun invoke(): List<MemberDto> = withContext(ioDispatcher) {
         return@withContext memberRepository.getAllMembers()
     }
 }

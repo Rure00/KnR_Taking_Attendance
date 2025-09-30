@@ -3,7 +3,7 @@ package com.rure.presentation.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rure.data.entities.Member
+import com.rure.domain.models.MemberDto
 import com.rure.domain.usecase.member.DeleteMemberUseCase
 import com.rure.domain.usecase.member.GetAllMembersUseCase
 import com.rure.domain.usecase.member.GetMemberByIdUseCase
@@ -33,22 +33,13 @@ class MemberViewModel @Inject constructor(
 
     private val tag = "MemberViewModel"
 
-    private val _memberList = MutableStateFlow(listOf<Member>())
+    private val _memberList = MutableStateFlow(listOf<MemberDto>())
     val memberList get() = _memberList.asStateFlow()
 
     init {
         viewModelScope.launch {
             subscribeMemberFlowUseCase.invoke().collectLatest {
-                when(it) {
-                    is MemberFlowState.Loading -> { }
-                    is MemberFlowState.Success ->{
-                        _memberList.value = it.list
-                    }
-                    is MemberFlowState.Fail -> {
-                        Log.e(tag, "Collect MemberFlow Failed: ${it.exception.message}")
-                    }
-                }
-
+                _memberList.value = it.getOrElse { listOf() }
             }
         }
     }

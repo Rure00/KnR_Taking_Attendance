@@ -1,10 +1,11 @@
 package com.rure.data.repository
 
-import com.rure.knr_takingattendance.data.dao.MemberDao
-import com.rure.knr_takingattendance.data.dao.ParticipationToMemberDao
-import com.rure.knr_takingattendance.domain.usecase.models.MemberParticipation
-import com.rure.knr_takingattendance.data.entities.ParticipationToMember
-import com.rure.knr_takingattendance.domain.repository.MemberParticipationRepository
+import com.rure.data.dao.MemberDao
+import com.rure.data.dao.ParticipationToMemberDao
+import com.rure.domain.models.MemberParticipation
+import com.rure.data.entities.ParticipationToMember
+import com.rure.data.entities.toDto
+import com.rure.domain.repository.MemberParticipationRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -76,7 +77,7 @@ class MemberParticipationRepositoryImpl @Inject constructor(
                                 date = date,
                                 memberId = it.key.id,
                                 attendanceStatus = it.value.attendanceStatus,
-                                member =  memberDao.getMemberById(it.key.id)!!
+                                member =  memberDao.getMemberById(it.key.id)!!.toDto()
                             )
                         )
                     }
@@ -102,7 +103,7 @@ class MemberParticipationRepositoryImpl @Inject constructor(
                                 date = it.date,
                                 memberId = it.memberId,
                                 attendanceStatus = it.attendanceStatus,
-                                member =  memberDao.getMemberById(it.memberId)!!
+                                member =  memberDao.getMemberById(it.memberId)!!.toDto()
                             )
                         )
                     }

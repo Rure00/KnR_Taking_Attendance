@@ -2,10 +2,10 @@ package com.rure.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rure.domain.models.AttendanceHistory
 import com.rure.domain.usecase.member.GetMemberByIdUseCase
 import com.rure.domain.usecase.participation.GetAttendanceHistoryUseCase
 import com.rure.presentation.state.UiResult
-import com.rure.presentation.state.detail.AttendanceHistory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +24,7 @@ class AttendanceHistoryViewModel @Inject constructor(
         emit(UiResult.Loading)
         viewModelScope.launch {
             val member = getMemberByIdUseCase.invoke(id = memberId)
-            val history = member?.let { getAttendanceHistoryUseCase.invoke(member = it) }
+            val history = member?.let { getAttendanceHistoryUseCase.invoke(memberDto = it) }
 
             if(member == null || history == null) {
                 emit(UiResult.Fail)

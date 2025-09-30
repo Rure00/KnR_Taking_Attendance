@@ -1,8 +1,8 @@
-package com.rure.domain.entities
+package com.rure.domain.models
 
 import java.time.LocalDate
 
-data class DayAttendanceSummary(
+data class DayAttendanceSummaryDto(
     val date: LocalDate,
     val allNum: Int,
     val attendNum: Int,

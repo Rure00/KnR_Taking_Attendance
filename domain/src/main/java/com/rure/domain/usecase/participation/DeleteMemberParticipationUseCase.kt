@@ -4,7 +4,6 @@ import com.rure.domain.models.MemberParticipation
 import com.rure.domain.repository.MemberParticipationRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class DeleteMemberParticipationUseCase(
     private val participationRepository: MemberParticipationRepository,

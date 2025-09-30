@@ -3,16 +3,16 @@ package com.rure.data.data_source
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.rure.knr_takingattendance.data.dao.ActivityDateDao
-import com.rure.knr_takingattendance.data.dao.ParticipationToMemberDao
-import com.rure.knr_takingattendance.data.dao.MemberDao
-import com.rure.knr_takingattendance.data.entities.ActivityDate
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.ParticipationToMember
-import com.rure.knr_takingattendance.data.utils.LocalDateConverter
-import com.rure.knr_takingattendance.data.utils.PositionMapConverter
+import com.rure.data.dao.ActivityDateDao
+import com.rure.data.dao.ParticipationToMemberDao
+import com.rure.data.dao.MemberDao
+import com.rure.domain.models.ActivityDateDto
+import com.rure.data.entities.Member
+import com.rure.data.entities.ParticipationToMember
+import com.rure.core.utils.LocalDateConverter
+import com.rure.core.utils.PositionMapConverter
 
-@Database(entities = [Member::class, ActivityDate::class, ParticipationToMember::class], version = 1)
+@Database(entities = [Member::class, ActivityDateDto::class, ParticipationToMember::class], version = 1)
 @TypeConverters(LocalDateConverter::class, PositionMapConverter::class)
 abstract class AppRoomDataBase: RoomDatabase() {
     abstract val memberDao: MemberDao

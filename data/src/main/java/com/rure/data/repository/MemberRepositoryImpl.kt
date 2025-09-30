@@ -1,13 +1,14 @@
 package com.rure.data.repository
 
 import android.util.Log
-import com.rure.knr_takingattendance.data.dao.MemberDao
-import com.rure.knr_takingattendance.data.entities.Member
-import com.rure.knr_takingattendance.data.entities.Position
-import com.rure.knr_takingattendance.domain.repository.MemberRepository
-import com.rure.knr_takingattendance.domain.result.MemberFlowResult
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
+import com.rure.data.dao.MemberDao
+import com.rure.data.entities.Member
+import com.rure.data.entities.toDto
+import com.rure.data.entities.toEntity
+import com.rure.domain.models.MemberDto
+import com.rure.domain.models.Position
+import com.rure.domain.repository.MemberRepository
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 import javax.inject.Inject
@@ -23,7 +24,7 @@ class MemberRepositoryImpl @Inject constructor(
         position: Map<Position, Boolean>,
         joinDate: LocalDate,
         phoneNumber: String
-    ): Member? {
+    ): MemberDto? {
         return kotlin.runCatching {
             val id = memberDao.insertMember(
                 Member(name, birth, position, joinDate, phoneNumber)
@@ -31,43 +32,42 @@ class MemberRepositoryImpl @Inject constructor(
 
             Log.d(tag, "member created...")
 
-            memberDao.getMemberById(id.toInt())
+            memberDao.getMemberById(id.toInt())?.toDto()
         }.onFailure {
             Log.e(tag, "insertMember Fail: ${it.message}")
         }.getOrNull()
     }
 
-    override suspend fun deleteMember(member: Member) {
+    override suspend fun deleteMember(member: MemberDto) {
         kotlin.runCatching {
-            memberDao.deleteMember(member)
+            memberDao.deleteMember(member.toEntity())
         }
     }
 
-    override suspend fun updateMember(member: Member) {
+    override suspend fun updateMember(member: MemberDto) {
         kotlin.runCatching {
-            memberDao.insertMember(member)
+            memberDao.insertMember(member.toEntity())
         }
     }
 
-    override suspend fun getAllMembers(): List<Member> {
+    override suspend fun getAllMembers(): List<MemberDto> {
         return kotlin.runCatching {
-            memberDao.getAllMembers()
+            memberDao.getAllMembers().map {
+                it.toDto()
+            }
         }.getOrDefault(listOf())
     }
 
-    override suspend fun getMemberById(id: Int): Member? {
+    override suspend fun getMemberById(id: Int): MemberDto? {
         return kotlin.runCatching {
-            memberDao.getMemberById(id)
+            memberDao.getMemberById(id)?.toDto()
         }.getOrNull()
     }
 
     override fun subscribeMemberFlow() = flow {
-        emit(MemberFlowResult.Loading)
-        memberDao.subscribeMemberFlow().collect {
-            emit(MemberFlowResult.Success(it))
+        memberDao.subscribeMemberFlow().collectLatest { entities ->
+            emit(entities.map { it.toDto() })
         }
-    }.catch { e ->
-        emit(MemberFlowResult.Fail(e))
     }
 
 }

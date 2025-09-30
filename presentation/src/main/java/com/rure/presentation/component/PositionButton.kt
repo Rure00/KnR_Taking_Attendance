@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.rure.data.entities.Position
+import com.rure.domain.models.Position
 import com.rure.presentation.ui.theme.DfColor
 import com.rure.presentation.ui.theme.FwColor
 import com.rure.presentation.ui.theme.GkColor

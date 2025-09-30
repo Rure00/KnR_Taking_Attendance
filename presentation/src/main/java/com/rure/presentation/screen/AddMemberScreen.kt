@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rure.core.validation.MemberRegisterValidation
-import com.rure.data.entities.getPositionFalseMap
+import com.rure.domain.models.getPositionFalseMap
 import com.rure.presentation.R
 import com.rure.presentation.intent.MemberIntent
 import com.rure.presentation.screen.pages.WriteBirthPage

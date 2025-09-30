@@ -1,7 +1,6 @@
-package com.rure.domain.entities
+package com.rure.data.entities
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import com.rure.domain.models.AttendanceState
 import java.time.LocalDate
