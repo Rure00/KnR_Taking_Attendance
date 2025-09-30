@@ -74,6 +74,10 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0")
 
+
+    // compose permission
+    implementation ("com.google.accompanist:accompanist-permissions:0.36.0")
+
     implementation(project(":domain"))
     implementation(project(":core"))
 }

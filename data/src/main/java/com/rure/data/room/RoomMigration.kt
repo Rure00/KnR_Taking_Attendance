@@ -1,4 +1,4 @@
-package com.rure.data.migration
+package com.rure.data.room
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase

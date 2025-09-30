@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.sp
 import com.rure.presentation.R
 import com.rure.presentation.component.PositionButton
 import com.rure.presentation.state.UiResult
-import com.rure.core.utils.RequestPermission
 import com.rure.core.utils.toPhoneFormat
 import com.rure.domain.models.AttendanceHistory
 import com.rure.domain.models.AttendanceState

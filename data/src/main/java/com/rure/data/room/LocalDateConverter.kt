@@ -1,4 +1,4 @@
-package com.rure.core.utils
+package com.rure.data.room
 
 import androidx.room.TypeConverter
 import java.time.LocalDate

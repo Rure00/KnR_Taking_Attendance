@@ -9,8 +9,8 @@ import com.rure.data.dao.MemberDao
 import com.rure.domain.models.ActivityDateDto
 import com.rure.data.entities.Member
 import com.rure.data.entities.ParticipationToMember
-import com.rure.core.utils.LocalDateConverter
-import com.rure.core.utils.PositionMapConverter
+import com.rure.data.room.LocalDateConverter
+import com.rure.data.room.PositionMapConverter
 
 @Database(entities = [Member::class, ActivityDateDto::class, ParticipationToMember::class], version = 1)
 @TypeConverters(LocalDateConverter::class, PositionMapConverter::class)

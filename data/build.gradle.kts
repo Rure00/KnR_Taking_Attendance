@@ -55,6 +55,10 @@ dependencies {
     testImplementation("androidx.room:room-testing:$room_version")
 
 
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
+
+
     implementation(project(":domain"))
     implementation(project(":core"))
 }

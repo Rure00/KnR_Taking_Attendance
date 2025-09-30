@@ -1,10 +1,9 @@
-package com.rure.core.utils
+package com.rure.data.room
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.rure.knr_takingattendance.data.entities.Position
-import java.time.LocalDate
+import com.rure.domain.models.Position
 
 class PositionMapConverter {
     @TypeConverter
